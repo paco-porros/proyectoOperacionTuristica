@@ -112,3 +112,103 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+
+/* ============================================================
+   script.js — Ethereal Voyager · Página de inicio de sesión
+   ============================================================ */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* ----------------------------------------------------------
+     Referencias a elementos del DOM
+     ---------------------------------------------------------- */
+  const formulario        = document.getElementById("formulario-login");
+  const campoCorrAeo      = document.getElementById("correo");
+  const campoContrasena   = document.getElementById("contrasena");
+  const botonGoogle       = document.getElementById("boton-google");
+  const botonFacebook     = document.getElementById("boton-facebook");
+
+  /* ----------------------------------------------------------
+     Envío del formulario principal
+     ---------------------------------------------------------- */
+  formulario.addEventListener("submit", (evento) => {
+    evento.preventDefault();
+
+    const correo     = campoCorrAeo.value.trim();
+    const contrasena = campoContrasena.value.trim();
+
+    if (!correo || !contrasena) {
+      mostrarMensaje("Por favor completa todos los campos.", "error");
+      return;
+    }
+
+    if (!validarCorreo(correo)) {
+      mostrarMensaje("Ingresa un correo electrónico válido.", "error");
+      return;
+    }
+
+    // Aquí se conectaría con el backend de autenticación
+    console.log("Iniciando sesión con:", { correo, contrasena });
+    mostrarMensaje("Iniciando sesión…", "exito");
+  });
+
+  /* ----------------------------------------------------------
+     Inicio de sesión con Google
+     ---------------------------------------------------------- */
+  botonGoogle.addEventListener("click", () => {
+    console.log("Inicio de sesión con Google solicitado.");
+    // Integrar con Google OAuth
+  });
+
+  /* ----------------------------------------------------------
+     Inicio de sesión con Facebook
+     ---------------------------------------------------------- */
+  botonFacebook.addEventListener("click", () => {
+    console.log("Inicio de sesión con Facebook solicitado.");
+    // Integrar con Facebook OAuth
+  });
+
+  /* ----------------------------------------------------------
+     Utilidades
+     ---------------------------------------------------------- */
+
+  /**
+   * Valida el formato de un correo electrónico.
+   * @param {string} correo
+   * @returns {boolean}
+   */
+  function validarCorreo(correo) {
+    const expresionRegular = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return expresionRegular.test(correo);
+  }
+
+  /**
+   * Muestra un mensaje temporal al usuario.
+   * @param {string} mensaje  - Texto a mostrar.
+   * @param {string} tipo     - "exito" | "error"
+   */
+  function mostrarMensaje(mensaje, tipo) {
+    // Eliminar mensaje previo si existe
+    const mensajePrevio = document.getElementById("mensaje-estado");
+    if (mensajePrevio) mensajePrevio.remove();
+
+    const contenedor = document.createElement("p");
+    contenedor.id = "mensaje-estado";
+    contenedor.textContent = mensaje;
+
+    Object.assign(contenedor.style, {
+      marginTop:    "0.75rem",
+      fontSize:     "0.825rem",
+      fontWeight:   "600",
+      textAlign:    "center",
+      color:        tipo === "exito" ? "#054da4" : "#ba1a1a",
+      fontFamily:   "Manrope, sans-serif",
+    });
+
+    formulario.appendChild(contenedor);
+
+    // Eliminar el mensaje después de 4 segundos
+    setTimeout(() => contenedor.remove(), 4000);
+  }
+
+});
