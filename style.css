@@ -1212,3 +1212,489 @@ a { text-decoration: none; }
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   vertical-align: middle;
 }
+
+/* ============================================================
+   estilo-registro.css — Ethereal Voyager · Página de registro
+   Todas las clases están nombradas en español
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   Variables globales de diseño (compartidas con login)
+   ---------------------------------------------------------- */
+:root {
+  --color-primario:            #054da4;
+  --color-primario-contenedor: #3066be;
+  --color-superficie:          #e5feff;
+  --color-fondo:               #e5feff;
+  --color-sobre-superficie:    #002021;
+  --color-sobre-variante:      #424752;
+  --color-inverso-superficie:  #003739;
+  --color-secundario:          #306388;
+  --color-sobre-primario:      #ffffff;
+  --color-contorno:            #737783;
+  --fuente-titular:            "Plus Jakarta Sans", sans-serif;
+  --fuente-cuerpo:             "Manrope", sans-serif;
+  --radio-base:                1rem;
+  --radio-completo:            9999px;
+  --sombra-tarjeta:            0 20px 40px rgba(0, 55, 57, 0.1);
+}
+
+/* ----------------------------------------------------------
+   Cuerpo / base
+   ---------------------------------------------------------- */
+.fuente-cuerpo {
+  font-family: var(--fuente-cuerpo);
+}
+
+.texto-superficie {
+  color: var(--color-sobre-superficie);
+}
+
+.fondo-principal {
+  background-color: var(--color-fondo);
+}
+
+.altura-minima {
+  min-height: 100vh;
+}
+
+.columna-flexible {
+  display: flex;
+  flex-direction: column;
+}
+
+.relativo {
+  position: relative;
+}
+
+.sin-desbordamiento-horizontal {
+  overflow-x: hidden;
+}
+
+/* ----------------------------------------------------------
+   Capa de imagen de fondo fija
+   ---------------------------------------------------------- */
+.capa-fondo-fija {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+.imagen-fondo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.9);
+}
+
+.superposicion-fondo {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(5, 77, 164, 0.1);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+/* ----------------------------------------------------------
+   Contenedor principal
+   ---------------------------------------------------------- */
+.contenedor-principal {
+  position: relative;
+  z-index: 10;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .contenedor-principal {
+    padding: 3rem;
+  }
+}
+
+/* ----------------------------------------------------------
+   Tarjeta de registro (efecto cristal)
+   ---------------------------------------------------------- */
+.tarjeta-registro {
+  background: linear-gradient(
+    135deg,
+    rgba(229, 254, 255, 0.4) 0%,
+    rgba(181, 243, 246, 0.2) 100%
+  );
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--sombra-tarjeta);
+  width: 100%;
+  max-width: 576px;
+  border-radius: var(--radio-base);
+  padding: 2rem;
+}
+
+@media (min-width: 768px) {
+  .tarjeta-registro {
+    padding: 3rem;
+  }
+}
+
+/* ----------------------------------------------------------
+   Encabezado / marca
+   ---------------------------------------------------------- */
+.encabezado-registro {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.contenedor-marca {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.nombre-marca {
+  font-size: 1.875rem;
+  font-weight: 800;
+  font-family: var(--fuente-titular);
+  letter-spacing: -0.04em;
+  color: var(--color-primario);
+}
+
+.titulo-registro {
+  font-size: 1.875rem;
+  font-weight: 800;
+  font-family: var(--fuente-titular);
+  color: var(--color-sobre-superficie);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .titulo-registro {
+    font-size: 2.25rem;
+  }
+}
+
+.subtitulo-registro {
+  color: var(--color-sobre-variante);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  font-family: var(--fuente-cuerpo);
+}
+
+/* ----------------------------------------------------------
+   Formulario de registro
+   ---------------------------------------------------------- */
+.formulario-registro {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ----------------------------------------------------------
+   Grupos de campos
+   ---------------------------------------------------------- */
+.grupo-campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.etiqueta-campo {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-sobre-variante);
+  margin-bottom: 0.5rem;
+  padding: 0 0.25rem;
+  font-family: var(--fuente-cuerpo);
+}
+
+.contenedor-input-icono {
+  position: relative;
+}
+
+.contenedor-input-icono:focus-within .icono-campo {
+  color: var(--color-primario);
+}
+
+.icono-campo {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-contorno);
+  font-size: 1.25rem;
+  pointer-events: none;
+  transition: color 0.3s ease;
+}
+
+.campo-cristal {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border-radius: 0.5rem;
+  color: var(--color-sobre-superficie);
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.campo-cristal::placeholder {
+  color: rgba(115, 119, 131, 0.6);
+}
+
+.campo-cristal:focus {
+  background: rgba(255, 255, 255, 0.4);
+  border-color: #80ded9;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(128, 222, 217, 0.1);
+}
+
+/* ----------------------------------------------------------
+   Cuadrícula de contraseñas (responsive)
+   ---------------------------------------------------------- */
+.cuadricula-contrasenas {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .cuadricula-contrasenas {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ----------------------------------------------------------
+   Términos y condiciones
+   ---------------------------------------------------------- */
+.fila-terminos {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+}
+
+.checkbox-terminos {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 0.25rem;
+  border-color: #c3c6d4;
+  color: var(--color-primario);
+  background: rgba(255, 255, 255, 0.1);
+  accent-color: var(--color-primario);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.etiqueta-terminos {
+  font-size: 0.875rem;
+  color: var(--color-sobre-variante);
+  font-family: var(--fuente-cuerpo);
+  cursor: pointer;
+}
+
+.enlace-terminos {
+  color: var(--color-primario);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.enlace-terminos:hover {
+  text-decoration: underline;
+}
+
+/* ----------------------------------------------------------
+   Botón de registro
+   ---------------------------------------------------------- */
+.boton-registrarse {
+  width: 100%;
+  background-color: var(--color-primario-contenedor);
+  color: var(--color-sobre-primario);
+  font-family: var(--fuente-titular);
+  font-weight: 700;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 14px rgba(48, 102, 190, 0.2);
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.boton-registrarse:hover {
+  background-color: var(--color-primario);
+}
+
+.boton-registrarse:active {
+  transform: scale(0.98);
+}
+
+.icono-flecha {
+  font-size: 1.25rem;
+  transition: transform 0.2s ease;
+}
+
+.boton-registrarse:hover .icono-flecha {
+  transform: translateX(4px);
+}
+
+/* ----------------------------------------------------------
+   Divisor de autenticación social
+   ---------------------------------------------------------- */
+.divisor-social {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 2.5rem 0;
+}
+
+.linea-divisor {
+  flex-grow: 1;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.texto-divisor {
+  padding: 0 1rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(66, 71, 82, 0.7);
+  font-family: var(--fuente-cuerpo);
+}
+
+/* ----------------------------------------------------------
+   Botones sociales
+   ---------------------------------------------------------- */
+.cuadricula-botones-sociales {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.boton-social {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  color: var(--color-sobre-superficie);
+  font-family: var(--fuente-cuerpo);
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.boton-social:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.icono-social {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* ----------------------------------------------------------
+   Pie de la tarjeta — enlace a login
+   ---------------------------------------------------------- */
+.pie-tarjeta-registro {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+.texto-ya-cuenta {
+  color: var(--color-sobre-variante);
+  font-weight: 500;
+  font-family: var(--fuente-cuerpo);
+}
+
+.enlace-iniciar-sesion {
+  color: var(--color-primario);
+  font-weight: 700;
+  text-decoration: none;
+  margin-left: 0.25rem;
+  transition: color 0.2s ease;
+}
+
+.enlace-iniciar-sesion:hover {
+  color: var(--color-primario-contenedor);
+}
+
+/* ----------------------------------------------------------
+   Pie de página global
+   ---------------------------------------------------------- */
+.pie-pagina-registro {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: 2.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(229, 254, 255, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .pie-pagina-registro {
+    flex-direction: row;
+    gap: 0;
+  }
+}
+
+.copyright-registro {
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(0, 32, 33, 0.6);
+}
+
+.enlaces-pie-registro {
+  display: flex;
+  gap: 2rem;
+}
+
+.enlace-pie-registro {
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(0, 32, 33, 0.6);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.enlace-pie-registro:hover {
+  color: var(--color-primario);
+}
+
+/* ----------------------------------------------------------
+   Íconos de Material Symbols
+   ---------------------------------------------------------- */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
