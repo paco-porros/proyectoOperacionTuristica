@@ -83,18 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* Botón "Buscar ahora" */
-  const botonBuscar = document.querySelector(".buscador__boton");
-  if (botonBuscar) {
-    botonBuscar.addEventListener("click", () => {
-      const destino  = document.querySelector(".buscador__entrada[placeholder='¿A dónde vas?']").value;
-      const fecha    = document.querySelector(".buscador__entrada[placeholder='Añadir fechas']").value;
-      const personas = document.querySelector(".buscador__entrada[placeholder='¿Cuántos viajan?']").value;
-      console.log("Búsqueda:", { destino, fecha, personas });
-      alert(`Buscando viaje a: ${destino || "destino no indicado"}`);
-    });
-  }
-
   /* Botones "Ver detalles" de cada plan */
   const botonesPlan = document.querySelectorAll(".tarjeta-plan__boton");
   botonesPlan.forEach((boton) => {
