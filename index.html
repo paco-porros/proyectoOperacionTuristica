@@ -1,383 +1,398 @@
 <!DOCTYPE html>
-<html class="light" lang="es"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Ethereal Voyager | Discover Your Next Adventure</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "surface-container-high": "#b5f3f6",
-              "outline": "#737783",
-              "error": "#ba1a1a",
-              "on-secondary-fixed-variant": "#104b6e",
-              "surface": "#e5feff",
-              "primary": "#054da4",
-              "on-tertiary": "#ffffff",
-              "inverse-primary": "#adc6ff",
-              "background": "#e5feff",
-              "primary-container": "#3066be",
-              "on-primary-fixed": "#001a41",
-              "surface-variant": "#afedf0",
-              "on-background": "#002021",
-              "primary-fixed": "#d8e2ff",
-              "on-tertiary-fixed-variant": "#004f53",
-              "surface-tint": "#225cb3",
-              "tertiary-container": "#007479",
-              "surface-dim": "#a7e5e8",
-              "surface-container-low": "#cbfdff",
-              "surface-container-highest": "#afedf0",
-              "on-tertiary-container": "#93f8ff",
-              "on-surface-variant": "#424752",
-              "secondary-fixed": "#cce5ff",
-              "secondary-container": "#a4d4ff",
-              "tertiary-fixed-dim": "#65d7de",
-              "on-primary-container": "#e0e8ff",
-              "inverse-surface": "#003739",
-              "on-primary": "#ffffff",
-              "surface-container-lowest": "#ffffff",
-              "tertiary": "#00595e",
-              "on-error-container": "#93000a",
-              "on-primary-fixed-variant": "#004494",
-              "on-tertiary-fixed": "#002022",
-              "outline-variant": "#c3c6d4",
-              "primary-fixed-dim": "#adc6ff",
-              "tertiary-fixed": "#84f4fb",
-              "surface-bright": "#e5feff",
-              "on-error": "#ffffff",
-              "surface-container": "#bbf9fc",
-              "on-surface": "#002021",
-              "inverse-on-surface": "#bdfcff",
-              "error-container": "#ffdad6",
-              "on-secondary-fixed": "#001e31",
-              "secondary-fixed-dim": "#9bccf6",
-              "on-secondary-container": "#285c81",
-              "secondary": "#306388",
-              "on-secondary": "#ffffff"
-            },
-            fontFamily: {
-              "headline": ["Plus Jakarta Sans"],
-              "body": ["Manrope"],
-              "label": ["Manrope"]
-            },
-            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
-          },
-        },
-      }
-    </script>
-<style>
-      .glass-panel {
-        background: linear-gradient(135deg, rgba(174, 236, 239, 0.15) 0%, rgba(48, 102, 190, 0.1) 100%);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-      }
-      .glass-border {
-        border: 1px solid rgba(255, 255, 255, 0.2);
-      }
-      .hero-gradient {
-        background: radial-gradient(circle at center, rgba(0, 32, 33, 0.2) 0%, rgba(0, 32, 33, 0.6) 100%);
-      }
-      .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-      }
-    </style>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ethereal Voyager | Discover Your Next Adventure</title>
+
+  <!-- Tailwind CDN (debe cargarse antes que script.js para que la config sea válida) -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Estilos externos -->
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="bg-surface font-body text-on-surface antialiased">
-<!-- Top Navigation Bar -->
-<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-8 py-4 w-full max-w-none bg-white/15 dark:bg-slate-900/20 backdrop-blur-md shadow-[0_20px_40px_rgba(0,55,57,0.06)]">
-<div class="text-2xl font-bold tracking-tight text-[#054da4] dark:text-[#b5f3f6] font-headline">
-            Ethereal Voyager
+
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       NAVEGACIÓN
+  ═══════════════════════════════════════════ -->
+  <nav class="navegacion">
+
+    <div class="navegacion__logo">Ethereal Voyager</div>
+
+    <div class="navegacion__enlaces">
+      <a class="navegacion__enlace navegacion__enlace--activo" href="#">Inicio</a>
+      <a class="navegacion__enlace" href="#">Servicios</a>
+      <a class="navegacion__enlace" href="#">Planes Turísticos</a>
+      <a class="navegacion__enlace" href="#">Oferentes</a>
+      <a class="navegacion__enlace" href="#">Mi Cuenta</a>
+    </div>
+
+    <button class="navegacion__boton">Iniciar Sesión</button>
+
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════════
+       PORTADA (HERO)
+  ═══════════════════════════════════════════ -->
+  <header class="portada">
+
+    <div class="portada__fondo">
+      <img class="portada__imagen"
+           src="https://lh3.googleusercontent.com/aida-public/AB6AXuCat7CGLoFYWOumyqkj2eSiPPAX0h3o4iNM6wb3PtigiOq96jBpNWoENNhndc9ImBi9PsXqlq9o_3FwCa5_wL0gYpf_UTLBNEtIRwqFVrckoRvQ5LCb35BZCse4-cbH8xiUbdTZZcg4j48J2SCtG3832LjfrOJF2UcD1T_6gPuD0czsVBqWUZ_0TOD5jjPqO5ZS6dEhmY-LYl2UUy27HBQpH9cg46eg-pzpqeTeMUvQrRSuMP-c-JuHUGeLT4J2D0naIjNyeJQ9eASQ"
+           alt="Paisaje montañoso impresionante" />
+      <div class="portada__veladura portada-gradiente"></div>
+    </div>
+
+    <div class="portada__contenido">
+      <h1 class="portada__titulo">Descubre tu próxima aventura</h1>
+      <p class="portada__subtitulo">Planes turísticos personalizados para ti</p>
+
+      <!-- Buscador -->
+      <div class="buscador panel-vidrio borde-vidrio">
+
+        <div class="buscador__campo">
+          <span class="material-symbols-outlined buscador__icono">location_on</span>
+          <div>
+            <span class="buscador__etiqueta">Destino</span>
+            <input class="buscador__entrada" type="text" placeholder="¿A dónde vas?" />
+          </div>
         </div>
-<div class="hidden md:flex items-center space-x-8">
-<a class="font-['Plus_Jakarta_Sans'] font-medium text-sm tracking-wide text-[#054da4] dark:text-[#80ded9] border-b-2 border-[#80ded9] pb-1" href="#">Inicio</a>
-<a class="font-['Plus_Jakarta_Sans'] font-medium text-sm tracking-wide text-slate-700 dark:text-slate-300 hover:text-[#054da4] transition-colors" href="#">Servicios</a>
-<a class="font-['Plus_Jakarta_Sans'] font-medium text-sm tracking-wide text-slate-700 dark:text-slate-300 hover:text-[#054da4] transition-colors" href="#">Planes Turísticos</a>
-<a class="font-['Plus_Jakarta_Sans'] font-medium text-sm tracking-wide text-slate-700 dark:text-slate-300 hover:text-[#054da4] transition-colors" href="#">Oferentes</a>
-<a class="font-['Plus_Jakarta_Sans'] font-medium text-sm tracking-wide text-slate-700 dark:text-slate-300 hover:text-[#054da4] transition-colors" href="#">Mi Cuenta</a>
-</div>
-<button class="bg-primary text-on-primary px-6 py-2.5 rounded-full font-medium text-sm transition-all duration-300 hover:bg-primary-container scale-95 active:scale-90">
-            Iniciar Sesión
+
+        <div class="buscador__campo">
+          <span class="material-symbols-outlined buscador__icono">calendar_today</span>
+          <div>
+            <span class="buscador__etiqueta">Fecha</span>
+            <input class="buscador__entrada" type="text" placeholder="Añadir fechas" />
+          </div>
+        </div>
+
+        <div class="buscador__campo">
+          <span class="material-symbols-outlined buscador__icono">group</span>
+          <div>
+            <span class="buscador__etiqueta">Personas</span>
+            <input class="buscador__entrada" type="text" placeholder="¿Cuántos viajan?" />
+          </div>
+        </div>
+
+        <button class="buscador__boton">
+          <span class="material-symbols-outlined">search</span>
+          Buscar ahora
         </button>
-</nav>
-<!-- Hero Section -->
-<header class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-<div class="absolute inset-0 z-0">
-<img alt="Stunning mountain landscape" class="w-full h-full object-cover" data-alt="Cinematic wide shot of majestic snow-capped mountain peaks reflecting in a crystal clear turquoise alpine lake at sunrise with soft mist" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCat7CGLoFYWOumyqkj2eSiPPAX0h3o4iNM6wb3PtigiOq96jBpNWoENNhndc9ImBi9PsXqlq9o_3FwCa5_wL0gYpf_UTLBNEtIRwqFVrckoRvQ5LCb35BZCse4-cbH8xiUbdTZZcg4j48J2SCtG3832LjfrOJF2UcD1T_6gPuD0czsVBqWUZ_0TOD5jjPqO5ZS6dEhmY-LYl2UUy27HBQpH9cg46eg-pzpqeTeMUvQrRSuMP-c-JuHUGeLT4J2D0naIjNyeJQ9eASQ"/>
-<div class="absolute inset-0 hero-gradient"></div>
-</div>
-<div class="relative z-10 w-full max-w-6xl px-6 text-center">
-<h1 class="font-headline font-extrabold text-5xl md:text-7xl text-white mb-4 tracking-tight">
-                Descubre tu próxima aventura
-            </h1>
-<p class="text-lg md:text-xl text-white/90 font-medium mb-12 max-w-2xl mx-auto">
-                Planes turísticos personalizados para ti
-            </p>
-<!-- Search Bar -->
-<div class="glass-panel glass-border rounded-full p-2 md:p-3 flex flex-col md:flex-row items-center gap-2 max-w-4xl mx-auto shadow-2xl transition-all duration-500 focus-within:backdrop-blur-xl">
-<div class="flex-1 flex items-center gap-3 px-6 py-3 w-full border-r border-white/10 last:border-0">
-<span class="material-symbols-outlined text-white/70" data-icon="location_on">location_on</span>
-<div class="flex flex-col items-start">
-<span class="text-[10px] uppercase tracking-widest text-white/60 font-bold">Destino</span>
-<input class="bg-transparent border-0 p-0 text-white placeholder-white/50 focus:ring-0 text-sm w-full font-semibold" placeholder="¿A dónde vas?" type="text"/>
-</div>
-</div>
-<div class="flex-1 flex items-center gap-3 px-6 py-3 w-full border-r border-white/10 last:border-0">
-<span class="material-symbols-outlined text-white/70" data-icon="calendar_today">calendar_today</span>
-<div class="flex flex-col items-start">
-<span class="text-[10px] uppercase tracking-widest text-white/60 font-bold">Fecha</span>
-<input class="bg-transparent border-0 p-0 text-white placeholder-white/50 focus:ring-0 text-sm w-full font-semibold" placeholder="Añadir fechas" type="text"/>
-</div>
-</div>
-<div class="flex-1 flex items-center gap-3 px-6 py-3 w-full border-r border-white/10 last:border-0">
-<span class="material-symbols-outlined text-white/70" data-icon="group">group</span>
-<div class="flex flex-col items-start">
-<span class="text-[10px] uppercase tracking-widest text-white/60 font-bold">Personas</span>
-<input class="bg-transparent border-0 p-0 text-white placeholder-white/50 focus:ring-0 text-sm w-full font-semibold" placeholder="¿Cuántos viajan?" type="text"/>
-</div>
-</div>
-<button class="w-full md:w-auto bg-primary-container hover:bg-primary text-white px-8 py-4 rounded-full font-bold transition-all duration-300 flex items-center justify-center gap-2">
-<span class="material-symbols-outlined" data-icon="search">search</span>
-                    Buscar ahora
-                </button>
-</div>
-</div>
-</header>
-<!-- Featured Services -->
-<section class="py-24 px-6 max-w-7xl mx-auto">
-<div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
-<div>
-<span class="text-tertiary font-bold tracking-widest uppercase text-xs mb-2 block">Explora el mundo</span>
-<h2 class="font-headline font-extrabold text-4xl text-on-surface tracking-tight">Nuestros Servicios</h2>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-<!-- Alojamiento -->
-<div class="glass-panel glass-border p-8 rounded-lg group transition-all duration-300 hover:-translate-y-2 hover:bg-white/30">
-<div class="w-14 h-14 bg-primary-container/20 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110">
-<span class="material-symbols-outlined text-primary-container text-3xl" data-icon="hotel">hotel</span>
-</div>
-<h3 class="font-headline font-bold text-xl mb-3">Alojamiento</h3>
-<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">Desde hoteles boutique hasta villas privadas de ensueño.</p>
-<button class="text-primary font-bold text-sm flex items-center gap-2 transition-all group-hover:gap-3">
-                    Ver más <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
-</button>
-</div>
-<!-- Transporte -->
-<div class="glass-panel glass-border p-8 rounded-lg group transition-all duration-300 hover:-translate-y-2 hover:bg-white/30">
-<div class="w-14 h-14 bg-primary-container/20 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110">
-<span class="material-symbols-outlined text-primary-container text-3xl" data-icon="directions_car">directions_car</span>
-</div>
-<h3 class="font-headline font-bold text-xl mb-3">Transporte</h3>
-<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">Traslados ejecutivos y alquiler de vehículos de alta gama.</p>
-<button class="text-primary font-bold text-sm flex items-center gap-2 transition-all group-hover:gap-3">
-                    Ver más <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
-</button>
-</div>
-<!-- Alimentación -->
-<div class="glass-panel glass-border p-8 rounded-lg group transition-all duration-300 hover:-translate-y-2 hover:bg-white/30">
-<div class="w-14 h-14 bg-primary-container/20 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110">
-<span class="material-symbols-outlined text-primary-container text-3xl" data-icon="restaurant">restaurant</span>
-</div>
-<h3 class="font-headline font-bold text-xl mb-3">Alimentación</h3>
-<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">Experiencias gastronómicas locales y cenas gourmet privadas.</p>
-<button class="text-primary font-bold text-sm flex items-center gap-2 transition-all group-hover:gap-3">
-                    Ver más <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
-</button>
-</div>
-<!-- Entretenimiento -->
-<div class="glass-panel glass-border p-8 rounded-lg group transition-all duration-300 hover:-translate-y-2 hover:bg-white/30">
-<div class="w-14 h-14 bg-primary-container/20 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110">
-<span class="material-symbols-outlined text-primary-container text-3xl" data-icon="local_activity">local_activity</span>
-</div>
-<h3 class="font-headline font-bold text-xl mb-3">Entretenimiento</h3>
-<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">Tours exclusivos, deportes de aventura y eventos culturales.</p>
-<button class="text-primary font-bold text-sm flex items-center gap-2 transition-all group-hover:gap-3">
-                    Ver más <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
-</button>
-</div>
-</div>
-</section>
-<!-- Recommended Plans -->
-<section class="py-24 bg-surface-container-low">
-<div class="max-w-7xl mx-auto px-6">
-<div class="flex justify-between items-end mb-12">
-<div>
-<span class="text-tertiary font-bold tracking-widest uppercase text-xs mb-2 block">Selección premium</span>
-<h2 class="font-headline font-extrabold text-4xl text-on-surface tracking-tight">Planes Recomendados</h2>
-</div>
-<button class="hidden md:flex items-center gap-2 text-primary font-bold bg-white/50 px-6 py-3 rounded-full hover:bg-white transition-colors">
-                    Ver todos los planes
-                </button>
-</div>
-<div class="space-y-6">
-<!-- Plan 1 -->
-<div class="glass-panel glass-border rounded-lg overflow-hidden flex flex-col md:flex-row transition-all duration-300 hover:shadow-xl group">
-<div class="md:w-1/3 h-48 md:h-auto overflow-hidden">
-<img alt="Santorini landscape" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Stunning cliffside architecture of Oia Santorini with white buildings and blue domes overlooking the deep navy Aegean Sea at sunset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqrYiszyVO9b5FJvsR6QPJYsqdT1GRR_mYpjMlPFWjxafulqCduopzqvrPvj3cGmkgQeW_gjY7KmGaR5QZF2cJ5nICZ31UU4QvbFe3hQvpbR3fcNkkiv4PtLHKxPWQaj-m5KvRDvg0BuZM5v2Yx1AK6kk9MFOE-pR83n69Fo6EBiS5FK3SaeIGMpyP68nUPiP33pURX9LjDtg5JKbLoWzeTPEuwFkFJaSET8JWQ8qGwPGcqgJeNRD9fPPvAF0pxhu2cdEaD2v2fV72"/>
-</div>
-<div class="flex-1 p-8 flex flex-col justify-between">
-<div>
-<div class="flex justify-between items-start mb-2">
-<h3 class="font-headline font-bold text-2xl">Escapada Romántica Santorini</h3>
-<div class="bg-tertiary-container/10 text-tertiary px-3 py-1 rounded text-xs font-bold uppercase tracking-wider">Luxury</div>
-</div>
-<div class="flex items-center gap-4 text-on-surface-variant text-sm mb-4">
-<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span> 7 Días</span>
-<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="star">star</span> 4.9 (124 reseñas)</span>
-</div>
-</div>
-<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-6">
-<div>
-<span class="text-xs text-on-surface-variant block uppercase tracking-tighter">Desde</span>
-<span class="text-3xl font-extrabold text-primary">$2,450 <span class="text-sm font-medium text-on-surface-variant">/ pers</span></span>
-</div>
-<button class="bg-tertiary hover:bg-[#004a4e] text-white px-8 py-3 rounded-full font-bold transition-all transform hover:translate-x-1 flex items-center justify-center gap-2">
-                                Ver detalles
-                                <span class="material-symbols-outlined" data-icon="visibility">visibility</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Plan 2 -->
-<div class="glass-panel glass-border rounded-lg overflow-hidden flex flex-col md:flex-row transition-all duration-300 hover:shadow-xl group">
-<div class="md:w-1/3 h-48 md:h-auto overflow-hidden">
-<img alt="Swiss Alps adventure" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Low-angle view of a professional hiker on a rocky ridge in the Swiss Alps with dramatic peaks and valley glaciers in background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALZtJ2omilYGHRKrG9x1nwXdgbTd-CLY_tL4_aKJOyNqaE4VqDD1vM-0EgYDbk1b_zQ_Bzwjaj2EL6Jug0TSFK9Q-JoDVcC2zHmYPXmPc1zpUCs9D1NvLosOig4fhqukT6z_XkcA1TJTQ3z1izAZLfA9vpyDhxsvALNQAMbO2erryl9DKcG8sCxPDIU7jo1FK55zo9d97q8LeZ2rLMly0ow4RZmUu4fjbaSEys11NOkjGrGZcKesu4mXcv8VQI1xP2rcQ5i7H1vsOt"/>
-</div>
-<div class="flex-1 p-8 flex flex-col justify-between">
-<div>
-<div class="flex justify-between items-start mb-2">
-<h3 class="font-headline font-bold text-2xl">Aventura en los Alpes Suizos</h3>
-<div class="bg-tertiary-container/10 text-tertiary px-3 py-1 rounded text-xs font-bold uppercase tracking-wider">Eco-Tour</div>
-</div>
-<div class="flex items-center gap-4 text-on-surface-variant text-sm mb-4">
-<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span> 5 Días</span>
-<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="star">star</span> 4.8 (89 reseñas)</span>
-</div>
-</div>
-<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-6">
-<div>
-<span class="text-xs text-on-surface-variant block uppercase tracking-tighter">Desde</span>
-<span class="text-3xl font-extrabold text-primary">$1,890 <span class="text-sm font-medium text-on-surface-variant">/ pers</span></span>
-</div>
-<button class="bg-tertiary hover:bg-[#004a4e] text-white px-8 py-3 rounded-full font-bold transition-all transform hover:translate-x-1 flex items-center justify-center gap-2">
-                                Ver detalles
-                                <span class="material-symbols-outlined" data-icon="visibility">visibility</span>
-</button>
-</div>
-</div>
-</div>
-<!-- Plan 3 -->
-<div class="glass-panel glass-border rounded-lg overflow-hidden flex flex-col md:flex-row transition-all duration-300 hover:shadow-xl group">
-<div class="md:w-1/3 h-48 md:h-auto overflow-hidden">
-<img alt="Kyoto temples" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Serene Japanese Zen garden in Kyoto with a traditional wooden pagoda reflected in a still pond surrounded by bright red autumn maple leaves" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGZj183QMPNxArCGjvbpRWb8nIGbfTxzu7KKzsUUwoup4opovL_2ax7638xLfXWsTVJ1v0jzegSzjCRDmhpBuss3YW7lxJc7zEbj7DB-JGTHSRu24vIj4BFSU3WGWajncHqKD4tDTAe35nhNLhcqzJlbtmsBL8xsEyZpj1x8ZGtQeKs0da94l9vSQaoV_fGaAYWq2uPje0-b20Ubur2D8KewvzKCXDnLgnFTPtyV1wnH9ZvVnLXKAA8g6BO7Ol7BbeE0q0uXo3eBwO"/>
-</div>
-<div class="flex-1 p-8 flex flex-col justify-between">
-<div>
-<div class="flex justify-between items-start mb-2">
-<h3 class="font-headline font-bold text-2xl">Esencia Cultural de Kioto</h3>
-<div class="bg-tertiary-container/10 text-tertiary px-3 py-1 rounded text-xs font-bold uppercase tracking-wider">Culture</div>
-</div>
-<div class="flex items-center gap-4 text-on-surface-variant text-sm mb-4">
-<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span> 6 Días</span>
-<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="star">star</span> 5.0 (215 reseñas)</span>
-</div>
-</div>
-<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mt-6">
-<div>
-<span class="text-xs text-on-surface-variant block uppercase tracking-tighter">Desde</span>
-<span class="text-3xl font-extrabold text-primary">$3,200 <span class="text-sm font-medium text-on-surface-variant">/ pers</span></span>
-</div>
-<button class="bg-tertiary hover:bg-[#004a4e] text-white px-8 py-3 rounded-full font-bold transition-all transform hover:translate-x-1 flex items-center justify-center gap-2">
-                                Ver detalles
-                                <span class="material-symbols-outlined" data-icon="visibility">visibility</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Featured Providers -->
-<section class="py-24 px-6 max-w-7xl mx-auto">
-<div class="text-center mb-16">
-<span class="text-tertiary font-bold tracking-widest uppercase text-xs mb-2 block">Nuestros Aliados</span>
-<h2 class="font-headline font-extrabold text-4xl text-on-surface tracking-tight">Oferentes Destacados</h2>
-</div>
-<div class="grid grid-cols-2 md:grid-cols-4 gap-12">
-<div class="flex flex-col items-center group">
-<div class="w-32 h-32 md:w-40 md:h-40 glass-panel glass-border rounded-full flex items-center justify-center p-6 transition-all duration-300 group-hover:bg-[#80ded9]/20 group-hover:scale-105 group-hover:shadow-[0_20px_40px_rgba(128,222,217,0.2)]">
-<span class="material-symbols-outlined text-primary text-5xl opacity-40 group-hover:opacity-100 group-hover:text-primary transition-all" data-icon="airplanemode_active">airplanemode_active</span>
-</div>
-<span class="mt-4 font-bold text-on-surface-variant group-hover:text-primary transition-colors">AeroLuxe Travel</span>
-</div>
-<div class="flex flex-col items-center group">
-<div class="w-32 h-32 md:w-40 md:h-40 glass-panel glass-border rounded-full flex items-center justify-center p-6 transition-all duration-300 group-hover:bg-[#80ded9]/20 group-hover:scale-105 group-hover:shadow-[0_20px_40px_rgba(128,222,217,0.2)]">
-<span class="material-symbols-outlined text-primary text-5xl opacity-40 group-hover:opacity-100 group-hover:text-primary transition-all" data-icon="apartment">apartment</span>
-</div>
-<span class="mt-4 font-bold text-on-surface-variant group-hover:text-primary transition-colors">Zenith Hotels</span>
-</div>
-<div class="flex flex-col items-center group">
-<div class="w-32 h-32 md:w-40 md:h-40 glass-panel glass-border rounded-full flex items-center justify-center p-6 transition-all duration-300 group-hover:bg-[#80ded9]/20 group-hover:scale-105 group-hover:shadow-[0_20px_40px_rgba(128,222,217,0.2)]">
-<span class="material-symbols-outlined text-primary text-5xl opacity-40 group-hover:opacity-100 group-hover:text-primary transition-all" data-icon="directions_boat">directions_boat</span>
-</div>
-<span class="mt-4 font-bold text-on-surface-variant group-hover:text-primary transition-colors">Oceanic Cruises</span>
-</div>
-<div class="flex flex-col items-center group">
-<div class="w-32 h-32 md:w-40 md:h-40 glass-panel glass-border rounded-full flex items-center justify-center p-6 transition-all duration-300 group-hover:bg-[#80ded9]/20 group-hover:scale-105 group-hover:shadow-[0_20px_40px_rgba(128,222,217,0.2)]">
-<span class="material-symbols-outlined text-primary text-5xl opacity-40 group-hover:opacity-100 group-hover:text-primary transition-all" data-icon="hiking">hiking</span>
-</div>
-<span class="mt-4 font-bold text-on-surface-variant group-hover:text-primary transition-colors">WildPeak Tours</span>
-</div>
-</div>
-</section>
-<!-- Footer -->
-<footer class="bg-[#003739]/90 dark:bg-[#001a1b]/95 backdrop-blur-xl w-full mt-auto">
-<div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 py-16 w-full max-w-7xl mx-auto">
-<div class="col-span-1 md:col-span-1">
-<span class="text-xl font-bold text-white mb-4 block font-headline tracking-tight">Ethereal Voyager</span>
-<p class="font-['Manrope'] text-sm leading-relaxed text-slate-300 mb-6">Redefiniendo el lujo en cada travesía. Tu horizonte, nuestra pasión.</p>
-<div class="flex gap-4">
-<div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#80ded9]/20 transition-all cursor-pointer">
-<span class="material-symbols-outlined text-white text-sm" data-icon="public">public</span>
-</div>
-<div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#80ded9]/20 transition-all cursor-pointer">
-<span class="material-symbols-outlined text-white text-sm" data-icon="share">share</span>
-</div>
-</div>
-</div>
-<div>
-<h4 class="text-[#80ded9] font-bold mb-6 font-headline uppercase text-xs tracking-widest">Sobre nosotros</h4>
-<ul class="space-y-4 font-['Manrope'] text-sm">
-<li><a class="text-slate-300 hover:text-[#80ded9] hover:translate-x-1 transition-transform inline-block" href="#">Misión y Visión</a></li>
-<li><a class="text-slate-300 hover:text-[#80ded9] hover:translate-x-1 transition-transform inline-block" href="#">Equipo Ejecutivo</a></li>
-<li><a class="text-slate-300 hover:text-[#80ded9] hover:translate-x-1 transition-transform inline-block" href="#">Carreras</a></li>
-</ul>
-</div>
-<div>
-<h4 class="text-[#80ded9] font-bold mb-6 font-headline uppercase text-xs tracking-widest">Enlaces rápidos</h4>
-<ul class="space-y-4 font-['Manrope'] text-sm">
-<li><a class="text-slate-300 hover:text-[#80ded9] hover:translate-x-1 transition-transform inline-block" href="#">Términos y Condiciones</a></li>
-<li><a class="text-slate-300 hover:text-[#80ded9] hover:translate-x-1 transition-transform inline-block" href="#">Privacidad</a></li>
-<li><a class="text-slate-300 hover:text-[#80ded9] hover:translate-x-1 transition-transform inline-block" href="#">FAQs</a></li>
-</ul>
-</div>
-<div>
-<h4 class="text-[#80ded9] font-bold mb-6 font-headline uppercase text-xs tracking-widest">Contacto</h4>
-<ul class="space-y-4 font-['Manrope'] text-sm text-slate-300">
-<li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs" data-icon="mail">mail</span> info@etherealvoyager.com</li>
-<li class="flex items-center gap-2"><span class="material-symbols-outlined text-xs" data-icon="call">call</span> +1 (555) 123-4567</li>
-</ul>
-</div>
-</div>
-<div class="border-t border-white/5 px-12 py-6 flex flex-col md:flex-row justify-between items-center text-xs text-slate-400 max-w-7xl mx-auto">
-<p>© 2024 Ethereal Voyager. Translucent Horizon.</p>
-<p class="mt-2 md:mt-0">Diseñado para mentes viajeras.</p>
-</div>
-</footer>
-</body></html>
+
+      </div>
+    </div>
+
+  </header>
+
+
+  <!-- ═══════════════════════════════════════════
+       SERVICIOS DESTACADOS
+  ═══════════════════════════════════════════ -->
+  <section class="servicios">
+
+    <div class="servicios__encabezado">
+      <div>
+        <span class="seccion__supratitulo">Explora el mundo</span>
+        <h2 class="seccion__titulo">Nuestros Servicios</h2>
+      </div>
+    </div>
+
+    <div class="servicios__cuadricula">
+
+      <!-- Alojamiento -->
+      <div class="tarjeta-servicio panel-vidrio borde-vidrio">
+        <div class="tarjeta-servicio__icono-envoltorio">
+          <span class="material-symbols-outlined tarjeta-servicio__icono">hotel</span>
+        </div>
+        <h3 class="tarjeta-servicio__titulo">Alojamiento</h3>
+        <p class="tarjeta-servicio__descripcion">Desde hoteles boutique hasta villas privadas de ensueño.</p>
+        <button class="tarjeta-servicio__enlace">
+          Ver más <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+
+      <!-- Transporte -->
+      <div class="tarjeta-servicio panel-vidrio borde-vidrio">
+        <div class="tarjeta-servicio__icono-envoltorio">
+          <span class="material-symbols-outlined tarjeta-servicio__icono">directions_car</span>
+        </div>
+        <h3 class="tarjeta-servicio__titulo">Transporte</h3>
+        <p class="tarjeta-servicio__descripcion">Traslados ejecutivos y alquiler de vehículos de alta gama.</p>
+        <button class="tarjeta-servicio__enlace">
+          Ver más <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+
+      <!-- Alimentación -->
+      <div class="tarjeta-servicio panel-vidrio borde-vidrio">
+        <div class="tarjeta-servicio__icono-envoltorio">
+          <span class="material-symbols-outlined tarjeta-servicio__icono">restaurant</span>
+        </div>
+        <h3 class="tarjeta-servicio__titulo">Alimentación</h3>
+        <p class="tarjeta-servicio__descripcion">Experiencias gastronómicas locales y cenas gourmet privadas.</p>
+        <button class="tarjeta-servicio__enlace">
+          Ver más <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+
+      <!-- Entretenimiento -->
+      <div class="tarjeta-servicio panel-vidrio borde-vidrio">
+        <div class="tarjeta-servicio__icono-envoltorio">
+          <span class="material-symbols-outlined tarjeta-servicio__icono">local_activity</span>
+        </div>
+        <h3 class="tarjeta-servicio__titulo">Entretenimiento</h3>
+        <p class="tarjeta-servicio__descripcion">Tours exclusivos, deportes de aventura y eventos culturales.</p>
+        <button class="tarjeta-servicio__enlace">
+          Ver más <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       PLANES RECOMENDADOS
+  ═══════════════════════════════════════════ -->
+  <section class="planes">
+    <div class="planes__interior">
+
+      <div class="planes__encabezado">
+        <div>
+          <span class="seccion__supratitulo">Selección premium</span>
+          <h2 class="seccion__titulo">Planes Recomendados</h2>
+        </div>
+        <button class="planes__boton-todos">Ver todos los planes</button>
+      </div>
+
+      <div class="planes__lista">
+
+        <!-- Plan 1 — Santorini -->
+        <div class="tarjeta-plan panel-vidrio borde-vidrio">
+          <div class="tarjeta-plan__imagen-envoltorio">
+            <img class="tarjeta-plan__imagen"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqrYiszyVO9b5FJvsR6QPJYsqdT1GRR_mYpjMlPFWjxafulqCduopzqvrPvj3cGmkgQeW_gjY7KmGaR5QZF2cJ5nICZ31UU4QvbFe3hQvpbR3fcNkkiv4PtLHKxPWQaj-m5KvRDvg0BuZM5v2Yx1AK6kk9MFOE-pR83n69Fo6EBiS5FK3SaeIGMpyP68nUPiP33pURX9LjDtg5JKbLoWzeTPEuwFkFJaSET8JWQ8qGwPGcqgJeNRD9fPPvAF0pxhu2cdEaD2v2fV72"
+                 alt="Paisaje de Santorini" />
+          </div>
+          <div class="tarjeta-plan__cuerpo">
+            <div>
+              <div class="tarjeta-plan__fila-superior">
+                <h3 class="tarjeta-plan__titulo">Escapada Romántica Santorini</h3>
+                <span class="tarjeta-plan__etiqueta">Luxury</span>
+              </div>
+              <div class="tarjeta-plan__meta">
+                <span class="tarjeta-plan__meta-item">
+                  <span class="material-symbols-outlined">schedule</span> 7 Días
+                </span>
+                <span class="tarjeta-plan__meta-item">
+                  <span class="material-symbols-outlined">star</span> 4.9 (124 reseñas)
+                </span>
+              </div>
+            </div>
+            <div class="tarjeta-plan__pie">
+              <div>
+                <span class="tarjeta-plan__precio-desde">Desde</span>
+                <span class="tarjeta-plan__precio">
+                  $2,450 <span class="tarjeta-plan__precio-unidad">/ pers</span>
+                </span>
+              </div>
+              <button class="tarjeta-plan__boton">
+                Ver detalles <span class="material-symbols-outlined">visibility</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan 2 — Alpes Suizos -->
+        <div class="tarjeta-plan panel-vidrio borde-vidrio">
+          <div class="tarjeta-plan__imagen-envoltorio">
+            <img class="tarjeta-plan__imagen"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuALZtJ2omilYGHRKrG9x1nwXdgbTd-CLY_tL4_aKJOyNqaE4VqDD1vM-0EgYDbk1b_zQ_Bzwjaj2EL6Jug0TSFK9Q-JoDVcC2zHmYPXmPc1zpUCs9D1NvLosOig4fhqukT6z_XkcA1TJTQ3z1izAZLfA9vpyDhxsvALNQAMbO2erryl9DKcG8sCxPDIU7jo1FK55zo9d97q8LeZ2rLMly0ow4RZmUu4fjbaSEys11NOkjGrGZcKesu4mXcv8VQI1xP2rcQ5i7H1vsOt"
+                 alt="Aventura en los Alpes Suizos" />
+          </div>
+          <div class="tarjeta-plan__cuerpo">
+            <div>
+              <div class="tarjeta-plan__fila-superior">
+                <h3 class="tarjeta-plan__titulo">Aventura en los Alpes Suizos</h3>
+                <span class="tarjeta-plan__etiqueta">Eco-Tour</span>
+              </div>
+              <div class="tarjeta-plan__meta">
+                <span class="tarjeta-plan__meta-item">
+                  <span class="material-symbols-outlined">schedule</span> 5 Días
+                </span>
+                <span class="tarjeta-plan__meta-item">
+                  <span class="material-symbols-outlined">star</span> 4.8 (89 reseñas)
+                </span>
+              </div>
+            </div>
+            <div class="tarjeta-plan__pie">
+              <div>
+                <span class="tarjeta-plan__precio-desde">Desde</span>
+                <span class="tarjeta-plan__precio">
+                  $1,890 <span class="tarjeta-plan__precio-unidad">/ pers</span>
+                </span>
+              </div>
+              <button class="tarjeta-plan__boton">
+                Ver detalles <span class="material-symbols-outlined">visibility</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan 3 — Kioto -->
+        <div class="tarjeta-plan panel-vidrio borde-vidrio">
+          <div class="tarjeta-plan__imagen-envoltorio">
+            <img class="tarjeta-plan__imagen"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGZj183QMPNxArCGjvbpRWb8nIGbfTxzu7KKzsUUwoup4opovL_2ax7638xLfXWsTVJ1v0jzegSzjCRDmhpBuss3YW7lxJc7zEbj7DB-JGTHSRu24vIj4BFSU3WGWajncHqKD4tDTAe35nhNLhcqzJlbtmsBL8xsEyZpj1x8ZGtQeKs0da94l9vSQaoV_fGaAYWq2uPje0-b20Ubur2D8KewvzKCXDnLgnFTPtyV1wnH9ZvVnLXKAA8g6BO7Ol7BbeE0q0uXo3eBwO"
+                 alt="Templos de Kioto" />
+          </div>
+          <div class="tarjeta-plan__cuerpo">
+            <div>
+              <div class="tarjeta-plan__fila-superior">
+                <h3 class="tarjeta-plan__titulo">Esencia Cultural de Kioto</h3>
+                <span class="tarjeta-plan__etiqueta">Culture</span>
+              </div>
+              <div class="tarjeta-plan__meta">
+                <span class="tarjeta-plan__meta-item">
+                  <span class="material-symbols-outlined">schedule</span> 6 Días
+                </span>
+                <span class="tarjeta-plan__meta-item">
+                  <span class="material-symbols-outlined">star</span> 5.0 (215 reseñas)
+                </span>
+              </div>
+            </div>
+            <div class="tarjeta-plan__pie">
+              <div>
+                <span class="tarjeta-plan__precio-desde">Desde</span>
+                <span class="tarjeta-plan__precio">
+                  $3,200 <span class="tarjeta-plan__precio-unidad">/ pers</span>
+                </span>
+              </div>
+              <button class="tarjeta-plan__boton">
+                Ver detalles <span class="material-symbols-outlined">visibility</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       OFERENTES DESTACADOS
+  ═══════════════════════════════════════════ -->
+  <section class="oferentes">
+
+    <div class="oferentes__encabezado">
+      <span class="seccion__supratitulo">Nuestros Aliados</span>
+      <h2 class="seccion__titulo">Oferentes Destacados</h2>
+    </div>
+
+    <div class="oferentes__cuadricula">
+
+      <div class="tarjeta-oferente">
+        <div class="tarjeta-oferente__logo panel-vidrio borde-vidrio">
+          <span class="material-symbols-outlined tarjeta-oferente__icono">airplanemode_active</span>
+        </div>
+        <span class="tarjeta-oferente__nombre">AeroLuxe Travel</span>
+      </div>
+
+      <div class="tarjeta-oferente">
+        <div class="tarjeta-oferente__logo panel-vidrio borde-vidrio">
+          <span class="material-symbols-outlined tarjeta-oferente__icono">apartment</span>
+        </div>
+        <span class="tarjeta-oferente__nombre">Zenith Hotels</span>
+      </div>
+
+      <div class="tarjeta-oferente">
+        <div class="tarjeta-oferente__logo panel-vidrio borde-vidrio">
+          <span class="material-symbols-outlined tarjeta-oferente__icono">directions_boat</span>
+        </div>
+        <span class="tarjeta-oferente__nombre">Oceanic Cruises</span>
+      </div>
+
+      <div class="tarjeta-oferente">
+        <div class="tarjeta-oferente__logo panel-vidrio borde-vidrio">
+          <span class="material-symbols-outlined tarjeta-oferente__icono">hiking</span>
+        </div>
+        <span class="tarjeta-oferente__nombre">WildPeak Tours</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
+       PIE DE PÁGINA
+  ═══════════════════════════════════════════ -->
+  <footer class="pie">
+
+    <div class="pie__cuadricula">
+
+      <!-- Marca -->
+      <div>
+        <span class="pie__logo">Ethereal Voyager</span>
+        <p class="pie__eslogan">Redefiniendo el lujo en cada travesía. Tu horizonte, nuestra pasión.</p>
+        <div class="pie__redes">
+          <button class="pie__boton-red">
+            <span class="material-symbols-outlined">public</span>
+          </button>
+          <button class="pie__boton-red">
+            <span class="material-symbols-outlined">share</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Sobre nosotros -->
+      <div>
+        <h4 class="pie__columna-titulo">Sobre nosotros</h4>
+        <ul class="pie__lista">
+          <li><a href="#">Misión y Visión</a></li>
+          <li><a href="#">Equipo Ejecutivo</a></li>
+          <li><a href="#">Carreras</a></li>
+        </ul>
+      </div>
+
+      <!-- Enlaces rápidos -->
+      <div>
+        <h4 class="pie__columna-titulo">Enlaces rápidos</h4>
+        <ul class="pie__lista">
+          <li><a href="#">Términos y Condiciones</a></li>
+          <li><a href="#">Privacidad</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+
+      <!-- Contacto -->
+      <div>
+        <h4 class="pie__columna-titulo">Contacto</h4>
+        <ul class="pie__lista-contacto">
+          <li class="pie__contacto-item">
+            <span class="material-symbols-outlined">mail</span>
+            <a href="mailto:hola@etherealvoyager.com">hola@etherealvoyager.com</a>
+          </li>
+          <li class="pie__contacto-item">
+            <span class="material-symbols-outlined">call</span>
+            +1 (555) 123-4567
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="pie__inferior">
+      <p>© 2024 Ethereal Voyager. Todos los derechos reservados.</p>
+    </div>
+
+  </footer>
+
+  <!-- JavaScript externo (al final del body para no bloquear la carga) -->
+  <script src="script.js"></script>
+
+</body>
+</html>
