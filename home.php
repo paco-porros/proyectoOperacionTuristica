@@ -162,6 +162,115 @@
   </section>
 
   <!-- =========================================================
+       OFERTAS GASTRONÓMICAS
+       ========================================================= -->
+  <section class="seccion-gastronomia">
+    <div class="contenedor-gastronomia">
+
+      <!-- Encabezado -->
+      <div class="encabezado-seccion-gastronomia">
+        <div>
+          <span class="etiqueta-seccion">Sabores Locales</span>
+          <h2 class="titulo-seccion">Ofertas Gastronómicas</h2>
+        </div>
+        <button class="boton-ver-todos" id="boton-ver-todos-gastronomia">
+          Ver todas
+          <span class="material-symbols-outlined icono-flecha-ver-todos" data-icon="arrow_forward">arrow_forward</span>
+        </button>
+      </div>
+
+      <!-- Cuadrícula de tarjetas gastronómicas -->
+      <div class="cuadricula-gastronomia">
+
+        <!-- Tarjeta 1 — Trucha -->
+        <div class="tarjeta-gastro grupo-imagen">
+          <div class="tarjeta-gastro__imagen-envoltorio">
+            <img
+              alt="Trucha al Ajillo"
+              class="tarjeta-gastro__imagen"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB711Yx-xQsszazQUBDqN1OqQYl4K8czjoq1Nka6XzAwDkrWX0IejB6EnX6bjk1X_vvcGNWiJIcqWzq4t5qYN1Opwg2Y8nMBxhqhzu_1R1ae4Q_8NhuJzyYxiUDDV8sQfFCgDo6LycuHewxR61A3BS_3oGw2yzY4JkuQeTM1brAg3oPmgaFMooN2Xcm4k2EjJs23RaG9pS7IWuUb7sc7WqOiWOGVE1VoaznK9VAT2w7bsR3Ycem5FSWtpZLVI9C8fuu1sUFmuMbahA"
+            />
+            <span class="tarjeta-gastro__badge">Típico</span>
+          </div>
+          <div class="tarjeta-gastro__cuerpo panel-cristal borde-superior-cristal">
+            <span class="tarjeta-gastro__restaurante">Restaurante El Manantial</span>
+            <h3 class="tarjeta-gastro__titulo">Trucha al Ajillo con Patacones</h3>
+            <div class="tarjeta-gastro__meta">
+              <span class="tarjeta-gastro__precio">$35,000 COP</span>
+              <span class="tarjeta-gastro__calificacion">
+                <span class="material-symbols-outlined">star</span> 4.9
+              </span>
+            </div>
+            <div class="acciones-tarjeta">
+              <button class="boton-tarjeta boton-tarjeta--blanco boton-tarjeta--pequeno">
+                Ver menú <span class="material-symbols-outlined">arrow_forward</span>
+              </button>
+              <button class="boton-tarjeta boton-tarjeta--cristal boton-tarjeta--pequeno">Reservar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta 2 — Bandeja Paisa -->
+        <div class="tarjeta-gastro grupo-imagen">
+          <div class="tarjeta-gastro__imagen-envoltorio">
+            <img
+              alt="Bandeja Paisa"
+              class="tarjeta-gastro__imagen"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjFlGpXujdfQF-8b9gRFHXxsmyP1MibGWZWjioRuKfNBI60Jq9HU_is02Emlcpmhz96F3sT4SZ6csyzaqJjVATkr96Vcy6-hQNGPmllHVL8NdTGVvqyGi0aXpa8iXv71B--3uE6f3aGwcmkiOmI8KfjXtOhUr1D01QKnfxdjnggBPIpZXa0f_V0daOaDcp_9GSF5JMimVgcZJr7yp3zUhhbbuSpmtsKKVQzCIEbxJb5X9pmZGIrVH6-nBXTHG44GxabvfF-7AGN-Y"
+            />
+            <span class="tarjeta-gastro__badge">Insignia</span>
+          </div>
+          <div class="tarjeta-gastro__cuerpo panel-cristal borde-superior-cristal">
+            <span class="tarjeta-gastro__restaurante">La Fonda Paisa</span>
+            <h3 class="tarjeta-gastro__titulo">Bandeja Paisa Premium</h3>
+            <div class="tarjeta-gastro__meta">
+              <span class="tarjeta-gastro__precio">$28,000 COP</span>
+              <span class="tarjeta-gastro__calificacion">
+                <span class="material-symbols-outlined">star</span> 4.8
+              </span>
+            </div>
+            <div class="acciones-tarjeta">
+              <button class="boton-tarjeta boton-tarjeta--blanco boton-tarjeta--pequeno">
+                Ver menú <span class="material-symbols-outlined">arrow_forward</span>
+              </button>
+              <button class="boton-tarjeta boton-tarjeta--cristal boton-tarjeta--pequeno">Reservar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta 3 — Tour Cafetero -->
+        <div class="tarjeta-gastro grupo-imagen">
+          <div class="tarjeta-gastro__imagen-envoltorio">
+            <img
+              alt="Tour Cafetero"
+              class="tarjeta-gastro__imagen"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBclMJTecXPdKK2ee7Nqm1hnNKeODuSBdQO7f22h0Ai2Pn_xKD50h1tBxHMeNHqf32ZSFp3rDm2oNfUDSOL2Hgc4wFFSfbxLq9CIuFvyY-xeM4rSf6U0NZLKeJRI1NPZ-kFbrdUd4EL8cxVpJNdSC5VxkG77TP8RygkTo83YL2HQvLN-40KKatTvjzX8hhCz49Wagw59CxqICS09LnrUdEU-pScwieXY9yQFcGOuhJY1ziFpj0UKuwv40lUL0u79wGO4IJtttXzodM"
+            />
+            <span class="tarjeta-gastro__badge">Experiencia</span>
+          </div>
+          <div class="tarjeta-gastro__cuerpo panel-cristal borde-superior-cristal">
+            <span class="tarjeta-gastro__restaurante">Finca La Esperanza</span>
+            <h3 class="tarjeta-gastro__titulo">Tour Cafetero & Cata Gourmet</h3>
+            <div class="tarjeta-gastro__meta">
+              <span class="tarjeta-gastro__precio">$65,000 COP</span>
+              <span class="tarjeta-gastro__calificacion">
+                <span class="material-symbols-outlined">star</span> 5.0
+              </span>
+            </div>
+            <div class="acciones-tarjeta">
+              <button class="boton-tarjeta boton-tarjeta--blanco boton-tarjeta--pequeno">
+                Ver menú <span class="material-symbols-outlined">arrow_forward</span>
+              </button>
+              <button class="boton-tarjeta boton-tarjeta--cristal boton-tarjeta--pequeno">Reservar</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
        NUESTROS SERVICIOS PREMIUM
        ========================================================= -->
   <section class="seccion-servicios">

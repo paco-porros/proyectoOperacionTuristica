@@ -248,6 +248,141 @@
 
 
   <!-- ═══════════════════════════════════════════
+       OFERTAS GASTRONÓMICAS
+  ═══════════════════════════════════════════ -->
+  <section class="gastronomia">
+    <div class="gastronomia__interior">
+
+      <div class="gastronomia__encabezado">
+        <div>
+          <span class="seccion__supratitulo">Sabores de Santa Rosa</span>
+          <h2 class="seccion__titulo">Ofertas Gastronómicas</h2>
+        </div>
+        <button class="gastronomia__boton-todos" id="boton-ver-todos-gastronomia">Ver todas las ofertas</button>
+      </div>
+
+      <div class="gastronomia__lista">
+
+        <!-- Oferta 1 — Trucha al ajillo -->
+        <div class="tarjeta-gastronomia panel-vidrio borde-vidrio">
+          <div class="tarjeta-gastronomia__imagen-envoltorio">
+            <img class="tarjeta-gastronomia__imagen"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqrYiszyVO9b5FJvsR6QPJYsqdT1GRR_mYpjMlPFWjxafulqCduopzqvrPvj3cGmkgQeW_gjY7KmGaR5QZF2cJ5nICZ31UU4QvbFe3hQvpbR3fcNkkiv4PtLHKxPWQaj-m5KvRDvg0BuZM5v2Yx1AK6kk9MFOE-pR83n69Fo6EBiS5FK3SaeIGMpyP68nUPiP33pURX9LjDtg5JKbLoWzeTPEuwFkFJaSET8JWQ8qGwPGcqgJeNRD9fPPvAF0pxhu2cdEaD2v2fV72"
+                 alt="Trucha al ajillo" />
+            <span class="tarjeta-gastronomia__badge">Típico</span>
+          </div>
+          <div class="tarjeta-gastronomia__cuerpo">
+            <div>
+              <div class="tarjeta-gastronomia__fila-superior">
+                <h3 class="tarjeta-gastronomia__titulo">Trucha al Ajillo con Patacones</h3>
+                <span class="tarjeta-gastronomia__etiqueta">Plato fuerte</span>
+              </div>
+              <p class="tarjeta-gastronomia__descripcion">Trucha fresca de los ríos de Santa Rosa, preparada con mantequilla de ajo, hierbas aromáticas locales y acompañada de patacones artesanales.</p>
+              <div class="tarjeta-gastronomia__meta">
+                <span class="tarjeta-gastronomia__meta-item">
+                  <span class="material-symbols-outlined">restaurant</span> Restaurante El Manantial
+                </span>
+                <span class="tarjeta-gastronomia__meta-item">
+                  <span class="material-symbols-outlined">star</span> 4.9 (87 reseñas)
+                </span>
+              </div>
+            </div>
+            <div class="tarjeta-gastronomia__pie">
+              <div>
+                <span class="tarjeta-gastronomia__precio-desde">Desde</span>
+                <span class="tarjeta-gastronomia__precio">
+                  $35,000 <span class="tarjeta-gastronomia__precio-unidad">COP / pers</span>
+                </span>
+              </div>
+              <button class="tarjeta-gastronomia__boton" data-oferta="Trucha al Ajillo con Patacones">
+                Ver detalles <span class="material-symbols-outlined">visibility</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Oferta 2 — Bandeja paisa -->
+        <div class="tarjeta-gastronomia panel-vidrio borde-vidrio">
+          <div class="tarjeta-gastronomia__imagen-envoltorio">
+            <img class="tarjeta-gastronomia__imagen"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuALZtJ2omilYGHRKrG9x1nwXdgbTd-CLY_tL4_aKJOyNqaE4VqDD1vM-0EgYDbk1b_zQ_Bzwjaj2EL6Jug0TSFK9Q-JoDVcC2zHmYPXmPc1zpUCs9D1NvLosOig4fhqukT6z_XkcA1TJTQ3z1izAZLfA9vpyDhxsvALNQAMbO2erryl9DKcG8sCxPDIU7jo1FK55zo9d97q8LeZ2rLMly0ow4RZmUu4fjbaSEys11NOkjGrGZcKesu4mXcv8VQI1xP2rcQ5i7H1vsOt"
+                 alt="Bandeja Paisa" />
+            <span class="tarjeta-gastronomia__badge">Insignia</span>
+          </div>
+          <div class="tarjeta-gastronomia__cuerpo">
+            <div>
+              <div class="tarjeta-gastronomia__fila-superior">
+                <h3 class="tarjeta-gastronomia__titulo">Bandeja Paisa Premium</h3>
+                <span class="tarjeta-gastronomia__etiqueta">Tradición</span>
+              </div>
+              <p class="tarjeta-gastronomia__descripcion">La reina de la gastronomía antioqueña en su versión más completa: frijoles, chicharrón, chorizo artesanal, huevo, arroz, aguacate y arepa de maíz.</p>
+              <div class="tarjeta-gastronomia__meta">
+                <span class="tarjeta-gastronomia__meta-item">
+                  <span class="material-symbols-outlined">restaurant</span> La Fonda Paisa
+                </span>
+                <span class="tarjeta-gastronomia__meta-item">
+                  <span class="material-symbols-outlined">star</span> 4.8 (132 reseñas)
+                </span>
+              </div>
+            </div>
+            <div class="tarjeta-gastronomia__pie">
+              <div>
+                <span class="tarjeta-gastronomia__precio-desde">Desde</span>
+                <span class="tarjeta-gastronomia__precio">
+                  $28,000 <span class="tarjeta-gastronomia__precio-unidad">COP / pers</span>
+                </span>
+              </div>
+              <button class="tarjeta-gastronomia__boton" data-oferta="Bandeja Paisa Premium">
+                Ver detalles <span class="material-symbols-outlined">visibility</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Oferta 3 — Tour cafetero -->
+        <div class="tarjeta-gastronomia panel-vidrio borde-vidrio">
+          <div class="tarjeta-gastronomia__imagen-envoltorio">
+            <img class="tarjeta-gastronomia__imagen"
+                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGZj183QMPNxArCGjvbpRWb8nIGbfTxzu7KKzsUUwoup4opovL_2ax7638xLfXWsTVJ1v0jzegSzjCRDmhpBuss3YW7lxJc7zEbj7DB-JGTHSRu24vIj4BFSU3WGWajncHqKD4tDTAe35nhNLhcqzJlbtmsBL8xsEyZpj1x8ZGtQeKs0da94l9vSQaoV_fGaAYWq2uPje0-b20Ubur2D8KewvzKCXDnLgnFTPtyV1wnH9ZvVnLXKAA8g6BO7Ol7BbeE0q0uXo3eBwO"
+                 alt="Tour Cafetero" />
+            <span class="tarjeta-gastronomia__badge">Experiencia</span>
+          </div>
+          <div class="tarjeta-gastronomia__cuerpo">
+            <div>
+              <div class="tarjeta-gastronomia__fila-superior">
+                <h3 class="tarjeta-gastronomia__titulo">Tour Cafetero & Cata Gourmet</h3>
+                <span class="tarjeta-gastronomia__etiqueta">Experiencia</span>
+              </div>
+              <p class="tarjeta-gastronomia__descripcion">Recorre los cafetales de la región, conoce el proceso del café de origen y disfruta una cata guiada con maridaje de postres artesanales locales.</p>
+              <div class="tarjeta-gastronomia__meta">
+                <span class="tarjeta-gastronomia__meta-item">
+                  <span class="material-symbols-outlined">schedule</span> 3 horas
+                </span>
+                <span class="tarjeta-gastronomia__meta-item">
+                  <span class="material-symbols-outlined">star</span> 5.0 (64 reseñas)
+                </span>
+              </div>
+            </div>
+            <div class="tarjeta-gastronomia__pie">
+              <div>
+                <span class="tarjeta-gastronomia__precio-desde">Desde</span>
+                <span class="tarjeta-gastronomia__precio">
+                  $65,000 <span class="tarjeta-gastronomia__precio-unidad">COP / pers</span>
+                </span>
+              </div>
+              <button class="tarjeta-gastronomia__boton" data-oferta="Tour Cafetero & Cata Gourmet">
+                Ver detalles <span class="material-symbols-outlined">visibility</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════
        OFERENTES DESTACADOS
   ═══════════════════════════════════════════ -->
   <section class="oferentes">
@@ -338,7 +473,7 @@
         <ul class="pie__lista-contacto">
           <li class="pie__contacto-item">
             <span class="material-symbols-outlined">mail</span>
-            <a href="mailto:operadorturisticoygastronomico@correo.com">operadorturisticoygastronomico@correo.com</a>
+            <a href="/cdn-cgi/l/email-protection#d3bca3b6a1b2b7bca1a7a6a1baa0a7bab0bcaab4b2a0a7a1bcbdbcbebab0bc93b0bca1a1b6bcfdb0bcbe"><span class="__cf_email__" data-cfemail="e28d92879083868d909697908b91968b818d9b85839196908d8c8d8f8b818da2818d9090878dcc818d8f">[email&#160;protected]</span></a>
           </li>
           <li class="pie__contacto-item">
             <span class="material-symbols-outlined">call</span>
@@ -350,13 +485,4 @@
     </div>
 
     <div class="pie__inferior">
-      <p>© 2026 Operador Turístico y Gastronomico | Santa Rosa de Cabal.</p>
-    </div>
-
-  </footer>
-
-  <!-- JavaScript externo (al final del body para no bloquear la carga) -->
-  <script src="/scripts/script.js"></script>
-
-</body>
-</html>
+      <p>© 2026 Operador Turístico y Gastronomico | Santa Rosa de Cab

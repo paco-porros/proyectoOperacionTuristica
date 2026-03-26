@@ -36,6 +36,37 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* ----------------------------------------------------------
+     Botón "Ver todos" en gastronomía
+     ---------------------------------------------------------- */
+  const botonVerTodosGastronomia = document.getElementById("boton-ver-todos-gastronomia");
+  if (botonVerTodosGastronomia) {
+    botonVerTodosGastronomia.addEventListener("click", () => {
+      console.log("Navegar a todas las ofertas gastronómicas.");
+      // Aquí se navegaría a la página de gastronomía
+    });
+  }
+
+  /* ----------------------------------------------------------
+     Botones de tarjetas gastronómicas (delegación de eventos)
+     ---------------------------------------------------------- */
+  document.querySelectorAll(".tarjeta-gastro .boton-tarjeta--cristal").forEach((boton) => {
+    boton.addEventListener("click", () => {
+      const nombrePlato = boton
+        .closest(".tarjeta-gastro")
+        ?.querySelector(".tarjeta-gastro__titulo")
+        ?.textContent?.trim();
+      console.log("Reservando:", nombrePlato);
+      mostrarNotificacion(`Reserva iniciada para "${nombrePlato}".`, "exito");
+    });
+  });
+
+  document.querySelectorAll(".tarjeta-gastro .boton-tarjeta--blanco").forEach((boton) => {
+    boton.addEventListener("click", () => {
+      console.log("Ver menú del restaurante.");
+    });
+  });
+
+  /* ----------------------------------------------------------
      Botón "Ver todos" en itinerarios
      ---------------------------------------------------------- */
   botonVerTodos.addEventListener("click", () => {

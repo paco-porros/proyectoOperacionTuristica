@@ -103,13 +103,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* Botón "Ver todos los planes" */
-  const botonTodos = document.querySelector(".planes__boton-todos");
-  if (botonTodos) {
-    botonTodos.addEventListener("click", () => {
-      alert("Próximamente: catálogo completo de planes.");
+  /* Botón "Ver todas las ofertas" de gastronomía */
+  const botonTodosGastronomia = document.getElementById("boton-ver-todos-gastronomia");
+  if (botonTodosGastronomia) {
+    botonTodosGastronomia.addEventListener("click", () => {
+      alert("Próximamente: catálogo completo de ofertas gastronómicas.");
     });
   }
+
+  /* Botones "Ver detalles" de cada oferta gastronómica */
+  const botonesGastronomia = document.querySelectorAll(".tarjeta-gastronomia__boton");
+  botonesGastronomia.forEach((boton) => {
+    boton.addEventListener("click", () => {
+      const titulo = boton.closest(".tarjeta-gastronomia")
+                          .querySelector(".tarjeta-gastronomia__titulo").textContent;
+      alert(`Próximamente: detalle de la oferta "${titulo}"`);
+    });
+  });
 
 });
 
