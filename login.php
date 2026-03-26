@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Ethereal Voyager - Iniciar Sesión</title>
+  <title>Iniciar Sesión</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -38,7 +38,7 @@
       <img
         alt="Cadena de montañas neblinosas"
         class="imagen-fondo"
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNZTu32FuYq9VDjnhGiQ4SARHSjYLvMic_dSZ8aEpaZTP-19L-_2MkRFFAfT8fnbVbodd9t0JsK1ki0PqTWp9v0_-U0qw5QvXMA-rmuF2MmEZoFBIvw-rGqExaVr2jo4VZM8ZNtpmNB65teSoGwAM4Aw7cl6gaVh38iKMTSdGpJ_doLBOFdNmJPaAjilD-14FUlh5NeevqTAUGv2PKRal1Woxr3PAVKrUdobdAa2G_BpF1qSfVotnKEbSB6Oq8XBsBOy-rkdpqF4QK"
+        src="./img/fondo_login.png"
       />
       <div class="superposicion-radial"></div>
     </div>
