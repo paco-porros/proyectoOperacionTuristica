@@ -213,6 +213,131 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+/* ============================================================
+   script-registro.js — Ethereal Voyager · Página de registro
+   ============================================================ */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  /* ----------------------------------------------------------
+     Referencias a elementos del DOM
+     ---------------------------------------------------------- */
+  const formulario           = document.getElementById("formulario-registro");
+  const campoNombre          = document.getElementById("nombre-completo");
+  const campoCorrEo          = document.getElementById("correo");
+  const campoContrasena      = document.getElementById("contrasena");
+  const campoConfirmar       = document.getElementById("confirmar-contrasena");
+  const checkboxTerminos     = document.getElementById("terminos");
+  const botonGoogle          = document.getElementById("boton-google-registro");
+  const botonFacebook        = document.getElementById("boton-facebook-registro");
+
+  /* ----------------------------------------------------------
+     Envío del formulario de registro
+     ---------------------------------------------------------- */
+  formulario.addEventListener("submit", (evento) => {
+    evento.preventDefault();
+
+    const nombre     = campoNombre.value.trim();
+    const correo     = campoCorrEo.value.trim();
+    const contrasena = campoContrasena.value.trim();
+    const confirmar  = campoConfirmar.value.trim();
+    const terminos   = checkboxTerminos.checked;
+
+    // Validaciones en orden
+    if (!nombre) {
+      mostrarMensaje("Por favor ingresa tu nombre completo.", "error");
+      campoNombre.focus();
+      return;
+    }
+
+    if (!correo || !validarCorreo(correo)) {
+      mostrarMensaje("Ingresa un correo electrónico válido.", "error");
+      campoCorrEo.focus();
+      return;
+    }
+
+    if (!contrasena || contrasena.length < 8) {
+      mostrarMensaje("La contraseña debe tener al menos 8 caracteres.", "error");
+      campoContrasena.focus();
+      return;
+    }
+
+    if (contrasena !== confirmar) {
+      mostrarMensaje("Las contraseñas no coinciden.", "error");
+      campoConfirmar.focus();
+      return;
+    }
+
+    if (!terminos) {
+      mostrarMensaje("Debes aceptar los Términos de Servicio para continuar.", "error");
+      return;
+    }
+
+    // Aquí se conectaría con el backend de registro
+    console.log("Registrando usuario:", { nombre, correo });
+    mostrarMensaje("¡Cuenta creada con éxito! Bienvenido a Ethereal Voyager.", "exito");
+    formulario.reset();
+  });
+
+  /* ----------------------------------------------------------
+     Registro con Google
+     ---------------------------------------------------------- */
+  botonGoogle.addEventListener("click", () => {
+    console.log("Registro con Google solicitado.");
+    // Integrar con Google OAuth
+  });
+
+  /* ----------------------------------------------------------
+     Registro con Facebook
+     ---------------------------------------------------------- */
+  botonFacebook.addEventListener("click", () => {
+    console.log("Registro con Facebook solicitado.");
+    // Integrar con Facebook OAuth
+  });
+
+  /* ----------------------------------------------------------
+     Utilidades
+     ---------------------------------------------------------- */
+
+  /**
+   * Valida el formato de un correo electrónico.
+   * @param {string} correo
+   * @returns {boolean}
+   */
+  function validarCorreo(correo) {
+    const expresion = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return expresion.test(correo);
+  }
+
+  /**
+   * Muestra un mensaje de estado temporal debajo del formulario.
+   * @param {string} texto - Mensaje a mostrar.
+   * @param {string} tipo  - "exito" | "error"
+   */
+  function mostrarMensaje(texto, tipo) {
+    const previo = document.getElementById("mensaje-estado");
+    if (previo) previo.remove();
+
+    const mensaje = document.createElement("p");
+    mensaje.id = "mensaje-estado";
+    mensaje.textContent = texto;
+
+    Object.assign(mensaje.style, {
+      marginTop:  "0.75rem",
+      fontSize:   "0.825rem",
+      fontWeight: "600",
+      textAlign:  "center",
+      color:      tipo === "exito" ? "#054da4" : "#ba1a1a",
+      fontFamily: "Manrope, sans-serif",
+    });
+
+    formulario.appendChild(mensaje);
+
+    setTimeout(() => mensaje.remove(), 4000);
+  }
+
+});
+
 
 
 

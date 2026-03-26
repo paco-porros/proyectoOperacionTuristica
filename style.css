@@ -1,7 +1,4 @@
-/* ============================================================
-   style.css — Ethereal Voyager
-   Todos los estilos del sitio con clases en español (BEM)
-   ============================================================ */
+
 
 /* ---------- Importación de fuentes ---------- */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap');
@@ -99,7 +96,7 @@ a { text-decoration: none; }
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.025em;
-  color: var(--color-primario);
+  color: var(--color-terciario-contenedor);
 }
 
 .navegacion__enlaces {
@@ -130,7 +127,7 @@ a { text-decoration: none; }
 }
 
 .navegacion__boton {
-  background-color: var(--color-primario);
+  background-color: var(--color-terciario-contenedor);
   color: var(--color-sobre-primario);
   padding: 0.625rem 1.5rem;
   border-radius: var(--radio-full);
@@ -177,7 +174,7 @@ a { text-decoration: none; }
 
 .portada__contenido {
   position: relative;
-  z-index: 10;
+  z-index: 1;
   width: 100%;
   max-width: 72rem;
   padding: 0 1.5rem;
@@ -186,11 +183,13 @@ a { text-decoration: none; }
 
 .portada__titulo {
   font-family: var(--fuente-titular);
+  z-index: 1;
   font-weight: 800;
   font-size: 3rem;
-  color: #ffffff;
+  color: var(--color-terciario);
   margin-bottom: 1rem;
   letter-spacing: -0.025em;
+
 }
 
 @media (min-width: 768px) {
