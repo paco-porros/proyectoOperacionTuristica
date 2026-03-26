@@ -19,7 +19,7 @@
   ═══════════════════════════════════════════ -->
   <nav class="navegacion">
 
-    <div class="navegacion__logo">Operador Turístico y Gastronomico | Santa Rosa de Cabal </div>
+    <div class="navegacion__logo">Operador Turístico y Gastronomico | Santa Rosa de Cabal</div>
 
     <div class="navegacion__enlaces">
       <a class="navegacion__enlace" href="#">Servicios</a>

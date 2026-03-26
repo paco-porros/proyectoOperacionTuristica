@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Voyager | Explora el Horizonte</title>
+  <title>Operador Turístico y Gastronomico | Santa Rosa de Cabal</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
@@ -20,7 +20,7 @@
 
       <!-- Logo + enlaces -->
       <div class="grupo-izquierdo-nav">
-        <span class="logo-nav">Voyager</span>
+        <span class="logo-nav">Operador Turístico y Gastronomico | Santa Rosa de Cabal</span>
         <div class="menu-enlaces-nav">
           <a class="enlace-nav enlace-nav--activo" href="#">Destinos</a>
           <a class="enlace-nav" href="#">Itinerarios</a>
@@ -55,31 +55,18 @@
       <img
         alt="Paisaje de montaña"
         class="imagen-hero"
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuClAN6d0IwP8oqsIrtwpSuVYBumU2mS8N_Lm-inPcZ7IUVFti7BCTvkI3PASE05UevqhavRZJhwogIDIkaN8AEAEhSfBcDdt3ByuGqNugWhPJzR2HeItjvW8MJvpoXNJXjrvscI-Y4JjFGVlZUDLulEMjB6n0H7AId0PaMADcQd7FMiiyjTNu3rrczyIWq-rjRH-UM0R4F9pNlPbhjhoEKQYt5v4r9HHHymDqS6xFNdpdt4k6qYdcrA8JVOT9v1JdgfCSdzLZWAX9c"
+        src="img/fondoPortada.jpg"
       />
       <div class="degradado-hero"></div>
     </div>
 
     <!-- Contenido del hero -->
     <div class="contenido-hero">
-      <h1 class="titulo-hero">Horizontes Etéreos</h1>
+      <h1 class="titulo-hero">Vive Esta Experiencia </h1>
       <p class="subtitulo-hero">
-        Viaja más allá de lo ordinario. Descubre destinos que desvanecen la línea entre la realidad y los sueños.
+      Descubre a Santa Rosa donde la realidad y los sueños conectan.
       </p>
 
-      <!-- Barra de búsqueda -->
-      <div class="barra-busqueda-hero panel-cristal">
-        <div class="campo-busqueda">
-          <span class="material-symbols-outlined icono-busqueda" data-icon="search">search</span>
-          <input
-            class="input-busqueda"
-            id="input-busqueda"
-            placeholder="¿A dónde quieres ir?"
-            type="text"
-          />
-        </div>
-        <button class="boton-explorar" id="boton-explorar">Explorar</button>
-      </div>
     </div>
 
   </section>

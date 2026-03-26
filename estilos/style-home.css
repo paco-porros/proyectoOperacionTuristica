@@ -1,7 +1,4 @@
-/* ============================================================
-   estilo-home.css — Ethereal Voyager · Página principal
-   Todas las clases están nombradas en español
-   ============================================================ */
+
 
 /* ----------------------------------------------------------
    Variables globales de diseño
@@ -241,7 +238,7 @@ h1, h2, h3 {
 .titulo-hero {
   font-size: 3rem;
   font-weight: 800;
-  color: #ffffff;
+  color: #1e3a8a;
   text-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
   margin-bottom: 1.5rem;
   letter-spacing: -0.03em;
@@ -256,7 +253,7 @@ h1, h2, h3 {
 
 .subtitulo-hero {
   font-size: 1.25rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: white;
   margin-bottom: 2.5rem;
   max-width: 42rem;
   font-weight: 500;

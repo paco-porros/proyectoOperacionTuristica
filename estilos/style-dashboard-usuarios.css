@@ -1,0 +1,698 @@
+/* =========================================================
+   style.css — Voyager Admin · Dashboard de Usuarios
+   Sin Tailwind. Todo el estilo vive aquí.
+   ========================================================= */
+
+/* ----- Variables de color (paleta original) -------------- */
+:root {
+  --color-primario:           #054da4;
+  --color-primario-contenedor:#3066be;
+  --color-secundario:         #306388;
+  --color-terciario:          #00595e;
+  --color-terciario-contenedor:#007479;
+  --color-error:              #ba1a1a;
+  --color-superficie:         #e5feff;
+  --color-sobre-superficie:   #002021;
+  --color-fondo:              #e5feff;
+
+  --fuente-titular:  'Plus Jakarta Sans', sans-serif;
+  --fuente-cuerpo:   'Manrope', sans-serif;
+
+  --radio-sm:   0.5rem;
+  --radio-md:   1rem;
+  --radio-lg:   2rem;
+  --radio-full: 9999px;
+
+  --sombra-vidrio: linear-gradient(135deg, rgba(174,236,239,.15) 0%, rgba(48,102,190,.1) 100%);
+  --borde-vidrio:  1px solid rgba(255,255,255,.4);
+}
+
+/* ----- Reset mínimo ---------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ----- Base body ------------------------------------------- */
+body {
+  font-family: var(--fuente-cuerpo);
+  color: var(--color-sobre-superficie);
+  background-color: var(--color-fondo);
+  background-image:
+    radial-gradient(at 0% 0%,   rgba(173,198,255,.3) 0, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(132,244,251,.3) 0, transparent 50%);
+  min-height: 100vh;
+}
+
+/* ----- Iconos Material ------------------------------------- */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+  font-size: 1.25rem;
+}
+
+.icono-relleno {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* =========================================================
+   BARRA LATERAL
+   ========================================================= */
+.barra-lateral {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 16rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0;
+  background-color: rgba(236, 254, 255, 0.2);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-right: 1px solid rgba(224, 242, 254, 0.1);
+  z-index: 50;
+}
+
+.barra-lateral__encabezado {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.contenedor-logo {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  background-color: var(--color-primario-contenedor);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 10px 15px -3px rgba(48,102,190,.2);
+}
+
+.imagen-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.titulo-marca {
+  font-family: var(--fuente-titular);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #1e40af;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.subtitulo-marca {
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-secundario);
+  margin-top: 0.25rem;
+}
+
+/* ----- Navegación lateral ---------------------------------- */
+.nav-lateral {
+  flex: 1;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.enlace-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  margin: 0.125rem 0.5rem;
+  border-radius: var(--radio-lg);
+  color: #475569;
+  font-family: var(--fuente-titular);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.enlace-nav:hover {
+  background-color: rgba(103, 232, 249, 0.3);
+}
+
+.enlace-nav--activo {
+  background: linear-gradient(to right, #2563eb, #3b82f6);
+  color: #ffffff;
+  box-shadow: 0 10px 15px -3px rgba(59,130,246,.3);
+}
+
+.enlace-nav--activo:hover {
+  background: linear-gradient(to right, #2563eb, #3b82f6);
+}
+
+/* ----- Pie de barra lateral -------------------------------- */
+.barra-lateral__pie {
+  padding: 0 1.5rem;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.boton-nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: var(--radio-md);
+  border: none;
+  background: transparent;
+  color: #475569;
+  font-family: var(--fuente-titular);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.boton-nav:hover {
+  background-color: rgba(103, 232, 249, 0.3);
+}
+
+.boton-nav--cerrar-sesion {
+  color: var(--color-error);
+}
+
+.boton-nav--cerrar-sesion:hover {
+  background-color: rgba(186, 26, 26, 0.1);
+}
+
+/* =========================================================
+   BARRA SUPERIOR
+   ========================================================= */
+.barra-superior {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 2rem 0.75rem 19rem;
+  background-color: rgba(236, 254, 255, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 20px 25px -5px rgba(22, 78, 99, 0.05);
+}
+
+.barra-superior__busqueda {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  max-width: 36rem;
+}
+
+.barra-superior__acciones {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: 1.5rem;
+}
+
+/* ----- Buscador -------------------------------------------- */
+.contenedor-busqueda {
+  position: relative;
+  width: 100%;
+}
+
+.icono-busqueda {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.campo-busqueda {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: none;
+  border-radius: var(--radio-full);
+  padding: 0.625rem 1rem 0.625rem 3rem;
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.875rem;
+  color: var(--color-sobre-superficie);
+  transition: box-shadow 0.3s ease;
+  outline: none;
+}
+
+.campo-busqueda::placeholder {
+  color: #94a3b8;
+}
+
+.campo-busqueda:focus {
+  box-shadow: 0 0 0 2px rgba(5, 77, 164, 0.2);
+}
+
+/* ----- Botones icono redondos ------------------------------ */
+.boton-icono-redondo {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radio-full);
+  border: none;
+  background: transparent;
+  color: #475569;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.boton-icono-redondo:hover {
+  background-color: rgba(165, 243, 252, 0.4);
+}
+
+/* ----- Separador ------------------------------------------- */
+.separador-vertical {
+  height: 2rem;
+  width: 1px;
+  background-color: #e2e8f0;
+}
+
+/* ----- Perfil administrador -------------------------------- */
+.perfil-admin {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-left: 0.5rem;
+}
+
+.perfil-admin__info {
+  text-align: right;
+}
+
+.texto-nombre-admin {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-sobre-superficie);
+  line-height: 1;
+}
+
+.texto-rol-admin {
+  font-size: 0.625rem;
+  color: var(--color-secundario);
+  margin-top: 0.125rem;
+}
+
+.avatar-admin {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radio-full);
+  box-shadow: 0 0 0 2px rgba(5, 77, 164, 0.1);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.imagen-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* =========================================================
+   CONTENIDO PRINCIPAL
+   ========================================================= */
+.contenido-principal {
+  margin-left: 16rem;
+  padding: 2rem;
+  min-height: calc(100vh - 64px);
+}
+
+/* ----- Encabezado de sección ------------------------------- */
+.encabezado-seccion {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .encabezado-seccion {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
+
+.encabezado-seccion__texto {
+  max-width: 42rem;
+}
+
+.titulo-seccion {
+  font-family: var(--fuente-titular);
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--color-primario);
+  letter-spacing: -0.025em;
+  margin-bottom: 0.5rem;
+}
+
+.descripcion-seccion {
+  color: var(--color-secundario);
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+/* ----- Botón Nuevo Usuario --------------------------------- */
+.boton-nuevo-usuario {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background-color: var(--color-primario-contenedor);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radio-full);
+  font-family: var(--fuente-titular);
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 15px -3px rgba(48,102,190,.3);
+  transition: transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.boton-nuevo-usuario:hover  { transform: scale(1.05); }
+.boton-nuevo-usuario:active { transform: scale(0.95); }
+
+/* =========================================================
+   CUADRÍCULA DE ESTADÍSTICAS
+   ========================================================= */
+.cuadricula-estadisticas {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .cuadricula-estadisticas { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Estilo glassmorphism compartido */
+.tarjeta-estadistica,
+.seccion-tabla,
+.panel-vidrio {
+  background: var(--sombra-vidrio);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: var(--borde-vidrio);
+  border-radius: var(--radio-md);
+}
+
+.tarjeta-estadistica {
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tarjeta-estadistica--vacia {
+  justify-content: center;
+  background-color: rgba(255,255,255,0.05);
+  border-style: dashed;
+}
+
+.etiqueta-estadistica {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.25rem;
+}
+
+.valor-estadistica {
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: #1e3a5f;
+  line-height: 1;
+}
+
+.icono-estadistica {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radio-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icono-estadistica .material-symbols-outlined { font-size: 1.875rem; }
+
+.icono-estadistica--primario {
+  background-color: rgba(5, 77, 164, 0.1);
+  color: var(--color-primario);
+}
+
+.icono-estadistica--terciario {
+  background-color: rgba(0, 116, 121, 0.1);
+  color: var(--color-terciario);
+}
+
+.texto-proximas-metricas {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* =========================================================
+   TABLA DE USUARIOS
+   ========================================================= */
+.seccion-tabla {
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(30, 58, 95, 0.05);
+}
+
+.contenedor-tabla {
+  overflow-x: auto;
+}
+
+.tabla-usuarios {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* ----- Encabezado tabla ------------------------------------ */
+.encabezado-tabla-fila {
+  background-color: rgba(48, 102, 190, 0.05);
+}
+
+.encabezado-tabla {
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--color-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border-bottom: 1px solid rgba(255,255,255,.2);
+}
+
+.encabezado-tabla--derecha { text-align: right; }
+
+/* ----- Cuerpo tabla ---------------------------------------- */
+.cuerpo-tabla tr + tr { border-top: 1px solid rgba(255,255,255,.1); }
+
+.fila-usuario {
+  transition: background-color 0.2s ease;
+}
+
+.fila-usuario:hover {
+  background-color: rgba(255,255,255,.3);
+}
+
+.fila-usuario:hover .contenedor-acciones {
+  opacity: 1;
+}
+
+.celda-tabla {
+  padding: 1rem 1.5rem;
+  vertical-align: middle;
+}
+
+.celda-tabla--derecha { text-align: right; }
+
+/* ----- Avatar de usuario ----------------------------------- */
+.contenedor-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radio-full);
+  overflow: hidden;
+  box-shadow: 0 0 0 2px #ffffff, 0 1px 3px rgba(0,0,0,.1);
+}
+
+/* ----- Datos del usuario ----------------------------------- */
+.nombre-usuario {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-sobre-superficie);
+}
+
+.correo-usuario {
+  font-size: 0.875rem;
+  color: #475569;
+}
+
+/* ----- Insignias de rol ------------------------------------ */
+.insignia-rol {
+  display: inline-block;
+  font-size: 0.625rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.insignia-rol--editor {
+  background-color: rgba(0, 116, 121, 0.1);
+  color: var(--color-terciario);
+}
+
+.insignia-rol--admin {
+  background-color: rgba(48, 102, 190, 0.1);
+  color: var(--color-primario);
+}
+
+.insignia-rol--visor {
+  background-color: rgba(164, 212, 255, 0.1);
+  color: var(--color-secundario);
+}
+
+/* ----- Estado del usuario ---------------------------------- */
+.estado-usuario {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.indicador-estado {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radio-full);
+  flex-shrink: 0;
+}
+
+.indicador-estado--activo   { background-color: #10b981; }
+.indicador-estado--inactivo { background-color: #cbd5e1; }
+
+.texto-estado {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.texto-estado--activo   { color: #059669; }
+.texto-estado--inactivo { color: #94a3b8; }
+
+/* ----- Botones de acción ----------------------------------- */
+.contenedor-acciones {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.boton-accion {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radio-sm);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.boton-accion--editar {
+  background-color: rgba(255,255,255,.5);
+  color: var(--color-primario);
+}
+
+.boton-accion--editar:hover { background-color: #ffffff; }
+
+.boton-accion--eliminar {
+  background-color: rgba(255,255,255,.5);
+  color: var(--color-error);
+}
+
+.boton-accion--eliminar:hover {
+  background-color: rgba(186, 26, 26, 0.1);
+}
+
+/* =========================================================
+   PIE DE TABLA / PAGINACIÓN
+   ========================================================= */
+.pie-tabla {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background-color: rgba(255,255,255,.1);
+  border-top: 1px solid rgba(255,255,255,.2);
+}
+
+.texto-paginacion {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-secundario);
+}
+
+.controles-paginacion {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.boton-paginacion {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radio-sm);
+  border: none;
+  background: transparent;
+  color: var(--color-secundario);
+  font-weight: 700;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.boton-paginacion:hover {
+  background-color: rgba(255,255,255,.4);
+}
+
+.boton-paginacion--activo {
+  background-color: var(--color-primario);
+  color: #ffffff;
+}
+
+.boton-paginacion--activo:hover {
+  background-color: var(--color-primario);
+}
