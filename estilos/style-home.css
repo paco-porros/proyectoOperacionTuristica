@@ -2,23 +2,26 @@
    Variables globales de diseño
    ---------------------------------------------------------- */
 :root {
-  --color-primario:            #582c4dff;
-  --color-primario-contenedor: #7a3d5fff;
-  --color-superficie:          #ece2d0ff;
-  --color-fondo:               #ece2d0ff;
-  --color-sobre-superficie:    #2e1428ff;
-  --color-sobre-variante:      #6b4558ff;
-  --color-inverso-superficie:  #2e1428ff;
-  --color-terciario:           #a26769ff;
-  --color-secundario:          #7a3d5fff;
-  --color-sobre-primario:      #ffffff;
-  --color-contorno:            #bfb5afff;
-  --color-contenedor-bajo:     #d5b9b2ff;
-  --fuente-titular:            "Plus Jakarta Sans", sans-serif;
-  --fuente-cuerpo:             "Manrope", sans-serif;
-  --radio-base:                1rem;
-  --radio-completo:            9999px;
-  --sombra-nav:                0 20px 40px rgba(88, 44, 77, 0.07);
+  --color-primario:                     #582c4d;
+  --color-primario-contenedor:          #7a3d5f;
+  --color-sobre-primario:               #ffffff;
+  --color-primario-fijo-tenue:          #e8d0d5;
+  --color-terciario:                    #a26769;
+  --color-terciario-contenedor:         #b8787a;
+  --color-sobre-terciario:              #ffffff;
+  --color-superficie:                   #ece2d0;
+  --color-superficie-contenedor-bajo:   #d5b9b2;
+  --color-sobre-superficie:             #2e1428;
+  --color-sobre-superficie-variante:    #6b4558;
+  --color-fondo:                        #ece2d0;
+  --color-sobre-variante:               #6b4558;
+  --color-contorno:                     #6b4558;
+  --color-contenedor-bajo:              #d5b9b2;
+  --fuente-titular:                     "Plus Jakarta Sans", sans-serif;
+  --fuente-cuerpo:                      "Manrope", sans-serif;
+  --radio-base:                         1rem;
+  --radio-completo:                     9999px;
+  --sombra-nav:                         0 20px 40px rgba(88, 44, 77, 0.07);
 }
 
 /* ----------------------------------------------------------
@@ -44,7 +47,7 @@ h1, h2, h3 {
 .panel-cristal {
   background: linear-gradient(
     135deg,
-    rgba(162, 103, 105, 0.15) 0%,
+    rgba(162, 103, 105, 0.12) 0%,
     rgba(88, 44, 77, 0.1) 100%
   );
   backdrop-filter: blur(10px);
@@ -102,7 +105,7 @@ h1, h2, h3 {
   font-weight: 900;
   letter-spacing: -0.05em;
   text-transform: uppercase;
-  color: #582c4d;
+  color: var(--color-primario);
   font-family: var(--fuente-titular);
 }
 
@@ -123,19 +126,19 @@ h1, h2, h3 {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 700;
-  color: rgba(88, 44, 77, 0.7);
+  color: var(--color-sobre-superficie-variante);
   text-decoration: none;
   transition: color 0.2s ease;
   padding-bottom: 0.25rem;
 }
 
 .enlace-nav:hover {
-  color: #582c4d;
+  color: var(--color-primario);
 }
 
 .enlace-nav--activo {
-  color: #582c4d;
-  border-bottom: 2px solid #a26769;
+  color: var(--color-primario);
+  border-bottom: 2px solid #d5b9b2;
 }
 
 .grupo-derecho-nav {
@@ -157,11 +160,11 @@ h1, h2, h3 {
 }
 
 .boton-notificaciones:hover {
-  background-color: rgba(213, 185, 178, 0.2);
+  background-color: rgba(162, 103, 105, 0.15);
 }
 
 .icono-notificacion {
-  color: #582c4d;
+  color: var(--color-primario);
 }
 
 .avatar-usuario {
@@ -169,7 +172,7 @@ h1, h2, h3 {
   height: 2.5rem;
   border-radius: var(--radio-completo);
   overflow: hidden;
-  border: 2px solid #a26769;
+  border: 2px solid #b8787a;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -216,7 +219,7 @@ h1, h2, h3 {
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    rgba(213, 185, 178, 0.15) 60%,
+    rgba(236, 226, 208, 0.2) 60%,
     #ece2d0 100%
   );
 }
@@ -236,7 +239,7 @@ h1, h2, h3 {
 .titulo-hero {
   font-size: 3rem;
   font-weight: 800;
-  color: #582c4d;
+  color: var(--color-primario);
   text-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
   margin-bottom: 1.5rem;
   letter-spacing: -0.03em;
@@ -305,7 +308,7 @@ h1, h2, h3 {
   cursor: pointer;
   font-family: var(--fuente-titular);
   font-size: 0.95rem;
-  box-shadow: 0 4px 14px rgba(88, 44, 77, 0.4);
+  box-shadow: 0 4px 14px rgba(88, 44, 77, 0.3);
   transition: background-color 0.2s ease, transform 0.15s ease;
 }
 
@@ -353,14 +356,14 @@ h1, h2, h3 {
 .titulo-seccion {
   font-size: 2.25rem;
   font-weight: 900;
-  color: #582c4d;
+  color: var(--color-primario);
   font-family: var(--fuente-titular);
 }
 
 .titulo-seccion-oscuro {
   font-size: 2.25rem;
   font-weight: 900;
-  color: #582c4d;
+  color: var(--color-primario);
   font-family: var(--fuente-titular);
 }
 
@@ -451,7 +454,7 @@ h1, h2, h3 {
 .sombra-gradiente-tarjeta {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(46, 20, 40, 0.85) 0%, transparent 60%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 60%);
 }
 
 .info-tarjeta {
@@ -470,7 +473,7 @@ h1, h2, h3 {
 }
 
 .etiqueta-categoria {
-  background-color: rgba(162, 103, 105, 0.2);
+  background-color: rgba(162, 103, 105, 0.1);
   color: var(--color-terciario);
   padding: 0.2rem 0.75rem;
   border-radius: 0.125rem;
@@ -534,11 +537,11 @@ h1, h2, h3 {
 }
 
 .boton-tarjeta--blanco:hover {
-  background-color: #e8dcc8;
+  background-color: var(--color-fondo);
 }
 
 .boton-tarjeta--cristal {
-  background: rgba(162, 103, 105, 0.15);
+  background: rgba(162, 103, 105, 0.12);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: #ffffff;
@@ -547,7 +550,7 @@ h1, h2, h3 {
 }
 
 .boton-tarjeta--cristal:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.25);
 }
 
 .boton-tarjeta--pequeno {
@@ -556,144 +559,10 @@ h1, h2, h3 {
 }
 
 /* ----------------------------------------------------------
-   SECCIÓN OFERTAS GASTRONÓMICAS
-   ---------------------------------------------------------- */
-.seccion-gastronomia {
-  background-color: var(--color-contenedor-bajo);
-  padding: 6rem 0;
-}
-
-.contenedor-gastronomia {
-  padding: 0 2rem;
-  max-width: 1536px;
-  margin: 0 auto;
-}
-
-.encabezado-seccion-gastronomia {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 3rem;
-}
-
-/* Cuadrícula de tarjetas gastronómicas */
-.cuadricula-gastronomia {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-}
-
-@media (min-width: 768px) {
-  .cuadricula-gastronomia { grid-template-columns: repeat(3, 1fr); }
-}
-
-/* ---------- Tarjeta gastronómica ---------- */
-.tarjeta-gastro {
-  border-radius: 1rem;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-.tarjeta-gastro:hover {
-  box-shadow: 0 24px 48px rgba(162, 103, 105, 0.18);
-  transform: translateY(-4px);
-}
-
-.tarjeta-gastro__imagen-envoltorio {
-  position: relative;
-  height: 14rem;
-  overflow: hidden;
-}
-
-.tarjeta-gastro__imagen {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.7s ease;
-}
-
-.tarjeta-gastro:hover .tarjeta-gastro__imagen {
-  transform: scale(1.08);
-}
-
-.tarjeta-gastro__badge {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  background-color: var(--color-terciario);
-  color: #ffffff;
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--radio-completo);
-  font-family: var(--fuente-cuerpo);
-}
-
-.tarjeta-gastro__cuerpo {
-  flex: 1;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.tarjeta-gastro__restaurante {
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--color-terciario);
-  font-family: var(--fuente-cuerpo);
-}
-
-.tarjeta-gastro__titulo {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: #ffffff;
-  font-family: var(--fuente-titular);
-  margin: 0;
-}
-
-.tarjeta-gastro__meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 0.25rem;
-  margin-bottom: 0.75rem;
-}
-
-.tarjeta-gastro__precio {
-  font-size: 1rem;
-  font-weight: 800;
-  color: #ffffff;
-  font-family: var(--fuente-titular);
-}
-
-.tarjeta-gastro__calificacion {
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: #fbbf24;
-  font-family: var(--fuente-cuerpo);
-}
-
-.tarjeta-gastro__calificacion .material-symbols-outlined {
-  font-size: 1rem;
-  color: #fbbf24;
-  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-}
-
-/* ----------------------------------------------------------
    SECCIÓN SERVICIOS PREMIUM
    ---------------------------------------------------------- */
 .seccion-servicios {
-  background-color: var(--color-contenedor-bajo);
+  background-color: var(--color-superficie-contenedor-bajo);
   padding: 6rem 0;
 }
 
@@ -761,7 +630,7 @@ h1, h2, h3 {
 .titulo-servicio {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #582c4d;
+  color: var(--color-primario);
   margin-bottom: 0.75rem;
   font-family: var(--fuente-titular);
 }
@@ -816,161 +685,350 @@ h1, h2, h3 {
 
 .icono-socio {
   font-size: 2.25rem;
-  color: #582c4d;
+  color: var(--color-primario);
 }
 
 .nombre-socio {
   font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: 0.15em;
-  color: #582c4d;
+  color: var(--color-primario);
   font-family: var(--fuente-titular);
 }
 
 /* ----------------------------------------------------------
-   PIE DE PÁGINA
+   Pie de página global
    ---------------------------------------------------------- */
 .pie-pagina {
-  background-color: #e8dcc8;
   width: 100%;
-  position: relative;
-  margin-top: auto;
-}
-
-.cuadricula-pie {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-  padding: 4rem 3rem;
-  width: 100%;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 80rem;
+  margin: 0 auto;
+  gap: 1.5rem;
+  background-color: var(--color-fondo);
 }
 
 @media (min-width: 768px) {
-  .cuadricula-pie { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (min-width: 1024px) {
-  .cuadricula-pie { grid-template-columns: repeat(4, 1fr); }
-}
-
-.columna-pie {
-  display: flex;
-  flex-direction: column;
-}
-
-.columna-pie--enlaces {
-  gap: 1rem;
+  .pie-pagina {
+    flex-direction: row;
+    gap: 0;
+  }
 }
 
 .logo-pie {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: #582c4d;
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 1.5rem;
   font-family: var(--fuente-titular);
-}
-
-.descripcion-pie {
-  font-size: 0.75rem;
-  color: #7a3d5f;
-  line-height: 1.6;
-  max-width: 20rem;
-  font-family: var(--fuente-cuerpo);
-}
-
-.titulo-columna-pie {
-  color: #582c4d;
   font-weight: 700;
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  font-family: var(--fuente-cuerpo);
-  margin-bottom: 0.5rem;
+  color: var(--color-primario);
+}
+
+.enlaces-pie {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
 }
 
 .enlace-pie {
-  color: rgba(88, 44, 77, 0.6);
-  font-size: 0.75rem;
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(107, 69, 88, 0.5);
   text-decoration: none;
   transition: color 0.2s ease;
-  font-family: var(--fuente-cuerpo);
 }
 
 .enlace-pie:hover {
-  color: #582c4d;
-}
-
-/* Boletín en el pie */
-.formulario-boletin {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.25rem;
-}
-
-.input-boletin {
-  background-color: rgba(255, 255, 255, 0.5);
-  border: none;
-  border-radius: 0.375rem;
-  font-size: 0.75rem;
-  flex: 1;
-  padding: 0.5rem 0.75rem;
-  font-family: var(--fuente-cuerpo);
-  outline: none;
-  transition: box-shadow 0.2s ease;
-}
-
-.input-boletin:focus {
-  box-shadow: 0 0 0 1px #d5b9b2;
-}
-
-.boton-boletin {
-  background-color: #582c4d;
-  color: #ffffff;
-  padding: 0.5rem;
-  border-radius: 0.375rem;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s ease;
-}
-
-.boton-boletin:hover {
-  background-color: #7a3d5f;
-}
-
-.icono-enviar {
-  font-size: 0.875rem;
-}
-
-/* Barra inferior del pie */
-.barra-inferior-pie {
-  padding: 2rem 3rem;
-  border-top: 1px solid rgba(88, 44, 77, 0.06);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  color: var(--color-primario-contenedor);
 }
 
 .copyright-pie {
   font-family: var(--fuente-cuerpo);
-  font-size: 0.75rem;
-  color: #7a3d5f;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primario);
 }
 
-.iconos-sociales-pie {
+/* ============================================================
+   PIE DE PÁGINA — Estilos idénticos al index.php
+   ============================================================ */
+.pie {
+  background-color: rgba(46, 20, 40, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  width: 100%;
+  margin-top: auto;
+}
+
+.pie__cuadricula {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  padding: 4rem 3rem;
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .pie__cuadricula { grid-template-columns: repeat(4, 1fr); }
+}
+
+.pie__logo {
+  font-family: var(--fuente-titular);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  display: block;
+  margin-bottom: 1rem;
+  letter-spacing: -0.025em;
+}
+
+.pie__eslogan {
+  font-size: 0.875rem;
+  line-height: 1.625;
+  color: #e8d9d5;
+  margin: 0 0 1.5rem 0;
+}
+
+.pie__redes { display: flex; gap: 1rem; }
+
+.pie__boton-red {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radio-completo);
+  background: rgba(255, 255, 255, 0.1);
   display: flex;
-  gap: 1.5rem;
-}
-
-.icono-pie-social {
-  color: rgba(88, 44, 77, 0.4);
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: color 0.2s ease;
+  border: none;
+  color: #ffffff;
+  transition: background-color 0.2s;
 }
 
-.icono-pie-social:hover {
-  color: #582c4d;
+.pie__boton-red:hover { background-color: rgba(162, 103, 105, 0.25); }
+
+.pie__columna-titulo {
+  color: #a26769;
+  font-family: var(--fuente-titular);
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+}
+
+.pie__lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 0.875rem;
+}
+
+.pie__lista a {
+  color: #e8d9d5;
+  display: inline-block;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.pie__lista a:hover { color: #a26769; transform: translateX(0.25rem); }
+
+.pie__lista-contacto {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: #e8d9d5;
+}
+
+.pie__contacto-item { display: flex; align-items: center; gap: 0.5rem; }
+.pie__contacto-item a { color: #e8d9d5; transition: color 0.2s; }
+.pie__contacto-item a:hover { color: #a26769; }
+
+.pie__inferior {
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: #bfb5af;
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .pie__inferior { flex-direction: row; }
+}
+
+.pie__inferior a {
+  color: #e8d9d5;
+  transition: color 0.2s;
+}
+
+.pie__inferior a:hover { color: #a26769; }
+
+.pie__separador {
+  margin: 0 0.5rem;
+  opacity: 0.4;
+}
+
+
+/* ============================================================
+   OFERTAS GASTRONÓMICAS
+   ============================================================ */
+.seccion-gastronomia {
+  padding: 6rem 0;
+  background-color: var(--color-superficie-contenedor-bajo);
+}
+
+.contenedor-gastronomia {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.encabezado-seccion-gastronomia {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+}
+
+.cuadricula-gastronomia {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 640px) {
+  .cuadricula-gastronomia { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .cuadricula-gastronomia { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ---------- Tarjeta gastronómica ---------- */
+.tarjeta-gastro {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 25px rgba(88, 44, 77, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: var(--color-fondo);
+}
+
+.tarjeta-gastro:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(88, 44, 77, 0.18);
+}
+
+.tarjeta-gastro__imagen-envoltorio {
+  position: relative;
+  height: 13rem;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.tarjeta-gastro__imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.tarjeta-gastro:hover .tarjeta-gastro__imagen {
+  transform: scale(1.08);
+}
+
+.tarjeta-gastro__badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: var(--color-terciario-contenedor);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radio-completo);
+}
+
+.tarjeta-gastro__cuerpo {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: linear-gradient(
+    135deg,
+    rgba(162, 103, 105, 0.12) 0%,
+    rgba(88, 44, 77, 0.08) 100%
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.tarjeta-gastro__restaurante {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-terciario);
+  font-family: var(--fuente-cuerpo);
+}
+
+.tarjeta-gastro__titulo {
+  font-family: var(--fuente-titular);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-sobre-superficie);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.tarjeta-gastro__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-top: 1px solid rgba(88, 44, 77, 0.1);
+  border-bottom: 1px solid rgba(88, 44, 77, 0.1);
+}
+
+.tarjeta-gastro__precio {
+  font-family: var(--fuente-titular);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-primario);
+}
+
+.tarjeta-gastro__calificacion {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-sobre-superficie-variante);
+}
+
+.tarjeta-gastro__calificacion .material-symbols-outlined {
+  font-size: 1rem;
+  color: #c9893b;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }

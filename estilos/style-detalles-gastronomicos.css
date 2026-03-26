@@ -1,0 +1,747 @@
+/* ============================================================
+   Importación de fuentes
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+/* ============================================================
+   Variables de diseño (tokens)
+   ============================================================ */
+:root {
+  /* Colores primarios */
+  --color-primary:              #054da4;
+  --color-primary-container:    #3066be;
+  --color-on-primary:           #ffffff;
+
+  /* Colores terciarios */
+  --color-tertiary:             #00595e;
+  --color-tertiary-container:   #007479;
+  --color-on-tertiary:          #ffffff;
+
+  /* Colores secundarios */
+  --color-secondary:            #306388;
+
+  /* Superficies */
+  --color-surface:              #e5feff;
+  --color-surface-container-low:   #cbfdff;
+  --color-surface-container:       #bbf9fc;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-variant:      #afedf0;
+  --color-on-surface:           #002021;
+  --color-on-surface-variant:   #424752;
+
+  /* Fondo */
+  --color-background:           #e5feff;
+  --color-outline-variant:      #c3c6d4;
+
+  /* Tipografía */
+  --fuente-titular:  'Plus Jakarta Sans', sans-serif;
+  --fuente-cuerpo:   'Manrope', sans-serif;
+}
+
+/* ============================================================
+   Reset y base
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* ============================================================
+   Utilidades globales
+   ============================================================ */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
+
+.estrella-llena {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ============================================================
+   CUERPO
+   ============================================================ */
+.cuerpo-principal {
+  background-color: var(--color-background);
+  font-family: var(--fuente-cuerpo);
+  color: var(--color-on-surface);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   GLASSMORPHISM (utilitaria reutilizable)
+   ============================================================ */
+.glass-card,
+.tarjeta-cristal {
+  background: linear-gradient(
+    135deg,
+    rgba(174, 236, 239, 0.15) 0%,
+    rgba(48, 102, 190, 0.1) 100%
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* ============================================================
+   ÍCONOS
+   ============================================================ */
+.icono-primario {
+  color: var(--color-primary);
+  font-size: 1.875rem;
+}
+
+.icono-secundario {
+  color: var(--color-secondary);
+  font-size: 1.25rem;
+}
+
+/* ============================================================
+   NAVEGACIÓN
+   ============================================================ */
+.barra-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  height: 5rem;
+  background: rgba(236, 254, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 20px 40px rgba(0, 55, 57, 0.06);
+}
+
+.nav-logo {
+  font-family: var(--fuente-titular);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  color: #1e40af;
+}
+
+.nav-enlaces {
+  display: none;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .nav-enlaces { display: flex; }
+}
+
+.nav-enlace {
+  font-family: var(--fuente-titular);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: rgba(30, 58, 138, 0.7);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-enlace:hover {
+  color: #1e3a8a;
+}
+
+.nav-enlace--activo {
+  color: #1e3a8a;
+  border-bottom: 2px solid rgba(34, 211, 238, 0.4);
+  padding-bottom: 0.25rem;
+}
+
+.nav-acciones {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-buscador {
+  display: none;
+  align-items: center;
+  background-color: rgba(165, 243, 252, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+}
+
+@media (min-width: 1024px) {
+  .nav-buscador { display: flex; }
+}
+
+.nav-buscador__icono {
+  color: var(--color-primary);
+  font-size: 1.25rem;
+}
+
+.nav-buscador__input {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 0.875rem;
+  color: var(--color-on-surface);
+  font-family: var(--fuente-cuerpo);
+}
+
+.nav-buscador__input::placeholder {
+  color: rgba(30, 58, 138, 0.5);
+}
+
+.nav-boton-reservar {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  padding: 0.625rem 1.5rem;
+  border-radius: 9999px;
+  font-family: var(--fuente-titular);
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transform: scale(0.95);
+  transition: transform 0.15s;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.nav-boton-reservar:active {
+  transform: scale(0.90);
+}
+
+/* ============================================================
+   CONTENIDO PRINCIPAL
+   ============================================================ */
+.contenido-principal {
+  padding-top: 5rem;
+}
+
+/* ============================================================
+   SECCIÓN HERO
+   ============================================================ */
+.seccion-hero {
+  position: relative;
+  height: 716px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero-fondo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.hero-degradado {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    var(--color-background) 0%,
+    rgba(229, 254, 255, 0.2) 40%,
+    transparent 100%
+  );
+}
+
+.hero-contenido {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 2rem 4rem 2rem;
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.hero-etiqueta {
+  display: inline-block;
+  padding: 0.375rem 1rem;
+  border-radius: 0.125rem;
+  background-color: rgba(0, 116, 121, 0.1);
+  color: var(--color-tertiary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 1rem;
+  width: fit-content;
+}
+
+.hero-titulo {
+  font-family: var(--fuente-titular);
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--color-on-surface);
+  letter-spacing: -0.025em;
+  margin: 0 0 1rem 0;
+  max-width: 48rem;
+}
+
+@media (min-width: 768px) {
+  .hero-titulo { font-size: 4.5rem; }
+}
+
+.hero-subtitulo {
+  color: var(--color-on-surface-variant);
+  font-size: 1.125rem;
+  max-width: 42rem;
+  font-weight: 500;
+  line-height: 1.625;
+  margin: 0;
+}
+
+/* ============================================================
+   SECCIÓN CUERPO
+   ============================================================ */
+.seccion-cuerpo {
+  padding: 0 2rem 6rem 2rem;
+  margin-top: -6rem;
+  position: relative;
+  z-index: 20;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cuadricula-principal {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .cuadricula-principal { grid-template-columns: 2fr 1fr; }
+}
+
+.columna-contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ============================================================
+   TARJETA CRISTAL
+   ============================================================ */
+.tarjeta-cristal {
+  padding: 2.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 55, 57, 0.06);
+}
+
+.tarjeta-cristal--sticky {
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 6rem;
+}
+
+.tarjeta-cristal__encabezado {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+/* ============================================================
+   TÍTULOS DE SECCIÓN
+   ============================================================ */
+.titulo-seccion {
+  font-family: var(--fuente-titular);
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.subtitulo-seccion {
+  font-family: var(--fuente-titular);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ============================================================
+   LISTA DE PLATOS
+   ============================================================ */
+.lista-platos {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.plato {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .plato {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.plato__imagen-envoltorio {
+  width: 100%;
+  height: 8rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .plato__imagen-envoltorio { width: 8rem; }
+}
+
+.plato__imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.plato__titulo {
+  font-family: var(--fuente-titular);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 0.5rem 0;
+}
+
+.plato__descripcion {
+  color: var(--color-on-surface-variant);
+  line-height: 1.625;
+  margin: 0;
+}
+
+/* ============================================================
+   CUADRÍCULA DOS COLUMNAS
+   ============================================================ */
+.cuadricula-dos-columnas {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .cuadricula-dos-columnas { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ============================================================
+   TARJETA CONTENEDOR (Bodegas / Maridaje)
+   ============================================================ */
+.tarjeta-contenedor {
+  background-color: var(--color-surface-container-low);
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
+/* ============================================================
+   LISTA DE BODEGAS
+   ============================================================ */
+.lista-bodegas {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.bodega-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-surface-container-lowest);
+}
+
+.bodega-item__nombre {
+  font-weight: 500;
+  color: var(--color-on-surface);
+}
+
+.bodega-item__badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-tertiary);
+  background-color: rgba(0, 116, 121, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+/* ============================================================
+   MARIDAJE
+   ============================================================ */
+.lista-maridaje {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: var(--color-on-surface-variant);
+}
+
+.lista-maridaje p {
+  margin: 0;
+}
+
+.texto-destacado {
+  color: var(--color-on-surface);
+}
+
+/* ============================================================
+   GALERÍA
+   ============================================================ */
+.galeria__titulo {
+  font-family: var(--fuente-titular);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.galeria__cuadricula {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .galeria__cuadricula { grid-template-columns: repeat(4, 1fr); }
+}
+
+.galeria__item {
+  height: 12rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.5s;
+}
+
+.galeria__item:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.galeria__imagen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.galeria__item:hover .galeria__imagen {
+  transform: scale(1.05);
+}
+
+/* ============================================================
+   COLUMNA LATERAL
+   ============================================================ */
+.columna-lateral {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ============================================================
+   TARJETA DE RESERVA
+   ============================================================ */
+.reserva-precio {
+  margin-bottom: 1.5rem;
+}
+
+.reserva-precio__etiqueta {
+  display: block;
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(5, 77, 164, 0.7);
+  margin-bottom: 0.25rem;
+}
+
+.reserva-precio__valor {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.reserva-precio__numero {
+  font-family: var(--fuente-titular);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.reserva-precio__unidad {
+  color: var(--color-on-surface-variant);
+  font-weight: 500;
+}
+
+.reserva-detalles {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.reserva-detalle-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-on-surface-variant);
+}
+
+.boton-reservar {
+  width: 100%;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  padding: 1rem;
+  border-radius: 9999px;
+  font-family: var(--fuente-titular);
+  font-weight: 800;
+  font-size: 1.125rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.15s;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.boton-reservar:hover {
+  background-color: var(--color-primary-container);
+}
+
+.boton-reservar:active {
+  transform: scale(0.95);
+}
+
+.reserva-nota {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--color-on-surface-variant);
+  margin: 1rem 0 0 0;
+}
+
+/* ============================================================
+   TARJETA DE OPINIONES
+   ============================================================ */
+.tarjeta-opiniones {
+  background-color: var(--color-surface-container);
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
+.tarjeta-opiniones__titulo {
+  font-family: var(--fuente-titular);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+}
+
+.lista-opiniones {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.opinion--con-borde {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(195, 198, 212, 0.3);
+}
+
+.opinion__estrellas {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+}
+
+.opinion__texto {
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--color-on-surface-variant);
+  margin: 0 0 0.5rem 0;
+}
+
+.opinion__autor {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+/* ============================================================
+   PIE DE PÁGINA
+   ============================================================ */
+.pie-pagina {
+  background-color: rgba(236, 254, 255, 0.5);
+  width: 100%;
+  padding: 3rem 2rem;
+  margin-top: auto;
+}
+
+.pie-pagina__interior {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 80rem;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .pie-pagina__interior {
+    flex-direction: row;
+    gap: 0;
+  }
+}
+
+.pie-pagina__marca {
+  margin-bottom: 0;
+}
+
+.pie-pagina__logo {
+  font-family: var(--fuente-titular);
+  font-weight: 800;
+  color: #1e3a8a;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.pie-pagina__copyright {
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.875rem;
+  color: rgba(29, 78, 216, 0.6);
+  margin: 0;
+}
+
+.pie-pagina__enlaces {
+  display: flex;
+  gap: 2rem;
+}
+
+.pie-pagina__enlace {
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(29, 78, 216, 0.6);
+  text-decoration: none;
+  opacity: 0.8;
+  transition: color 0.2s, opacity 0.2s;
+  text-underline-offset: 0.25rem;
+}
+
+.pie-pagina__enlace:hover {
+  color: #1e3a8a;
+  opacity: 1;
+  text-decoration: underline;
+}
