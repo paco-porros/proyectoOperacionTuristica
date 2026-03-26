@@ -16,24 +16,15 @@
 <!-- Barra Lateral -->
 <aside class="barra-lateral">
     <div class="barra-lateral__marca">
-        <div class="barra-lateral__logo-contenedor">
-            <img
-                alt="Voyager Logo"
-                class="barra-lateral__logo"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAakvqdFX4lz9t9GmDwuyuvVKh2u3z4hXV8W_QXeTMsXypg9g-rZ0NlH5W518rA7ueFX0PKz391dlNc2AtIvMevy1WlLA_7kkOJlsI5_tvV7XjaOWrUPBFpCd3deVIfVF7NsU3W0DoKNiYX8UYYypnuhq3PScdOOkDdXHCKlOt5FNoYrSYgXTT0WKx72ax_s-jv4wd0gxUi0ngCUNNmYKoBfWf2umXASylviTyQXmkF2ALUxrqeXghdm2vxuvjCQMEAKlu4tnQx_0sK"
-            />
-        </div>
+        
         <div>
-            <h1 class="barra-lateral__nombre">Voyager</h1>
+            <h1 class="barra-lateral__nombre">Operador Turístico y Gastronomico | Santa Rosa de Cabal</h1>
             <p class="barra-lateral__subtitulo">Admin Console</p>
         </div>
     </div>
 
     <nav class="barra-lateral__nav">
-        <a class="nav__enlace" href="#">
-            <span class="material-symbols-outlined">dashboard</span>
-            <span class="nav__etiqueta">Dashboard</span>
-        </a>
+        
         <a class="nav__enlace--activo" href="#">
             <span class="material-symbols-outlined nav__icono--activo">group</span>
             <span class="nav__etiqueta">Usuarios</span>
@@ -46,17 +37,11 @@
             <span class="material-symbols-outlined">restaurant</span>
             <span class="nav__etiqueta">Planes Gastronómicos</span>
         </a>
-        <a class="nav__enlace" href="#">
-            <span class="material-symbols-outlined">history</span>
-            <span class="nav__etiqueta">Logs</span>
-        </a>
+        
     </nav>
 
     <div class="barra-lateral__pie">
-        <button class="boton-ayuda">
-            <span class="material-symbols-outlined">help</span>
-            <span class="nav__etiqueta">Ayuda</span>
-        </button>
+        
         <button class="boton-cerrar-sesion">
             <span class="material-symbols-outlined">logout</span>
             <span class="nav__etiqueta">Cerrar Sesión</span>
@@ -77,12 +62,7 @@
         </div>
     </div>
     <div class="barra-superior__acciones">
-        <button class="boton-icono-superior">
-            <span class="material-symbols-outlined">notifications</span>
-        </button>
-        <button class="boton-icono-superior">
-            <span class="material-symbols-outlined">settings</span>
-        </button>
+        
         <div class="divisor-vertical"></div>
         <div class="perfil-admin">
             <span class="perfil-admin__texto">
@@ -137,13 +117,7 @@
             </div>
         </div>
 
-        <div class="tarjeta-proximamente panel-vidrio">
-            <p class="tarjeta-proximamente__texto">Próximas métricas...</p>
-        </div>
-
-        <div class="tarjeta-proximamente panel-vidrio">
-            <p class="tarjeta-proximamente__texto">Próximas métricas...</p>
-        </div>
+        
     </div>
 
     <!-- Sección Tabla de Usuarios -->
