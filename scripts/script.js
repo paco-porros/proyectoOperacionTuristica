@@ -474,3 +474,25 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 console.log("Hola mundo")
+
+
+/* ojitos */
+
+    const toggle1 = document.getElementById("togglePassword");
+    const toggle2 = document.getElementById("togglePassword2");
+    const pass1 = document.getElementById("contrasena");
+    const pass2 = document.getElementById("confirmar-contrasena");
+
+    // 👁️ Contraseña
+    toggle1.addEventListener("click", () => {
+      const type = pass1.type === "password" ? "text" : "password";
+      pass1.type = type;
+      toggle1.textContent = type === "password" ? "visibility" : "visibility_off";
+    });
+
+    // 👁️ Confirmar contraseña
+    toggle2.addEventListener("click", () => {
+      const type = pass2.type === "password" ? "text" : "password";
+      pass2.type = type;
+      toggle2.textContent = type === "password" ? "visibility" : "visibility_off";
+    });
