@@ -115,7 +115,7 @@
         <footer class="pie-tarjeta">
           <p class="texto-registro">
             ¿No tienes una cuenta?
-            <a class="enlace-registro" href="#">Regístrate aquí</a>
+            <a class="enlace-registro" href="registro.php">Regístrate aquí</a>
           </p>
         </footer>
 
