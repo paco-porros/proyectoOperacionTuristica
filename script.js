@@ -337,3 +337,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 });
+
+
+
+
+const togglePassword = document.getElementById("togglePassword");
+    const password = document.getElementById("contrasena");
+
+    togglePassword.addEventListener("click", () => {
+      const type = password.type === "password" ? "text" : "password";
+      password.type = type;
+
+      togglePassword.textContent = type === "password" ? "visibility" : "visibility_off";
+    });
