@@ -52,18 +52,7 @@ body {
     gap: 0.75rem;
 }
 
-.barra-lateral__logo-contenedor {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 0.75rem;
-    background-color: #3066be;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    box-shadow: 0 10px 15px -3px rgba(48, 102, 190, 0.2);
-    overflow: hidden;
-}
+
 
 .barra-lateral__logo {
     width: 100%;
@@ -145,20 +134,6 @@ body {
     gap: 0.25rem;
 }
 
-.boton-ayuda {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: #334155;
-    padding: 0.75rem;
-    border-radius: 1rem;
-    transition: all 0.3s;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-}
-
 .boton-ayuda:hover {
     background: rgba(103, 232, 249, 0.3);
 }
@@ -203,6 +178,7 @@ body {
 .barra-superior__buscador {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     flex: 1;
     max-width: 36rem;
 }
@@ -214,7 +190,7 @@ body {
 
 .buscador__icono {
     position: absolute;
-    left: 1rem;
+    right: 1rem;
     top: 50%;
     transform: translateY(-50%);
     color: #94a3b8;
@@ -247,23 +223,9 @@ body {
     margin-left: 1.5rem;
 }
 
-.boton-icono-superior {
-    width: 2.5rem;
-    height: 2.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 9999px;
-    transition: all 0.2s;
-    color: #475569;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-}
 
-.boton-icono-superior:hover {
-    background: rgba(165, 243, 252, 0.4);
-}
+
+
 
 .divisor-vertical {
     height: 2rem;
@@ -444,22 +406,7 @@ body {
     color: #00595e;
 }
 
-.tarjeta-proximamente {
-    padding: 1.5rem;
-    border-radius: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px dashed rgba(255, 255, 255, 0.4);
-}
 
-.tarjeta-proximamente__texto {
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: #94a3b8;
-    font-style: italic;
-}
 
 /* =============================================
    TABLA DE USUARIOS
