@@ -131,42 +131,39 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ----------------------------------------------------------
      Envío del formulario principal
      ---------------------------------------------------------- */
-  formulario.addEventListener("submit", (evento) => {
-    evento.preventDefault();
+  if (formulario) {
+    formulario.addEventListener("submit", (evento) => {
+      evento.preventDefault();
 
-    const correo     = campoCorrAeo.value.trim();
-    const contrasena = campoContrasena.value.trim();
+      const correo     = campoCorrAeo?.value.trim() || "";
+      const contrasena = campoContrasena?.value.trim() || "";
 
-    if (!correo || !contrasena) {
-      mostrarMensaje("Por favor completa todos los campos.", "error");
-      return;
-    }
+      if (!correo || !contrasena) {
+        mostrarMensaje("Por favor completa todos los campos.", "error");
+        return;
+      }
 
-    if (!validarCorreo(correo)) {
-      mostrarMensaje("Ingresa un correo electrónico válido.", "error");
-      return;
-    }
+      if (!validarCorreo(correo)) {
+        mostrarMensaje("Ingresa un correo electrónico válido.", "error");
+        return;
+      }
 
-    // Aquí se conectaría con el backend de autenticación
-    console.log("Iniciando sesión con:", { correo, contrasena });
-    mostrarMensaje("Iniciando sesión…", "exito");
-  });
+      console.log("Iniciando sesión con:", { correo, contrasena });
+      mostrarMensaje("Iniciando sesión…", "exito");
+    });
+  }
 
-  /* ----------------------------------------------------------
-     Inicio de sesión con Google
-     ---------------------------------------------------------- */
-  botonGoogle.addEventListener("click", () => {
-    console.log("Inicio de sesión con Google solicitado.");
-    // Integrar con Google OAuth
-  });
+  if (botonGoogle) {
+    botonGoogle.addEventListener("click", () => {
+      console.log("Inicio de sesión con Google solicitado.");
+    });
+  }
 
-  /* ----------------------------------------------------------
-     Inicio de sesión con Facebook
-     ---------------------------------------------------------- */
-  botonFacebook.addEventListener("click", () => {
-    console.log("Inicio de sesión con Facebook solicitado.");
-    // Integrar con Facebook OAuth
-  });
+  if (botonFacebook) {
+    botonFacebook.addEventListener("click", () => {
+      console.log("Inicio de sesión con Facebook solicitado.");
+    });
+  }
 
   /* ----------------------------------------------------------
      Utilidades
