@@ -47,7 +47,7 @@
     <div class="portada__contenido">
       <h1 class="portada__titulo">Vive Esta Maravillosa Experiencia </h1>
       <p class="portada__subtitulo">Planes Turísticos y Gastronómicos Personalizados Para Ti</p>
-
+    </div>
 
   </header>
 
@@ -485,4 +485,17 @@
     </div>
 
     <div class="pie__inferior">
-      <p>© 2026 Operador Turístico y Gastronomico | Santa Rosa de Cab
+      <p>© 2026 Operador Turístico y Gastronomico | Santa Rosa de Cabal
+        <span class="pie__separador">|</span>
+        <a href="#">Política de Privacidad</a>
+        <span class="pie__separador">|</span>
+        <a href="#">Términos de Servicio</a>
+      </p>
+    </div>
+
+  </footer>
+  
+  <script src="/scripts/script.js"></script>
+
+</body>
+</html>

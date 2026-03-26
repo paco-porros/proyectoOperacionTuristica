@@ -360,65 +360,74 @@
     </div>
   </section>
 
-  <!-- =========================================================
+  <!-- ═══════════════════════════════════════════
        PIE DE PÁGINA
-       ========================================================= -->
-  <footer class="pie-pagina">
+  ═══════════════════════════════════════════ -->
+  <footer class="pie">
 
-    <!-- Cuadrícula de columnas -->
-    <div class="cuadricula-pie">
+    <div class="pie__cuadricula">
 
-      <!-- Columna: Marca -->
-      <div class="columna-pie">
-        <span class="logo-pie">Voyager</span>
-        <p class="descripcion-pie">
-          Creando viajes etéreos desde 2024. Tu puerta de entrada a las experiencias de viaje más exclusivas y puras del planeta.
-        </p>
-      </div>
-
-      <!-- Columna: Enlaces rápidos -->
-      <div class="columna-pie columna-pie--enlaces">
-        <h4 class="titulo-columna-pie">Enlaces Rápidos</h4>
-        <a class="enlace-pie" href="#">Sobre Nosotros</a>
-        <a class="enlace-pie" href="#">Contacto</a>
-      </div>
-
-      <!-- Columna: Legal -->
-      <div class="columna-pie columna-pie--enlaces">
-        <h4 class="titulo-columna-pie">Legal</h4>
-        <a class="enlace-pie" href="#">Política de Privacidad</a>
-        <a class="enlace-pie" href="#">Términos de Servicio</a>
-      </div>
-
-      <!-- Columna: Boletín -->
-      <div class="columna-pie">
-        <h4 class="titulo-columna-pie">Boletín Informativo</h4>
-        <div class="formulario-boletin">
-          <input
-            class="input-boletin"
-            id="input-boletin"
-            placeholder="Tu correo electrónico"
-            type="email"
-          />
-          <button class="boton-boletin" id="boton-boletin">
-            <span class="material-symbols-outlined icono-enviar" data-icon="send">send</span>
+      <!-- Marca -->
+      <div>
+        <span class="pie__logo">Operador Turístico y Gastronomico | Santa Rosa de Cabal</span>
+        <p class="pie__eslogan">Redefiniendo el lujo en cada travesía. Tu horizonte, nuestra pasión.</p>
+        <div class="pie__redes">
+          <button class="pie__boton-red">
+            <span class="material-symbols-outlined">public</span>
+          </button>
+          <button class="pie__boton-red">
+            <span class="material-symbols-outlined">share</span>
           </button>
         </div>
       </div>
 
+      <!-- Sobre nosotros -->
+      <div>
+        <h4 class="pie__columna-titulo">Sobre nosotros</h4>
+        <ul class="pie__lista">
+          <li><a href="#">Misión y Visión</a></li>
+          <li><a href="#">Equipo Ejecutivo</a></li>
+          <li><a href="#">Carreras</a></li>
+        </ul>
+      </div>
+
+      <!-- Enlaces rápidos -->
+      <div>
+        <h4 class="pie__columna-titulo">Enlaces rápidos</h4>
+        <ul class="pie__lista">
+          <li><a href="#">Términos y Condiciones</a></li>
+          <li><a href="#">Privacidad</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+
+      <!-- Contacto -->
+      <div>
+        <h4 class="pie__columna-titulo">Contacto</h4>
+        <ul class="pie__lista-contacto">
+          <li class="pie__contacto-item">
+            <span class="material-symbols-outlined">mail</span>
+            <a href="/cdn-cgi/l/email-protection#d3bca3b6a1b2b7bca1a7a6a1baa0a7bab0bcaab4b2a0a7a1bcbdbcbebab0bc93b0bca1a1b6bcfdb0bcbe"><span class="__cf_email__" data-cfemail="e28d92879083868d909697908b91968b818d9b85839196908d8c8d8f8b818da2818d9090878dcc818d8f">[email&#160;protected]</span></a>
+          </li>
+          <li class="pie__contacto-item">
+            <span class="material-symbols-outlined">call</span>
+            +1 (555) 123-4567
+          </li>
+        </ul>
+      </div>
+
     </div>
 
-    <!-- Barra inferior del pie -->
-    <div class="barra-inferior-pie">
-      <span class="copyright-pie">© 2024 Ethereal Voyager. Todos los derechos reservados.</span>
-      <div class="iconos-sociales-pie">
-        <span class="material-symbols-outlined icono-pie-social" id="icono-web" data-icon="public">public</span>
-        <span class="material-symbols-outlined icono-pie-social" id="icono-foro" data-icon="forum">forum</span>
-      </div>
+    <div class="pie__inferior">
+      <p>© 2026 Operador Turístico y Gastronomico | Santa Rosa de Cabal
+        <span class="pie__separador">|</span>
+        <a href="#">Política de Privacidad</a>
+        <span class="pie__separador">|</span>
+        <a href="#">Términos de Servicio</a>
+      </p>
     </div>
 
   </footer>
-
   <script src="/scripts/script-home.js"></script>
 </body>
 </html>

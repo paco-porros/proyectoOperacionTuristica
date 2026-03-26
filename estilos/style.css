@@ -63,13 +63,6 @@ a { text-decoration: none; }
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.portada-gradiente {
-  background: radial-gradient(
-    circle at center,
-    rgba(46, 20, 40, 0.2) 0%,
-    rgba(46, 20, 40, 0.6) 100%
-  );
-}
 
 /* ============================================================
    NAVEGACIÓN
