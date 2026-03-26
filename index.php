@@ -9,7 +9,7 @@
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
   <!-- Estilos externos -->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="/estilos/style.css" />
 </head>
 
 <body>
@@ -356,7 +356,7 @@
   </footer>
 
   <!-- JavaScript externo (al final del body para no bloquear la carga) -->
-  <script src="script.js"></script>
+  <script src="/scripts/script.js"></script>
 
 </body>
 </html>
