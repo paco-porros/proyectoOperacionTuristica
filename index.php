@@ -381,12 +381,10 @@
     </div>
   </section>
 
-
   <!-- ═══════════════════════════════════════════
        OFERENTES DESTACADOS
   ═══════════════════════════════════════════ -->
   <section class="oferentes">
-
     <div class="oferentes__encabezado">
       <span class="seccion__supratitulo">Nuestros Aliados</span>
       <h2 class="seccion__titulo">Oferentes Destacados</h2>
