@@ -92,10 +92,6 @@ $usuario  = usuarioActual();
     <section class="seccion-cuerpo">
       <div class="cuadricula-principal">
         <div class="columna-contenido">
-<<<<<<< HEAD
-          <div class="tarjeta-cristal" style="opacity:.3; min-height:12rem;"></div>
-          <div class="itinerario" style="opacity:.3; min-height:8rem;"></div>
-=======
 
           <!-- Descripción -->
           <div class="tarjeta-cristal">
@@ -155,13 +151,9 @@ $usuario  = usuarioActual();
             </div>
           </div>
 
->>>>>>> 16e14b6b1b8412fbec3ff2aacff89f9ad261fedf
         </div>
         <aside class="columna-lateral">
           <div class="lateral-sticky">
-<<<<<<< HEAD
-            <div class="tarjeta-reserva" style="opacity:.3; min-height:14rem;"></div>
-=======
 
             <!-- Tarjeta de reserva -->
             <div class="tarjeta-reserva">
@@ -236,7 +228,6 @@ $usuario  = usuarioActual();
               </ul>
             </div>
 
->>>>>>> 16e14b6b1b8412fbec3ff2aacff89f9ad261fedf
           </div>
         </aside>
       </div>
