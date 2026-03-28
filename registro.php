@@ -115,12 +115,22 @@ if (estaLogueado()) {
 
   <script>
   /* ── Toggle contraseñas ── */
-  ['togglePassword', 'togglePassword2'].forEach((btnId, i) => {
-    const inp = document.querySelectorAll('[name="password"],[name="confirmar"]')[i];
-    document.getElementById(btnId).addEventListener('click', function () {
+  const camposContrasena = {
+    togglePassword: document.getElementById('contrasena'),
+    togglePassword2: document.getElementById('confirmar-contrasena'),
+  };
+
+  Object.entries(camposContrasena).forEach(([btnId, inp]) => {
+    const btn = document.getElementById(btnId);
+    if (!btn || !inp) return;
+
+    inp.style.color = '#2e1428';
+    btn.addEventListener('click', function () {
       const show = inp.type === 'password';
       inp.type = show ? 'text' : 'password';
       this.textContent = show ? 'visibility_off' : 'visibility';
+      inp.style.color = '#2e1428';
+      inp.focus();
     });
   });
 
