@@ -1,3 +1,16 @@
+<?php
+/**
+ * login.php — con autenticación AJAX
+ */
+require_once __DIR__ . '/includes/session.php';
+
+// Si ya está logueado, redirigir
+if (estaLogueado()) {
+    $u = usuarioActual();
+    header('Location: ' . (in_array($u['rol'], ['admin','editor']) ? '/dashboard-administrador.php' : '/home.php'));
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html class="claro" lang="es">
 <head>
@@ -9,41 +22,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <script src="tailwind.config.js"></script>
   <link rel="stylesheet" href="./estilos/style-login.css">
-
-  <!-- ✅ Estilo para el ojo -->
   <style>
-    .contenedor-input {
-      position: relative;
-    }
-    .icono-ojo {
-      position: absolute;
-      right: 10px;
-      cursor: pointer;
-      color: #aaa;
-    }
+    .contenedor-input { position: relative; }
+    .icono-ojo { position: absolute; right: 10px; cursor: pointer; color: #aaa; }
   </style>
 </head>
 <body class="fondo-principal fuente-cuerpo texto-superficie seleccion-primaria sin-desbordamiento-horizontal">
 
-  <!-- Barra de navegación superior -->
   <nav class="barra-navegacion">
     <div class="logo-marca">Operador Turístico y Gastronomico | Santa Rosa de Cabal</div>
   </nav>
 
-  <!-- Contenedor principal hero -->
   <main class="contenedor-principal">
-
-    <!-- Imagen de fondo -->
     <div class="capa-fondo">
-      <img
-        alt="Cadena de montañas neblinosas"
-        class="imagen-fondo"
-        src="./img/fondo_login.png"
-      />
+      <img alt="Cadena de montañas neblinosas" class="imagen-fondo" src="./img/fondo_login.png"/>
       <div class="superposicion-radial"></div>
     </div>
 
-    <!-- Tarjeta -->
     <section class="seccion-tarjeta">
       <div class="tarjeta-cristal">
 
@@ -55,23 +50,18 @@
           <p class="subtitulo-bienvenida">Inicia sesión para planear tu próxima aventura</p>
         </header>
 
-        <form class="formulario-login" id="formulario-login">
+        <!-- Mensaje de estado AJAX -->
+        <div id="alerta-login" style="display:none; margin-bottom:1rem; padding:.75rem 1rem; border-radius:.5rem; font-size:.875rem; font-weight:600; text-align:center;"></div>
 
-          <!-- Correo -->
+        <form class="formulario-login" id="formulario-login" novalidate>
           <div class="grupo-campo">
             <label class="etiqueta-campo" for="correo">Correo electrónico</label>
             <div class="contenedor-input">
               <span class="material-symbols-outlined icono-input">mail</span>
-              <input
-                class="campo-input"
-                id="correo"
-                placeholder="viajero@ejemplo.com"
-                type="email"
-              />
+              <input class="campo-input" id="correo" name="email" placeholder="viajero@ejemplo.com" type="email" autocomplete="email"/>
             </div>
           </div>
 
-          <!-- Contraseña -->
           <div class="grupo-campo">
             <div class="fila-etiqueta-contrasena">
               <label class="etiqueta-campo" for="contrasena">Contraseña</label>
@@ -79,22 +69,12 @@
             </div>
             <div class="contenedor-input">
               <span class="material-symbols-outlined icono-input">lock</span>
-              <input
-                class="campo-input"
-                id="contrasena"
-                placeholder="••••••••"
-                type="password"
-              />
-
-              <!-- 👁️ BOTÓN VER CONTRASEÑA -->
-              <span 
-                class="material-symbols-outlined icono-ojo" 
-                id="togglePassword"
-              >visibility</span>
+              <input class="campo-input" id="contrasena" name="password" placeholder="••••••••" type="password" autocomplete="current-password"/>
+              <span class="material-symbols-outlined icono-ojo" id="togglePassword">visibility</span>
             </div>
           </div>
 
-          <button class="boton-iniciar-sesion" type="submit">Iniciar Sesión</button>
+          <button class="boton-iniciar-sesion" type="submit" id="btn-login">Iniciar Sesión</button>
         </form>
 
         <footer class="pie-tarjeta">
@@ -103,8 +83,6 @@
             <a class="enlace-registro" href="registro.php">Regístrate aquí</a>
           </p>
         </footer>
-
-          
 
       </div>
     </section>
@@ -121,7 +99,69 @@
     <div class="copyright-pie">© 2024 Operador Turístico y Gastronomico | Santa Rosa de Cabal.</div>
   </footer>
 
-    
-<script src="/scripts/script.js"></script>
+  <script>
+  /* ── Toggle contraseña ── */
+  document.getElementById('togglePassword').addEventListener('click', function () {
+    const inp  = document.getElementById('contrasena');
+    const show = inp.type === 'password';
+    inp.type   = show ? 'text' : 'password';
+    this.textContent = show ? 'visibility_off' : 'visibility';
+  });
+
+  /* ── Alerta helper ── */
+  function mostrarAlerta(msg, tipo) {
+    const el = document.getElementById('alerta-login');
+    el.textContent = msg;
+    el.style.display = 'block';
+    if (tipo === 'ok') {
+      el.style.background = 'rgba(16,185,129,.15)';
+      el.style.color = '#065f46';
+      el.style.border = '1px solid #6ee7b7';
+    } else {
+      el.style.background = 'rgba(239,68,68,.12)';
+      el.style.color = '#7f1d1d';
+      el.style.border = '1px solid #fca5a5';
+    }
+  }
+
+  /* ── Envío AJAX del formulario ── */
+  document.getElementById('formulario-login').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const btn   = document.getElementById('btn-login');
+    const email = document.getElementById('correo').value.trim();
+    const pass  = document.getElementById('contrasena').value.trim();
+
+    if (!email || !pass) {
+      mostrarAlerta('Por favor completa todos los campos.', 'error');
+      return;
+    }
+
+    btn.disabled     = true;
+    btn.textContent  = 'Iniciando…';
+
+    try {
+      const res  = await fetch('/ajax/login.php', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ email, password: pass }),
+      });
+      const data = await res.json();
+
+      if (data.ok) {
+        mostrarAlerta(data.msg, 'ok');
+        setTimeout(() => { window.location.href = data.redirect; }, 800);
+      } else {
+        mostrarAlerta(data.msg, 'error');
+        btn.disabled    = false;
+        btn.textContent = 'Iniciar Sesión';
+      }
+    } catch (err) {
+      mostrarAlerta('Error de conexión. Intenta de nuevo.', 'error');
+      btn.disabled    = false;
+      btn.textContent = 'Iniciar Sesión';
+    }
+  });
+  </script>
 </body>
 </html>

@@ -1,22 +1,33 @@
+<?php
+/**
+ * detalles-gastronomicos.php
+ * Página INFORMATIVA: restaurante, dirección, contacto, platos.
+ * No permite agregar a planes turísticos.
+ * Datos cargados vía AJAX desde la BD.
+ */
+require_once __DIR__ . '/includes/session.php';
+
+$planId  = (int)($_GET['id'] ?? 0);
+$logueado = estaLogueado();
+$usuario  = usuarioActual();
+?>
 <!DOCTYPE html>
 <html class="light" lang="es">
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Ruta del Vino y Queso Artesanal | Azure Voyager</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <title>Detalle Gastronómico | Operador Santa Rosa de Cabal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/estilos/style-detalles-gastronomicos.css"/>
 </head>
 <body class="cuerpo-principal">
 
-  <!-- ============================================================
-       NAVEGACIÓN
-  ============================================================ -->
+  <!-- NAVEGACIÓN -->
   <nav class="barra-nav">
     <div class="nav-logo">Azure Voyager</div>
     <div class="nav-enlaces">
-      <a class="nav-enlace" href="#">Inicio</a>
+      <a class="nav-enlace" href="index.php">Inicio</a>
       <a class="nav-enlace" href="#">Servicios</a>
       <a class="nav-enlace" href="#">Planes</a>
       <a class="nav-enlace" href="#">Destinos</a>
@@ -27,207 +38,39 @@
         <span class="material-symbols-outlined nav-buscador__icono">search</span>
         <input class="nav-buscador__input" placeholder="Buscar..." type="text"/>
       </div>
-      <button class="nav-boton-reservar">Reservar</button>
+      <?php if ($logueado): ?>
+        <button class="nav-boton-reservar" id="btn-logout-gastro"><?= htmlspecialchars($usuario['nombre']) ?> · Salir</button>
+      <?php else: ?>
+        <button class="nav-boton-reservar" onclick="window.location.href='/login.php'">Iniciar Sesión</button>
+      <?php endif; ?>
     </div>
   </nav>
 
-  <!-- ============================================================
-       CONTENIDO PRINCIPAL
-  ============================================================ -->
-  <main class="contenido-principal">
+  <!-- CONTENIDO PRINCIPAL — rellenado por AJAX -->
+  <main class="contenido-principal" id="contenido-gastro">
 
-    <!-- Hero -->
-    <section class="seccion-hero">
-      <div class="hero-fondo" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCVyCZ2FExmqXaMFwH23NJmftIQOA29hIqHlw4QVhAyepxIP0qPmqft0EUBSzlc28rmNRLQeWkcsbAthowjVD7Ov8tO8TmnGOd6kMpXYHMGvzcTt7nBtEijjwUxIA7Xqtab9OFW9f4D2DOdhkVPEI9EtdcOs20Tu3k2INSFHQ0fHSgtHFqFjhWArit9OSR3uw9dshnJU4AClXYlhUcWLwO76ZZ4emwujwsnGxR4H2dYMakb5BLUruCP_FnBlwjPvO-R5Vyvf59CpI0B');"></div>
+    <!-- Skeleton -->
+    <section class="seccion-hero" style="min-height:400px;background:linear-gradient(135deg,#cbfdff,#afedf0);">
       <div class="hero-degradado"></div>
       <div class="hero-contenido">
-        <span class="hero-etiqueta">Experiencia Gourmet</span>
-        <h1 class="hero-titulo">Ruta del Vino y Queso Artesanal</h1>
-        <p class="hero-subtitulo">Una inmersión sensorial a través de los viñedos más exclusivos, maridando cosechas premium con quesos de autor en un entorno etéreo.</p>
+        <span class="hero-etiqueta" style="opacity:.3;">Cargando…</span>
+        <h1 class="hero-titulo" style="opacity:.2;background:#c3c6d4;color:transparent;border-radius:.5rem;">Cargando información gastronómica</h1>
       </div>
     </section>
 
-    <!-- Cuerpo principal -->
     <section class="seccion-cuerpo">
       <div class="cuadricula-principal">
-
-        <!-- Columna izquierda -->
         <div class="columna-contenido">
-
-          <!-- Menú degustación -->
-          <div class="tarjeta-cristal">
-            <div class="tarjeta-cristal__encabezado">
-              <span class="material-symbols-outlined icono-primario">restaurant_menu</span>
-              <h2 class="titulo-seccion">Menú Degustación</h2>
-            </div>
-            <div class="lista-platos">
-
-              <div class="plato">
-                <div class="plato__imagen-envoltorio">
-                  <img class="plato__imagen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAERIc4zxlLattoIydkblU9vwFfzgioXPnhg6QVJEjbWnsq1M-CQBhoBmTIkvPqJ9DBqd-OHgphca5EgyPLSe4rAUCptAXc5sDhTNRrwZQTz7UICm3qsmUZXVNhqPk7Tvt7c0-0Do0m4p3I9AJ2z9HZxo7U5OfI7yCqThYZAMSM3JVsXPH1Fy7M5yOTrizSMZH-kkdfh4KPYUCvz9Lw7yLHoLe-RPVGA8ZHZfaB57vODJFL_ZyJOBqT05UgJoGqQvSWaoBWBHH_B7wS" alt="Tabla de quesos artesanales"/>
-                </div>
-                <div class="plato__info">
-                  <h3 class="plato__titulo">Aperitivo de Bienvenida</h3>
-                  <p class="plato__descripcion">Selección de quesos de cabra con ceniza volcánica, higos frescos y reducción de aceto balsámico envejecido 12 años.</p>
-                </div>
-              </div>
-
-              <div class="plato">
-                <div class="plato__imagen-envoltorio">
-                  <img class="plato__imagen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0YYIpDEmED-nEjkgWPSr0moD2dwARz53nPPgeWrW3P49PlydolP3Np8V2xlGhW8trD39utvRRRTIED_6TT24P4xK72R1z0Y47okoT04ooqhrxErihMMHMD7CDKG5NSFR6D1QxcPu3ZbTXeZYvzZs_ZWyD5dHvphkg3Q93yQ6K_Jih-q3-ky0-28__18OdPKRv9_EUWX4zIeISF3lGXklSgNk3HJhwoDwn5RpsbHIJ61rcrFOUv3tW3g-hLjccCHm5WVP_BF0NWNeh" alt="Risotto con hongos y trufa"/>
-                </div>
-                <div class="plato__info">
-                  <h3 class="plato__titulo">Principal de Autor</h3>
-                  <p class="plato__descripcion">Risotto de cebada perlada con hongos silvestres, espuma de queso Camembert y lluvia de trufa negra fresca.</p>
-                </div>
-              </div>
-
-              <div class="plato">
-                <div class="plato__imagen-envoltorio">
-                  <img class="plato__imagen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-C6xjliV2h3Xr8N7pH3qDKLEVhYQcLsfsfDuZXcG2_uTeKr-HmtfZW-EbppIl_YD9G4fyZqibxUugHF_hAHWcv1OS7yCrmYkJwLaGs4LaDGtuD9AFjloLzCoqGNODaMZCP_j1tMm3kJy2ToR6dU4BebXSOt8YsyUt281-bu1ICL3NJqyFdMtYBgaYOrW4QpkKouAlfGnvyuZngUhE5qw9QfBJYR5-fpD6kd3_mR-dg3IdCsLiT1aW922Yyw1pIaSEWSWdpO9SuTi0" alt="Postre de chocolate con frutos rojos"/>
-                </div>
-                <div class="plato__info">
-                  <h3 class="plato__titulo">Final Dulce</h3>
-                  <p class="plato__descripcion">Mousse de chocolate blanco y roquefort suave con cristales de sal marina y frutos rojos macerados en Oporto.</p>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <!-- Bodegas y Maridaje -->
-          <div class="cuadricula-dos-columnas">
-
-            <div class="tarjeta-contenedor">
-              <h3 class="subtitulo-seccion">
-                <span class="material-symbols-outlined icono-secundario">domain</span>
-                Bodegas a Visitar
-              </h3>
-              <ul class="lista-bodegas">
-                <li class="bodega-item">
-                  <span class="bodega-item__nombre">Château de l'Azur</span>
-                  <span class="bodega-item__badge">Organic</span>
-                </li>
-                <li class="bodega-item">
-                  <span class="bodega-item__nombre">Viñedos del Horizonte</span>
-                  <span class="bodega-item__badge">Historic</span>
-                </li>
-                <li class="bodega-item">
-                  <span class="bodega-item__nombre">Bodega Ethereal</span>
-                  <span class="bodega-item__badge">Boutique</span>
-                </li>
-              </ul>
-            </div>
-
-            <div class="tarjeta-contenedor">
-              <h3 class="subtitulo-seccion">
-                <span class="material-symbols-outlined icono-secundario">wine_bar</span>
-                Maridaje Sugerido
-              </h3>
-              <div class="lista-maridaje">
-                <p><strong class="texto-destacado">Sauvignon Blanc:</strong> Quesos frescos y cítricos.</p>
-                <p><strong class="texto-destacado">Cabernet Sauvignon:</strong> Quesos curados y ahumados.</p>
-                <p><strong class="texto-destacado">Rosé de Provence:</strong> Frutas y quesos cremosos.</p>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Galería -->
-          <div class="galeria">
-            <h2 class="galeria__titulo">
-              <span class="material-symbols-outlined icono-primario">photo_library</span>
-              Galería de Platos Gourmet
-            </h2>
-            <div class="galeria__cuadricula">
-              <div class="galeria__item">
-                <img class="galeria__imagen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtORCVIe8kZ_A3APHZRohZ_kboS0x1dT-ae8TyVzvmSaE5uskEr-BYky8FKqzoKol5jBxNL7HihHYq4vmYdpNArIhr1ADwSjIZywmCJgO9cMMXOK3m7vF_-zHU6Yjr0CDflk6TMjs7usgiPiELHXJ9zibi2XJ6qh7Wp9drAdhFUSgAFhR_sa2lt12NXZmpdvmlwdk16mCFAU91QcXb6yRTxklH09OScHFNyEypGrYxNYRNAeUohtP3JAD7vNcHYCzYNCL-uh7_jKeo" alt="Vieiras con microgreens"/>
-              </div>
-              <div class="galeria__item">
-                <img class="galeria__imagen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAupc1NXRagNIPfuN6kaSno6SiRPGOpyECJJPL441qhOJUVkUQiutYrL9ldZmd_x8UTzU_1VGqdHIWAzMBFVG1cdrnwYWfexW4eXmemEgJOp4xNoTX2_kbSghGxMb61j4gtbSmVTOaCdSx4vAh-dc7mD7GZEbHeDmYrujcT0kDzF1wxaiUeokhdkzY-BwJXIJXtwyrbpqpa56rL15TsKfsSJ9koXvYSD0NxkA6QwgwUOsAbo7dJjJWon7dr0NrCoVwd0ZuidLEKBVyw" alt="Copa de vino tinto"/>
-              </div>
-              <div class="galeria__item">
-                <img class="galeria__imagen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVgR2oa79Ejnru2Mp_SrUUROY-JTJeJU4YJ3s7tk1OevP61gN5iiPlbWc2bf-GFFyMZrDy9zCI8VDvLWUhqYPD2sFTzR8aexpvq78w3rcSn05J27XwCyGACeX3dBSYyBgM3rDln9Fn3PQ4VsQ4LZX12fj3ttK0V6G3UdSKv-ekLv2Jg14Da7zCDhQe5zplG3S9oRs76D6BsuoLhB76aUSIpS6j6a07EAxVXhLw7Lnk6BFHwXXivhP0LgAnfNz_5v_M2-rM_yftqURf" alt="Tabla de quesos franceses"/>
-              </div>
-              <div class="galeria__item">
-                <img class="galeria__imagen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKupxVN7DbLsoLq6dvPZwoGXVwpB9UhQwx15F1ZmFzJaJT10u9n6z5036N5OhDTFUYuUFvpQ5aTVLPmgK-g18xCPkRhEf1Ldki1ZiMBTgsZEXTNefmeAFdqrbYaSjKhnzRcdn8I1tt75oBjTE9Da1KQNDPJjDzfog01TQM-7Ob_Ez8RDZzppVzo2-QLeSaZXKWBXOtyGmKfW4beMd2mxo_1OUP1UWyvvq7UEL780GNbRs_hRHzenR0fABrLiz6tybRbMPOhZruw8vb" alt="Postre gourmet en restaurante"/>
-              </div>
-            </div>
-          </div>
-
+          <div class="tarjeta-cristal" style="opacity:.3;min-height:12rem;"></div>
         </div>
-
-        <!-- Columna derecha (aside) -->
         <aside class="columna-lateral">
-
-          <!-- Tarjeta de reserva -->
-          <div class="tarjeta-cristal tarjeta-cristal--sticky">
-            <div class="reserva-precio">
-              <span class="reserva-precio__etiqueta">Desde</span>
-              <div class="reserva-precio__valor">
-                <span class="reserva-precio__numero">$185</span>
-                <span class="reserva-precio__unidad">/ persona</span>
-              </div>
-            </div>
-            <div class="reserva-detalles">
-              <div class="reserva-detalle-item">
-                <span class="material-symbols-outlined icono-secundario">schedule</span>
-                <span>Duración: 6 horas</span>
-              </div>
-              <div class="reserva-detalle-item">
-                <span class="material-symbols-outlined icono-secundario">group</span>
-                <span>Máximo 8 personas</span>
-              </div>
-              <div class="reserva-detalle-item">
-                <span class="material-symbols-outlined icono-secundario">language</span>
-                <span>Español, Inglés, Francés</span>
-              </div>
-            </div>
-            <button class="boton-reservar">Reservar Mesa</button>
-            <p class="reserva-nota">Confirmación inmediata • Cancelación gratuita 48h antes</p>
-          </div>
-
-          <!-- Opiniones -->
-          <div class="tarjeta-opiniones">
-            <h3 class="tarjeta-opiniones__titulo">Opiniones</h3>
-            <div class="lista-opiniones">
-
-              <div class="opinion opinion--con-borde">
-                <div class="opinion__estrellas">
-                  <span class="material-symbols-outlined estrella-llena">star</span>
-                  <span class="material-symbols-outlined estrella-llena">star</span>
-                  <span class="material-symbols-outlined estrella-llena">star</span>
-                  <span class="material-symbols-outlined estrella-llena">star</span>
-                  <span class="material-symbols-outlined estrella-llena">star</span>
-                </div>
-                <p class="opinion__texto">"Una experiencia celestial. El maridaje de quesos fue revelador, nunca había probado algo tan equilibrado."</p>
-                <span class="opinion__autor">— Elena M., Gastrónoma</span>
-              </div>
-
-              <div class="opinion">
-                <div class="opinion__estrellas">
-                  <span class="material-symbols-outlined estrella-llena">star</span>
-                  <span class="material-symbols-outlined estrella-llena">star</span>
-                  <span class="material-symbols-outlined estrella-llena">star</span>
-                  <span class="material-symbols-outlined estrella-llena">star</span>
-                  <span class="material-symbols-outlined">star</span>
-                </div>
-                <p class="opinion__texto">"Las vistas desde la bodega Horizon son inmejorables. El Risotto fue el punto culminante del día."</p>
-                <span class="opinion__autor">— Julian V., Crítico de Viajes</span>
-              </div>
-
-            </div>
-          </div>
-
+          <div class="tarjeta-cristal tarjeta-cristal--sticky" style="opacity:.3;min-height:10rem;"></div>
         </aside>
       </div>
     </section>
-
   </main>
 
-  <!-- ============================================================
-       PIE DE PÁGINA
-  ============================================================ -->
+  <!-- PIE DE PÁGINA -->
   <footer class="pie-pagina">
     <div class="pie-pagina__interior">
       <div class="pie-pagina__marca">
@@ -242,6 +85,249 @@
       </div>
     </div>
   </footer>
+
+  <script>
+  /* ════════════════════════════════════════════════════
+     DETALLES GASTRONÓMICOS — Página puramente informativa
+     Carga datos del restaurante y plan desde la BD vía AJAX
+  ════════════════════════════════════════════════════ */
+
+  const PLAN_ID = <?= $planId ?>;
+
+  /* ── Renderizar estrellas ── */
+  function estrellas(n) {
+    let html = '';
+    for (let i = 1; i <= 5; i++) {
+      const llena = i <= Math.round(n);
+      html += `<span class="material-symbols-outlined ${llena ? 'estrella-llena' : ''}" style="font-size:1.125rem;color:#054da4;">${llena ? 'star' : 'star'}</span>`;
+    }
+    return html;
+  }
+
+  /* ── Renderizar lista de restaurantes (vista sin id) ── */
+  function renderLista(restaurantes) {
+    if (!restaurantes || !restaurantes.length) {
+      document.getElementById('contenido-gastro').innerHTML =
+        '<p style="padding:6rem 2rem;text-align:center;color:#306388;">No hay restaurantes disponibles.</p>';
+      return;
+    }
+
+    const cards = restaurantes.map(r => {
+      const planesHTML = r.planes.map(p =>
+        `<li style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid rgba(195,198,212,.2);">
+          <span style="font-size:.875rem;color:#002021;font-weight:500;">${p.titulo}</span>
+          <span style="font-size:.75rem;font-weight:700;color:#00595e;">$${Number(p.precio_desde).toLocaleString('es-CO')} ${p.moneda}</span>
+        </li>`
+      ).join('');
+
+      return `
+      <div class="tarjeta-contenedor" style="margin-bottom:2rem;">
+        <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:1rem;">
+          <span class="material-symbols-outlined icono-primario">${r.icono || 'restaurant'}</span>
+          <div>
+            <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:700;color:#054da4;margin:0;">${r.nombre}</h3>
+            <span style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;">${r.tipo || 'Restaurante'}</span>
+          </div>
+        </div>
+        ${r.descripcion ? `<p style="font-size:.875rem;color:#424752;line-height:1.625;margin-bottom:1rem;">${r.descripcion}</p>` : ''}
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;">
+          <span class="material-symbols-outlined" style="color:#306388;font-size:1.25rem;">location_on</span>
+          <span style="font-size:.875rem;color:#306388;font-weight:500;">${r.direccion || 'Santa Rosa de Cabal, Risaralda'}</span>
+        </div>
+        ${planesHTML ? `
+          <h4 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:.875rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin:1rem 0 .5rem;">Planes disponibles</h4>
+          <ul style="list-style:none;padding:0;margin:0;">${planesHTML}</ul>
+        ` : ''}
+      </div>`;
+    }).join('');
+
+    document.getElementById('contenido-gastro').innerHTML = `
+      <section class="seccion-hero" style="min-height:320px;">
+        <div class="hero-fondo" style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuCVyCZ2FExmqXaMFwH23NJmftIQOA29hIqHlw4QVhAyepxIP0qPmqft0EUBSzlc28rmNRLQeWkcsbAthowjVD7Ov8tO8TmnGOd6kMpXYHMGvzcTt7nBtEijjwUxIA7Xqtab9OFW9f4D2DOdhkVPEI9EtdcOs20Tu3k2INSFHQ0fHSgtHFqFjhWArit9OSR3uw9dshnJU4AClXYlhUcWLwO76ZZ4emwujwsnGxR4H2dYMakb5BLUruCP_FnBlwjPvO-R5Vyvf59CpI0B');"></div>
+        <div class="hero-degradado"></div>
+        <div class="hero-contenido">
+          <span class="hero-etiqueta">Gastronomía Local</span>
+          <h1 class="hero-titulo">Restaurantes & Sabores</h1>
+          <p class="hero-subtitulo">Descubre los mejores lugares gastronómicos de Santa Rosa de Cabal, sus direcciones y especialidades.</p>
+        </div>
+      </section>
+      <section class="seccion-cuerpo">
+        <div style="max-width:80rem;margin:0 auto;">
+          ${cards}
+        </div>
+      </section>`;
+  }
+
+  /* ── Renderizar detalle de un plan gastronómico ── */
+  function renderDetalle(plan) {
+    const imgHero = plan.imagen_hero_url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCVyCZ2FExmqXaMFwH23NJmftIQOA29hIqHlw4QVhAyepxIP0qPmqft0EUBSzlc28rmNRLQeWkcsbAthowjVD7Ov8tO8TmnGOd6kMpXYHMGvzcTt7nBtEijjwUxIA7Xqtab9OFW9f4D2DOdhkVPEI9EtdcOs20Tu3k2INSFHQ0fHSgtHFqFjhWArit9OSR3uw9dshnJU4AClXYlhUcWLwO76ZZ4emwujwsnGxR4H2dYMakb5BLUruCP_FnBlwjPvO-R5Vyvf59CpI0B';
+
+    const platosHTML = (plan.platos || []).map(p => `
+      <div class="plato">
+        <div class="plato__imagen-envoltorio">
+          <img class="plato__imagen" src="${p.imagen_url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuAERIc4zxlLattoIydkblU9vwFfzgioXPnhg6QVJEjbWnsq1M-CQBhoBmTIkvPqJ9DBqd-OHgphca5EgyPLSe4rAUCptAXc5sDhTNRrwZQTz7UICm3qsmUZXVNhqPk7Tvt7c0-0Do0m4p3I9AJ2z9HZxo7U5OfI7yCqThYZAMSM3JVsXPH1Fy7M5yOTrizSMZH-kkdfh4KPYUCvz9Lw7yLHoLe-RPVGA8ZHZfaB57vODJFL_ZyJOBqT05UgJoGqQvSWaoBWBHH_B7wS'}" alt="${p.titulo}" loading="lazy"/>
+        </div>
+        <div class="plato__info">
+          <h3 class="plato__titulo">${p.titulo}</h3>
+          <p class="plato__descripcion">${p.descripcion}</p>
+        </div>
+      </div>`).join('');
+
+    const resenasHTML = (plan.resenas || []).map(r => `
+      <div class="opinion opinion--con-borde">
+        <div class="opinion__estrellas">${estrellas(r.puntuacion)}</div>
+        <p class="opinion__texto">"${r.comentario}"</p>
+        <span class="opinion__autor">— ${r.autor_nombre}${r.autor_cargo ? ', ' + r.autor_cargo : ''}</span>
+      </div>`).join('');
+
+    document.getElementById('contenido-gastro').innerHTML = `
+      <!-- Hero -->
+      <section class="seccion-hero">
+        <div class="hero-fondo" style="background-image:url('${imgHero}');"></div>
+        <div class="hero-degradado"></div>
+        <div class="hero-contenido">
+          <span class="hero-etiqueta">${plan.etiqueta || 'Gastronomía'}</span>
+          <h1 class="hero-titulo">${plan.titulo}</h1>
+          <p class="hero-subtitulo">${plan.descripcion.substring(0, 160)}…</p>
+        </div>
+      </section>
+
+      <!-- Cuerpo -->
+      <section class="seccion-cuerpo">
+        <div class="cuadricula-principal">
+
+          <!-- Columna izquierda -->
+          <div class="columna-contenido">
+
+            ${platosHTML ? `
+            <div class="tarjeta-cristal">
+              <div class="tarjeta-cristal__encabezado">
+                <span class="material-symbols-outlined icono-primario">restaurant_menu</span>
+                <h2 class="titulo-seccion">Descripción del Plato</h2>
+              </div>
+              <div class="lista-platos">${platosHTML}</div>
+            </div>` : ''}
+
+            <!-- Información del restaurante -->
+            <div class="cuadricula-dos-columnas">
+              <div class="tarjeta-contenedor">
+                <h3 class="subtitulo-seccion">
+                  <span class="material-symbols-outlined icono-secundario">storefront</span>
+                  Restaurante
+                </h3>
+                <p style="font-size:1rem;font-weight:700;color:#002021;margin:0 0 .5rem;">${plan.restaurante_nombre}</p>
+                <p style="font-size:.875rem;color:#424752;margin:0 0 .75rem;">${plan.restaurante_tipo || 'Restaurante'}</p>
+                <div style="display:flex;align-items:center;gap:.5rem;">
+                  <span class="material-symbols-outlined icono-secundario">location_on</span>
+                  <span style="font-size:.875rem;color:#306388;font-weight:500;">${plan.restaurante_direccion || 'Santa Rosa de Cabal'}</span>
+                </div>
+              </div>
+
+              <div class="tarjeta-contenedor">
+                <h3 class="subtitulo-seccion">
+                  <span class="material-symbols-outlined icono-secundario">info</span>
+                  Información
+                </h3>
+                <div class="lista-maridaje">
+                  ${plan.duracion_horas ? `<p><strong class="texto-destacado">Duración:</strong> ${plan.duracion_horas} horas</p>` : ''}
+                  ${plan.max_personas   ? `<p><strong class="texto-destacado">Máx. personas:</strong> ${plan.max_personas}</p>` : ''}
+                  ${plan.idiomas        ? `<p><strong class="texto-destacado">Idiomas:</strong> ${plan.idiomas}</p>` : ''}
+                  <p><strong class="texto-destacado">Categoría:</strong> ${plan.categoria || plan.etiqueta || 'Gastronomía'}</p>
+                  <p><strong class="texto-destacado">Puntuación:</strong> ${parseFloat(plan.puntuacion).toFixed(1)} ⭐ (${plan.total_resenas} reseñas)</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Columna lateral — SOLO informativa, sin reserva de planes turísticos -->
+          <aside class="columna-lateral">
+
+            <div class="tarjeta-cristal tarjeta-cristal--sticky">
+              <!-- Precio referencial -->
+              <div class="reserva-precio">
+                <span class="reserva-precio__etiqueta">Precio referencial</span>
+                <div class="reserva-precio__valor">
+                  <span class="reserva-precio__numero">$${Number(plan.precio_desde).toLocaleString('es-CO')}</span>
+                  <span class="reserva-precio__unidad">/ ${plan.moneda === 'COP' ? 'persona COP' : 'persona'}</span>
+                </div>
+              </div>
+
+              <!-- Detalles del local -->
+              <div class="reserva-detalles">
+                <div class="reserva-detalle-item">
+                  <span class="material-symbols-outlined icono-secundario">storefront</span>
+                  <span>${plan.restaurante_nombre}</span>
+                </div>
+                <div class="reserva-detalle-item">
+                  <span class="material-symbols-outlined icono-secundario">location_on</span>
+                  <span>${plan.restaurante_direccion || 'Santa Rosa de Cabal, Risaralda'}</span>
+                </div>
+                ${plan.duracion_horas ? `
+                <div class="reserva-detalle-item">
+                  <span class="material-symbols-outlined icono-secundario">schedule</span>
+                  <span>Duración: ${plan.duracion_horas} horas</span>
+                </div>` : ''}
+                ${plan.idiomas ? `
+                <div class="reserva-detalle-item">
+                  <span class="material-symbols-outlined icono-secundario">language</span>
+                  <span>${plan.idiomas}</span>
+                </div>` : ''}
+              </div>
+
+              <!-- Nota informativa — no hay acción de reserva de plan turístico -->
+              <div style="background:rgba(0,116,121,.08);padding:1rem;border-radius:.5rem;font-size:.875rem;color:#00595e;font-weight:500;line-height:1.5;">
+                <span class="material-symbols-outlined" style="vertical-align:middle;margin-right:.25rem;">info</span>
+                Esta página es informativa. Para reservar una experiencia turística completa, visita la sección de
+                <a href="index.php" style="color:#054da4;font-weight:700;text-decoration:underline;">Planes Turísticos</a>.
+              </div>
+
+              <p class="reserva-nota" style="margin-top:1rem;">Contacta directamente al restaurante para disponibilidad.</p>
+            </div>
+
+            <!-- Opiniones -->
+            ${resenasHTML ? `
+            <div class="tarjeta-opiniones">
+              <h3 class="tarjeta-opiniones__titulo">Opiniones</h3>
+              <div class="lista-opiniones">${resenasHTML}</div>
+            </div>` : ''}
+
+          </aside>
+        </div>
+      </section>`;
+  }
+
+  /* ── Logout AJAX ── */
+  document.getElementById('btn-logout-gastro')?.addEventListener('click', async () => {
+    await fetch('/ajax/logout.php', { method: 'POST' });
+    window.location.href = '/index.php';
+  });
+
+  /* ── Carga de datos ── */
+  async function cargarGastronomico() {
+    try {
+      const url  = PLAN_ID ? `/ajax/gastronomicos.php?id=${PLAN_ID}` : '/ajax/gastronomicos.php';
+      const res  = await fetch(url);
+      const data = await res.json();
+
+      if (!data.ok) {
+        document.getElementById('contenido-gastro').innerHTML =
+          `<p style="padding:6rem 2rem;text-align:center;color:#ba1a1a;">${data.msg}</p>`;
+        return;
+      }
+
+      if (PLAN_ID) {
+        renderDetalle(data.plan);
+      } else {
+        renderLista(data.restaurantes);
+      }
+    } catch (err) {
+      console.error('Error cargando gastronomía:', err);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', cargarGastronomico);
+  </script>
 
   <script src="/scripts/script-detalles-gastronomicos.js"></script>
 </body>
