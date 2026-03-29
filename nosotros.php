@@ -225,16 +225,17 @@
 
       <div class="tarjeta-miembro">
         <div class="tarjeta-miembro__imagen-envoltorio">
-          <div class="tarjeta-miembro__avatar">LC</div>
+          <div class="tarjeta-miembro__avatar">VALRI</div>
         </div>
         <div class="tarjeta-miembro__cuerpo">
-          <div class="tarjeta-miembro__nombre">Luz Adriana Cardona</div>
-          <div class="tarjeta-miembro__cargo">Directora General &amp; Fundadora</div>
+          <div class="tarjeta-miembro__nombre">Victor Lopez Rios</div>
+          <div class="tarjeta-miembro__cargo">Director General &amp; Fundador</div>
           <p class="tarjeta-miembro__bio">
-            Administradora de Empresas Turísticas (UTP, Pereira) con maestría en Gestión
-            del Patrimonio Cultural (Universidad de Salamanca). Nació en Santa Rosa de Cabal
-            y ha dedicado 15 años a posicionar el municipio como destino turístico de clase
-            mundial. Conferencista en el Congreso Nacional de Turismo 2022 y 2023.
+            Víctor es barbero y estudiante en Unisarc (Santa Rosa de Cabal), apasionado por el estilo,
+  la estética y el emprendimiento. Combina su formación académica con la práctica diaria en
+  barbería, desarrollando técnicas modernas de corte y cuidado personal. Ha participado en
+  eventos locales de cultura urbana y busca posicionarse como referente en el mundo del
+  grooming masculino en la región.
           </p>
           <div class="tarjeta-miembro__especialidades">
             <span class="etiqueta-especialidad">Gestión Turística</span>
@@ -246,10 +247,10 @@
 
       <div class="tarjeta-miembro">
         <div class="tarjeta-miembro__imagen-envoltorio">
-          <div class="tarjeta-miembro__avatar">JM</div>
+          <div class="tarjeta-miembro__avatar">CHRISS</div>
         </div>
         <div class="tarjeta-miembro__cuerpo">
-          <div class="tarjeta-miembro__nombre">Jorge Iván Mejía</div>
+          <div class="tarjeta-miembro__nombre">Crhristian David Henao Sanchez</div>
           <div class="tarjeta-miembro__cargo">Director de Operaciones Turísticas</div>
           <p class="tarjeta-miembro__bio">
             Guía de turismo certificado por COTELCO con 12 años de experiencia en rutas
@@ -267,10 +268,10 @@
 
       <div class="tarjeta-miembro">
         <div class="tarjeta-miembro__imagen-envoltorio">
-          <div class="tarjeta-miembro__avatar">VR</div>
+          <div class="tarjeta-miembro__avatar">AT</div>
         </div>
         <div class="tarjeta-miembro__cuerpo">
-          <div class="tarjeta-miembro__nombre">Valentina Ríos</div>
+          <div class="tarjeta-miembro__nombre">Alejo Tabares</div>
           <div class="tarjeta-miembro__cargo">Directora Gastronómica</div>
           <p class="tarjeta-miembro__bio">
             Chef profesional graduada del Politécnico Colombiano Jaime Isaza Cadavid.
@@ -288,10 +289,10 @@
 
       <div class="tarjeta-miembro">
         <div class="tarjeta-miembro__imagen-envoltorio">
-          <div class="tarjeta-miembro__avatar">AP</div>
+          <div class="tarjeta-miembro__avatar">JEGM</div>
         </div>
         <div class="tarjeta-miembro__cuerpo">
-          <div class="tarjeta-miembro__nombre">Andrés Felipe Patiño</div>
+          <div class="tarjeta-miembro__nombre">Jesus Enrique Garcia Marbello</div>
           <div class="tarjeta-miembro__cargo">Director Comercial y Marketing</div>
           <p class="tarjeta-miembro__bio">
             Comunicador Social (Universidad de Manizales) con especialización en marketing
@@ -307,48 +308,9 @@
         </div>
       </div>
 
-      <div class="tarjeta-miembro">
-        <div class="tarjeta-miembro__imagen-envoltorio">
-          <div class="tarjeta-miembro__avatar">SM</div>
-        </div>
-        <div class="tarjeta-miembro__cuerpo">
-          <div class="tarjeta-miembro__nombre">Sandra Milena Ospina</div>
-          <div class="tarjeta-miembro__cargo">Directora de Experiencia al Cliente</div>
-          <p class="tarjeta-miembro__bio">
-            Profesional en Hotelería y Turismo (SENA - Risaralda) con 8 años en gestión
-            de hospitalidad. Lidera el equipo de atención al cliente, protocolos de calidad
-            y seguimiento post-experiencia. Impulsora del programa de fidelización
-            "Viajero Cafetero".
-          </p>
-          <div class="tarjeta-miembro__especialidades">
-            <span class="etiqueta-especialidad">Hospitalidad</span>
-            <span class="etiqueta-especialidad">CRM</span>
-            <span class="etiqueta-especialidad">Calidad</span>
-          </div>
-        </div>
-      </div>
+      
 
-      <div class="tarjeta-miembro">
-        <div class="tarjeta-miembro__imagen-envoltorio">
-          <div class="tarjeta-miembro__avatar">DG</div>
-        </div>
-        <div class="tarjeta-miembro__cuerpo">
-          <div class="tarjeta-miembro__nombre">Diego Armando Gómez</div>
-          <div class="tarjeta-miembro__cargo">Director de Sostenibilidad</div>
-          <p class="tarjeta-miembro__bio">
-            Biólogo (Universidad de Caldas) con énfasis en conservación de ecosistemas
-            andinos. Responsable de los programas ambientales de la empresa, la certificación
-            de turismo sostenible y los convenios con parques naturales y comunidades
-            rurales de Santa Rosa de Cabal.
-          </p>
-          <div class="tarjeta-miembro__especialidades">
-            <span class="etiqueta-especialidad">Ecosistemas Andinos</span>
-            <span class="etiqueta-especialidad">Turismo Regenerativo</span>
-            <span class="etiqueta-especialidad">Certificaciones</span>
-          </div>
-        </div>
-      </div>
-
+     
     </div>
 
     <!-- Cifras del equipo -->
