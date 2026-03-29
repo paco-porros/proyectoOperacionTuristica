@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const botonSesion = document.querySelector(".navegacion__boton");
   if (botonSesion) {
     botonSesion.addEventListener("click", () => {
-      alert("Funcionalidad de inicio de sesión próximamente.");
+      
     });
   }
 
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
     boton.addEventListener("click", () => {
       const titulo = boton.closest(".tarjeta-plan")
                           .querySelector(".tarjeta-plan__titulo").textContent;
-      alert(`Próximamente: detalle del plan "${titulo}"`);
+      
     });
   });
 
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
     boton.addEventListener("click", () => {
       const titulo = boton.closest(".tarjeta-servicio")
                           .querySelector(".tarjeta-servicio__titulo").textContent;
-      alert(`Próximamente: más información sobre "${titulo}"`);
+     
     });
   });
 
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const botonTodosGastronomia = document.getElementById("boton-ver-todos-gastronomia");
   if (botonTodosGastronomia) {
     botonTodosGastronomia.addEventListener("click", () => {
-      alert("Próximamente: catálogo completo de ofertas gastronómicas.");
+     
     });
   }
 
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     boton.addEventListener("click", () => {
       const titulo = boton.closest(".tarjeta-gastronomia")
                           .querySelector(".tarjeta-gastronomia__titulo").textContent;
-      alert(`Próximamente: detalle de la oferta "${titulo}"`);
+      
     });
   });
 
