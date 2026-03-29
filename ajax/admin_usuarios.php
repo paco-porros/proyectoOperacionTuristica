@@ -41,11 +41,11 @@ if ($method === 'GET') {
 
     $stmt = $pdo->prepare(
         'SELECT id, nombre, email, rol, estado, avatar_url, created_at
-         FROM usuarios WHERE nombre LIKE ? OR email LIKE ?
+         FROM usuarios WHERE nombre LIKE :b1 OR email LIKE :b2
          ORDER BY id DESC LIMIT :lim OFFSET :off'
     );
-    $stmt->bindValue(1, $busca);
-    $stmt->bindValue(2, $busca);
+    $stmt->bindValue(':b1',  $busca);
+    $stmt->bindValue(':b2',  $busca);
     $stmt->bindValue(':lim', $limit, PDO::PARAM_INT);
     $stmt->bindValue(':off', $off,   PDO::PARAM_INT);
     $stmt->execute();

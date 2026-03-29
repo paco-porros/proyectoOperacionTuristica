@@ -33,15 +33,15 @@ $usuario = usuarioActual();
     </div>
 
     <nav class="barra-lateral__nav">
-        <a class="nav__enlace--activo" href="#" id="nav-usuarios">
+        <a class="nav__enlace--activo" href="#" data-seccion="usuarios" id="nav-usuarios">
             <span class="material-symbols-outlined nav__icono--activo">group</span>
             <span class="nav__etiqueta">Usuarios</span>
         </a>
-        <a class="nav__enlace" href="index.php">
+        <a class="nav__enlace" href="#" data-seccion="planes-turisticos" id="nav-planes-turisticos">
             <span class="material-symbols-outlined">explore</span>
             <span class="nav__etiqueta">Planes Turísticos</span>
         </a>
-        <a class="nav__enlace" href="detalles-gastronomicos.php">
+        <a class="nav__enlace" href="#" data-seccion="planes-gastronomicos" id="nav-planes-gastronomicos">
             <span class="material-symbols-outlined">restaurant</span>
             <span class="nav__etiqueta">Planes Gastronómicos</span>
         </a>
@@ -84,8 +84,8 @@ $usuario = usuarioActual();
     <!-- Encabezado -->
     <section class="encabezado-seccion">
         <div class="encabezado-seccion__texto">
-            <h2 class="encabezado-seccion__titulo">Gestión de Usuarios</h2>
-            <p class="encabezado-seccion__descripcion">Controla el acceso, roles y estados de los miembros de la plataforma.</p>
+            <h2 class="encabezado-seccion__titulo" id="seccion-titulo">Gestión de Usuarios</h2>
+            <p class="encabezado-seccion__descripcion" id="seccion-descripcion">Controla el acceso, roles y estados de los miembros de la plataforma.</p>
         </div>
         <button class="boton-nuevo-usuario" id="btn-nuevo-usuario">
             <span class="material-symbols-outlined">add</span>
@@ -97,7 +97,7 @@ $usuario = usuarioActual();
     <div class="grilla-estadisticas" id="grilla-stats">
         <div class="tarjeta-estadistica panel-vidrio">
             <div>
-                <p class="tarjeta-estadistica__etiqueta">Total Usuarios</p>
+                <p class="tarjeta-estadistica__etiqueta" id="stat-etiqueta-1">Total Usuarios</p>
                 <h3 class="tarjeta-estadistica__valor" id="stat-total">—</h3>
             </div>
             <div class="tarjeta-estadistica__icono tarjeta-estadistica__icono--primario">
@@ -106,7 +106,7 @@ $usuario = usuarioActual();
         </div>
         <div class="tarjeta-estadistica panel-vidrio">
             <div>
-                <p class="tarjeta-estadistica__etiqueta">Usuarios Activos</p>
+                <p class="tarjeta-estadistica__etiqueta" id="stat-etiqueta-2">Usuarios Activos</p>
                 <h3 class="tarjeta-estadistica__valor" id="stat-activos">—</h3>
             </div>
             <div class="tarjeta-estadistica__icono tarjeta-estadistica__icono--terciario">
@@ -116,7 +116,7 @@ $usuario = usuarioActual();
     </div>
 
     <!-- Tabla de Usuarios -->
-    <section class="seccion-tabla panel-vidrio">
+    <section class="seccion-tabla panel-vidrio" id="seccion-usuarios">
         <div class="tabla-contenedor">
             <table class="tabla-usuarios">
                 <thead class="tabla-usuarios__encabezado">
@@ -145,6 +145,61 @@ $usuario = usuarioActual();
             <div class="paginacion" id="paginacion"></div>
         </div>
     </section>
+
+    <!-- ═══════════════════════════════════════════
+         SECCIÓN DINÁMICA — Planes Turísticos
+    ═══════════════════════════════════════════ -->
+    <section class="seccion-tabla panel-vidrio seccion-dinamica" id="seccion-planes-turisticos" style="display:none;">
+        <div class="seccion-planes__encabezado">
+            <h3 class="seccion-planes__subtitulo">Planes turísticos</h3>
+            <span class="etiqueta-planes-count" id="planes-turisticos-count"></span>
+        </div>
+        <div class="tabla-contenedor">
+            <table class="tabla-usuarios">
+                <thead class="tabla-usuarios__encabezado">
+                    <tr>
+                        <th class="tabla-usuarios__th">Imagen</th>
+                        <th class="tabla-usuarios__th">Título</th>
+                        <th class="tabla-usuarios__th">Etiqueta</th>
+                        <th class="tabla-usuarios__th">Precio desde</th>
+                        <th class="tabla-usuarios__th">Estado</th>
+                        <th class="tabla-usuarios__th--derecha">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-planes-turisticos">
+                    <tr><td colspan="6" class="celda-cargando">Cargando planes…</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         SECCIÓN DINÁMICA — Planes Gastronómicos
+    ═══════════════════════════════════════════ -->
+    <section class="seccion-tabla panel-vidrio seccion-dinamica" id="seccion-planes-gastronomicos" style="display:none;">
+        <div class="seccion-planes__encabezado">
+            <h3 class="seccion-planes__subtitulo">Planes gastronómicos</h3>
+            <span class="etiqueta-planes-count" id="planes-gastronomicos-count"></span>
+        </div>
+        <div class="tabla-contenedor">
+            <table class="tabla-usuarios">
+                <thead class="tabla-usuarios__encabezado">
+                    <tr>
+                        <th class="tabla-usuarios__th">Imagen</th>
+                        <th class="tabla-usuarios__th">Título</th>
+                        <th class="tabla-usuarios__th">Restaurante</th>
+                        <th class="tabla-usuarios__th">Precio desde</th>
+                        <th class="tabla-usuarios__th">Estado</th>
+                        <th class="tabla-usuarios__th--derecha">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-planes-gastronomicos">
+                    <tr><td colspan="6" class="celda-cargando">Cargando planes…</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
 </main>
 
 <!-- ════════════════════════════════════════
@@ -271,6 +326,133 @@ $usuario = usuarioActual();
     </div>
 </div>
 
+<!-- ════════════════════════════════════════
+     MODAL — Editar Plan (turístico / gastronómico)
+════════════════════════════════════════ -->
+<div id="modal-plan" style="
+    display:none; position:fixed; inset:0; z-index:1002;
+    background:rgba(0,32,33,.55); backdrop-filter:blur(4px);
+    align-items:center; justify-content:center;
+">
+    <div style="
+        background:#e5feff; border-radius:1rem; padding:2.5rem;
+        max-width:560px; width:90%; box-shadow:0 20px 40px rgba(0,32,33,.15);
+        max-height:90vh; overflow-y:auto;
+    ">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+            <h3 id="modal-plan-titulo" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.5rem;font-weight:700;color:#054da4;margin:0;">
+                Editar Plan
+            </h3>
+            <button id="modal-plan-cerrar" style="background:transparent;border:none;cursor:pointer;color:#306388;font-size:1.5rem;line-height:1;">✕</button>
+        </div>
+
+        <div id="modal-plan-alerta" style="display:none;margin-bottom:1rem;padding:.75rem 1rem;border-radius:.5rem;font-size:.875rem;font-weight:600;"></div>
+
+        <form id="form-plan" novalidate>
+            <input type="hidden" id="plan-id" value=""/>
+            <input type="hidden" id="plan-tipo" value=""/>
+
+            <div style="margin-bottom:1rem;">
+                <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Título *</label>
+                <input id="plan-titulo-input" type="text" placeholder="Nombre del plan" style="
+                    width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                    font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                "/>
+            </div>
+
+            <div style="margin-bottom:1rem;">
+                <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Descripción</label>
+                <textarea id="plan-descripcion" rows="3" placeholder="Descripción del plan" style="
+                    width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                    font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;
+                    box-sizing:border-box;resize:vertical;
+                "></textarea>
+            </div>
+
+            <!-- Campos solo para turístico -->
+            <div id="campos-turistico">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+                    <div>
+                        <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Ubicación</label>
+                        <input id="plan-ubicacion" type="text" placeholder="Santa Rosa de Cabal" style="
+                            width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                            font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                        "/>
+                    </div>
+                    <div>
+                        <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Duración (días)</label>
+                        <input id="plan-duracion-dias" type="number" min="1" placeholder="3" style="
+                            width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                            font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                        "/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campos solo para gastronómico -->
+            <div id="campos-gastronomico">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+                    <div>
+                        <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Categoría</label>
+                        <input id="plan-categoria" type="text" placeholder="Degustación, Parrilla…" style="
+                            width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                            font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                        "/>
+                    </div>
+                    <div>
+                        <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Duración (horas)</label>
+                        <input id="plan-duracion-horas" type="number" min="0" step="0.5" placeholder="2" style="
+                            width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                            font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                        "/>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+                <div>
+                    <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Precio desde</label>
+                    <input id="plan-precio" type="number" min="0" step="0.01" placeholder="0.00" style="
+                        width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                        font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                    "/>
+                </div>
+                <div>
+                    <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Estado</label>
+                    <select id="plan-estado" style="
+                        width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                        font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                    ">
+                        <option value="activo">Activo</option>
+                        <option value="inactivo">Inactivo</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="margin-bottom:1.5rem;">
+                <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">URL Imagen</label>
+                <input id="plan-imagen" type="url" placeholder="https://…" style="
+                    width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                    font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                "/>
+            </div>
+
+            <div style="display:flex;gap:1rem;">
+                <button type="button" id="modal-plan-btn-cancelar" style="
+                    flex:1;padding:1rem;border-radius:9999px;border:2px solid #afedf0;
+                    background:transparent;color:#306388;font-weight:700;cursor:pointer;
+                    font-family:'Plus Jakarta Sans',sans-serif;
+                ">Cancelar</button>
+                <button type="submit" id="modal-plan-btn-guardar" style="
+                    flex:2;padding:1rem;border-radius:9999px;background:#054da4;color:#fff;
+                    font-weight:700;border:none;cursor:pointer;
+                    font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;
+                ">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <!-- Toast -->
 <div id="toast-admin" style="
     display:none; position:fixed; bottom:1.5rem; right:1.5rem; z-index:9999;
@@ -341,7 +523,15 @@ async function cargarUsuarios(pagina = 1) {
 
     try {
         const res  = await fetch(url);
-        const data = await res.json();
+        const text = await res.text();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (_) {
+            console.error('Respuesta no-JSON del servidor:', text);
+            toast(`Error del servidor (${res.status}). Revisa la consola.`, 'error');
+            return;
+        }
 
         if (!data.ok) { toast(data.msg || 'Error al cargar usuarios.', 'error'); return; }
 
@@ -582,6 +772,450 @@ document.getElementById('btn-logout-admin').addEventListener('click', async () =
 
 /* ── Carga inicial ── */
 document.addEventListener('DOMContentLoaded', () => cargarUsuarios(1));
+
+/* ════════════════════════════════════════════════════
+   SPA — Navegación por secciones sin recarga
+════════════════════════════════════════════════════ */
+
+const CONFIG_SECCIONES = {
+    'usuarios': {
+        titulo:      'Gestión de Usuarios',
+        descripcion: 'Controla el acceso, roles y estados de los miembros de la plataforma.',
+        stat1:       'Total Usuarios',
+        stat2:       'Usuarios Activos',
+    },
+    'planes-turisticos': {
+        titulo:      'Planes Turísticos',
+        descripcion: 'Administra los planes y experiencias turísticas disponibles.',
+        stat1:       'Total Planes',
+        stat2:       'Planes Activos',
+    },
+    'planes-gastronomicos': {
+        titulo:      'Planes Gastronómicos',
+        descripcion: 'Gestiona las experiencias y planes gastronómicos por restaurante.',
+        stat1:       'Total Experiencias',
+        stat2:       'Activas',
+    },
+};
+
+let seccionActiva = 'usuarios';
+
+function activarNavItem(seccion) {
+    document.querySelectorAll('[data-seccion]').forEach(el => {
+        const esActivo = el.getAttribute('data-seccion') === seccion;
+        el.className   = esActivo ? 'nav__enlace--activo' : 'nav__enlace';
+        const icon     = el.querySelector('.material-symbols-outlined');
+        if (icon) icon.className = esActivo
+            ? 'material-symbols-outlined nav__icono--activo'
+            : 'material-symbols-outlined';
+    });
+}
+
+async function cargarSeccion(seccion) {
+    if (seccion === seccionActiva) {
+        document.getElementById('grilla-stats').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+    }
+
+    seccionActiva = seccion;
+    const cfg = CONFIG_SECCIONES[seccion];
+
+    /* — Encabezado dinámico — */
+    document.getElementById('seccion-titulo').textContent      = cfg.titulo;
+    document.getElementById('seccion-descripcion').textContent = cfg.descripcion;
+
+    /* — Labels de stats — */
+    document.getElementById('stat-etiqueta-1').textContent = cfg.stat1;
+    document.getElementById('stat-etiqueta-2').textContent = cfg.stat2;
+    document.getElementById('stat-total').textContent      = '—';
+    document.getElementById('stat-activos').textContent    = '—';
+
+    /* — Mostrar / ocultar secciones — */
+    document.getElementById('seccion-usuarios').style.display            = seccion === 'usuarios'             ? '' : 'none';
+    document.getElementById('seccion-planes-turisticos').style.display   = seccion === 'planes-turisticos'    ? '' : 'none';
+    document.getElementById('seccion-planes-gastronomicos').style.display = seccion === 'planes-gastronomicos' ? '' : 'none';
+
+    /* — Botón "Nuevo Usuario" solo en modo usuarios — */
+    document.getElementById('btn-nuevo-usuario').style.display = seccion === 'usuarios' ? '' : 'none';
+
+    /* — Buscador solo en modo usuarios — */
+    document.querySelector('.buscador__contenedor').style.visibility = seccion === 'usuarios' ? 'visible' : 'hidden';
+
+    /* — Actualizar nav activo — */
+    activarNavItem(seccion);
+
+    /* — Scroll suave al encabezado del contenido — */
+    document.getElementById('grilla-stats').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    /* — Cargar contenido — */
+    if (seccion === 'usuarios') {
+        cargarUsuarios(1);
+    } else if (seccion === 'planes-turisticos') {
+        await cargarPlanesTuristicos();
+    } else if (seccion === 'planes-gastronomicos') {
+        await cargarPlanesGastronomicos();
+    }
+}
+
+/* ════════════════════════════════════════
+   HELPERS COMUNES PARA PLANES
+════════════════════════════════════════ */
+function estadoBadgePlan(estado) {
+    const activo = estado === 'activo';
+    return `<div class="estado-usuario">
+        <div class="estado-usuario__punto estado-usuario__punto--${activo ? 'activo' : 'inactivo'}"></div>
+        <span class="estado-usuario__texto--${activo ? 'activo' : 'inactivo'}">${activo ? 'Activo' : 'Inactivo'}</span>
+    </div>`;
+}
+
+function accionesPlanHTML(id, tipo) {
+    const esActivo = arguments[2]; // 3er arg: estado actual
+    const iconToggle = esActivo ? 'toggle_on' : 'toggle_off';
+    const titleToggle = esActivo ? 'Inactivar' : 'Activar';
+    return `<div class="acciones-fila">
+        <button class="boton-accion boton-accion--editar"
+                title="Editar"
+                onclick="abrirEditarPlan(${id},'${tipo}')">
+            <span class="material-symbols-outlined">edit</span>
+        </button>
+        <button class="boton-accion ${esActivo ? 'boton-accion--eliminar' : 'boton-accion--editar'}"
+                title="${titleToggle}"
+                id="btn-toggle-${tipo}-${id}"
+                onclick="togglePlan(${id},'${tipo}')">
+            <span class="material-symbols-outlined">${iconToggle}</span>
+        </button>
+    </div>`;
+}
+
+/* ── Planes Turísticos ── */
+async function cargarPlanesTuristicos() {
+    const tbody = document.getElementById('tbody-planes-turisticos');
+    tbody.innerHTML = `<tr><td colspan="6" class="celda-cargando">Cargando planes…</td></tr>`;
+
+    try {
+        const res  = await fetch('/ajax/admin_planes_turisticos.php');
+        const data = await res.json();
+
+        if (!data.ok) { toast('Error al cargar planes turísticos.', 'error'); return; }
+
+        document.getElementById('stat-total').textContent   = data.stats.total   ?? '—';
+        document.getElementById('stat-activos').textContent = data.stats.activos ?? '—';
+        document.getElementById('planes-turisticos-count').textContent =
+            data.planes.length + ' planes (' + (data.stats.activos ?? 0) + ' activos)';
+
+        if (!data.planes.length) {
+            tbody.innerHTML = `<tr><td colspan="6" class="celda-cargando">No hay planes disponibles.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = data.planes.map(p => `
+        <tr class="fila-usuario" id="fila-turistico-${p.id}">
+            <td class="tabla-usuarios__celda">
+                <div class="avatar-plan">
+                    <img src="${p.imagen_hero_url || '/img/fondoPortada.jpg'}"
+                         alt="${p.titulo}"
+                         class="avatar-plan__img"
+                         onerror="this.src='/img/fondoPortada.jpg'"/>
+                </div>
+            </td>
+            <td class="tabla-usuarios__celda">
+                <p class="usuario__nombre">${p.titulo}</p>
+                <p class="usuario__email" style="margin-top:.2rem;">
+                    <span class="material-symbols-outlined" style="font-size:.9rem;vertical-align:-.15em;">schedule</span>
+                    ${p.duracion_dias} día${p.duracion_dias != 1 ? 's' : ''} &nbsp;·&nbsp;
+                    <span class="material-symbols-outlined" style="font-size:.9rem;vertical-align:-.15em;">location_on</span>
+                    ${p.ubicacion || '—'}
+                </p>
+            </td>
+            <td class="tabla-usuarios__celda">
+                <span class="etiqueta-rol etiqueta-rol--editor">${p.etiqueta || '—'}</span>
+            </td>
+            <td class="tabla-usuarios__celda">
+                <p class="usuario__nombre" style="color:#054da4;">$${p.precio_formateado}</p>
+                <p class="usuario__email" style="font-size:.7rem;">${p.moneda}</p>
+            </td>
+            <td class="tabla-usuarios__celda" id="estado-turistico-${p.id}">
+                ${estadoBadgePlan(p.estado)}
+            </td>
+            <td class="tabla-usuarios__celda--derecha">
+                ${accionesPlanHTML(p.id, 'turistico', p.estado === 'activo')}
+            </td>
+        </tr>`).join('');
+
+    } catch (err) {
+        toast('Error de conexión al cargar planes turísticos.', 'error');
+        console.error(err);
+    }
+}
+
+/* ── Planes Gastronómicos ── */
+async function cargarPlanesGastronomicos() {
+    const tbody = document.getElementById('tbody-planes-gastronomicos');
+    tbody.innerHTML = `<tr><td colspan="6" class="celda-cargando">Cargando planes…</td></tr>`;
+
+    try {
+        const res  = await fetch('/ajax/admin_planes_gastronomicos.php');
+        const data = await res.json();
+
+        if (!data.ok) { toast('Error al cargar planes gastronómicos.', 'error'); return; }
+
+        document.getElementById('stat-total').textContent   = data.stats.total   ?? '—';
+        document.getElementById('stat-activos').textContent = data.stats.activos ?? '—';
+        document.getElementById('planes-gastronomicos-count').textContent =
+            data.planes.length + ' experiencias (' + (data.stats.activos ?? 0) + ' activas)';
+
+        if (!data.planes.length) {
+            tbody.innerHTML = `<tr><td colspan="6" class="celda-cargando">No hay planes disponibles.</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = data.planes.map(p => `
+        <tr class="fila-usuario" id="fila-gastronomico-${p.id}">
+            <td class="tabla-usuarios__celda">
+                <div class="avatar-plan">
+                    <img src="${p.imagen_hero_url || '/img/fondoPortada.jpg'}"
+                         alt="${p.titulo}"
+                         class="avatar-plan__img"
+                         onerror="this.src='/img/fondoPortada.jpg'"/>
+                </div>
+            </td>
+            <td class="tabla-usuarios__celda">
+                <p class="usuario__nombre">${p.titulo}</p>
+                <p class="usuario__email" style="margin-top:.2rem;">
+                    <span class="material-symbols-outlined" style="font-size:.9rem;vertical-align:-.15em;">category</span>
+                    ${p.categoria || p.etiqueta || '—'}
+                    ${p.duracion_horas ? '&nbsp;·&nbsp;<span class="material-symbols-outlined" style="font-size:.9rem;vertical-align:-.15em;">schedule</span> ' + p.duracion_horas + ' hr' : ''}
+                </p>
+            </td>
+            <td class="tabla-usuarios__celda">
+                <p class="usuario__email">${p.restaurante_nombre || '—'}</p>
+            </td>
+            <td class="tabla-usuarios__celda">
+                <p class="usuario__nombre" style="color:#054da4;">$${p.precio_formateado}</p>
+                <p class="usuario__email" style="font-size:.7rem;">${p.moneda}</p>
+            </td>
+            <td class="tabla-usuarios__celda" id="estado-gastronomico-${p.id}">
+                ${estadoBadgePlan(p.estado)}
+            </td>
+            <td class="tabla-usuarios__celda--derecha">
+                ${accionesPlanHTML(p.id, 'gastronomico', p.estado === 'activo')}
+            </td>
+        </tr>`).join('');
+
+    } catch (err) {
+        toast('Error de conexión al cargar planes gastronómicos.', 'error');
+        console.error(err);
+    }
+}
+
+/* ════════════════════════════════════════
+   MODAL — Editar Plan
+════════════════════════════════════════ */
+// Cache de datos para edición
+const _cachePlanes = {};
+
+async function abrirEditarPlan(id, tipo) {
+    const endpoint = tipo === 'turistico'
+        ? '/ajax/admin_planes_turisticos.php'
+        : '/ajax/admin_planes_gastronomicos.php';
+
+    // Mostrar modal con spinner mientras carga
+    const modal = document.getElementById('modal-plan');
+    document.getElementById('modal-plan-titulo').textContent = 'Cargando…';
+    document.getElementById('modal-plan-alerta').style.display = 'none';
+    modal.style.display = 'flex';
+
+    // Obtener datos frescos (GET con id)
+    let plan = null;
+    try {
+        const r = await fetch(endpoint);
+        const d = await r.json();
+        if (d.ok) plan = d.planes.find(p => p.id == id);
+    } catch (_) {}
+
+    if (!plan) {
+        document.getElementById('modal-plan-titulo').textContent = 'Error';
+        alertaModalPlan('No se pudo cargar el plan.', 'error');
+        return;
+    }
+
+    _cachePlanes[`${tipo}-${id}`] = plan;
+
+    // Título del modal
+    document.getElementById('modal-plan-titulo').textContent =
+        (tipo === 'turistico' ? 'Editar Plan Turístico' : 'Editar Plan Gastronómico');
+
+    // Campos comunes
+    document.getElementById('plan-id').value            = id;
+    document.getElementById('plan-tipo').value          = tipo;
+    document.getElementById('plan-titulo-input').value  = plan.titulo   || '';
+    document.getElementById('plan-descripcion').value   = plan.descripcion || '';
+    document.getElementById('plan-precio').value        = plan.precio_desde || '';
+    document.getElementById('plan-imagen').value        = plan.imagen_hero_url || '';
+    document.getElementById('plan-estado').value        = plan.estado || 'activo';
+
+    // Campos específicos
+    const campTur = document.getElementById('campos-turistico');
+    const campGas = document.getElementById('campos-gastronomico');
+
+    if (tipo === 'turistico') {
+        campTur.style.display = '';
+        campGas.style.display = 'none';
+        document.getElementById('plan-ubicacion').value      = plan.ubicacion     || '';
+        document.getElementById('plan-duracion-dias').value  = plan.duracion_dias || '';
+    } else {
+        campTur.style.display = 'none';
+        campGas.style.display = '';
+        document.getElementById('plan-categoria').value      = plan.categoria      || '';
+        document.getElementById('plan-duracion-horas').value = plan.duracion_horas || '';
+    }
+}
+
+function cerrarModalPlan() {
+    document.getElementById('modal-plan').style.display = 'none';
+}
+
+function alertaModalPlan(msg, tipo) {
+    const el = document.getElementById('modal-plan-alerta');
+    el.textContent   = msg;
+    el.style.display = 'block';
+    el.style.background = tipo === 'ok' ? 'rgba(16,185,129,.12)' : 'rgba(239,68,68,.12)';
+    el.style.color      = tipo === 'ok' ? '#065f46' : '#7f1d1d';
+    el.style.border     = `1px solid ${tipo === 'ok' ? '#6ee7b7' : '#fca5a5'}`;
+}
+
+document.getElementById('modal-plan-cerrar').addEventListener('click', cerrarModalPlan);
+document.getElementById('modal-plan-btn-cancelar').addEventListener('click', cerrarModalPlan);
+document.getElementById('modal-plan').addEventListener('click', function(e) {
+    if (e.target === this) cerrarModalPlan();
+});
+
+document.getElementById('form-plan').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const id    = document.getElementById('plan-id').value;
+    const tipo  = document.getElementById('plan-tipo').value;
+    const titulo = document.getElementById('plan-titulo-input').value.trim();
+
+    if (!titulo) { alertaModalPlan('El título es requerido.', 'error'); return; }
+
+    const body = {
+        id:              parseInt(id),
+        titulo,
+        descripcion:     document.getElementById('plan-descripcion').value.trim(),
+        precio_desde:    parseFloat(document.getElementById('plan-precio').value) || 0,
+        imagen_hero_url: document.getElementById('plan-imagen').value.trim(),
+        estado:          document.getElementById('plan-estado').value,
+    };
+
+    if (tipo === 'turistico') {
+        body.ubicacion     = document.getElementById('plan-ubicacion').value.trim();
+        body.duracion_dias = parseInt(document.getElementById('plan-duracion-dias').value) || 1;
+    } else {
+        body.categoria      = document.getElementById('plan-categoria').value.trim();
+        body.duracion_horas = parseFloat(document.getElementById('plan-duracion-horas').value) || 0;
+    }
+
+    const btn = document.getElementById('modal-plan-btn-guardar');
+    btn.disabled    = true;
+    btn.textContent = 'Guardando…';
+
+    const endpoint = tipo === 'turistico'
+        ? '/ajax/admin_planes_turisticos.php'
+        : '/ajax/admin_planes_gastronomicos.php';
+
+    try {
+        const res  = await fetch(endpoint, {
+            method:  'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify(body),
+        });
+        const data = await res.json();
+
+        if (data.ok) {
+            cerrarModalPlan();
+            toast(data.msg, 'ok');
+            // Recargar la tabla correspondiente
+            if (tipo === 'turistico') cargarPlanesTuristicos();
+            else cargarPlanesGastronomicos();
+        } else {
+            alertaModalPlan(data.msg, 'error');
+        }
+    } catch (err) {
+        alertaModalPlan('Error de conexión.', 'error');
+    }
+
+    btn.disabled    = false;
+    btn.textContent = 'Guardar cambios';
+});
+
+/* ════════════════════════════════════════
+   TOGGLE Activar / Inactivar plan
+════════════════════════════════════════ */
+async function togglePlan(id, tipo) {
+    const esActivo = document.getElementById(`estado-${tipo}-${id}`)
+        ?.querySelector('.estado-usuario__punto--activo') !== null;
+
+    const accion = esActivo ? 'inactivar' : 'activar';
+    if (!confirm(`¿Deseas ${accion} este plan?`)) return;
+
+    const endpoint = tipo === 'turistico'
+        ? '/ajax/admin_planes_turisticos.php'
+        : '/ajax/admin_planes_gastronomicos.php';
+
+    try {
+        const res  = await fetch(endpoint, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ action: 'toggle', id }),
+        });
+        const data = await res.json();
+
+        if (data.ok) {
+            toast(data.msg, 'ok');
+
+            // Actualizar badge de estado en la fila sin recargar
+            const celdaEstado = document.getElementById(`estado-${tipo}-${id}`);
+            if (celdaEstado) celdaEstado.innerHTML = estadoBadgePlan(data.estado);
+
+            // Actualizar botón toggle
+            const btnToggle = document.getElementById(`btn-toggle-${tipo}-${id}`);
+            if (btnToggle) {
+                const nuevoActivo = data.estado === 'activo';
+                btnToggle.className = `boton-accion ${nuevoActivo ? 'boton-accion--eliminar' : 'boton-accion--editar'}`;
+                btnToggle.title     = nuevoActivo ? 'Inactivar' : 'Activar';
+                btnToggle.querySelector('.material-symbols-outlined').textContent =
+                    nuevoActivo ? 'toggle_on' : 'toggle_off';
+            }
+
+            // Actualizar stats
+            if (tipo === 'turistico') {
+                const activos = document.querySelectorAll('#tbody-planes-turisticos .estado-usuario__punto--activo').length;
+                const total   = document.querySelectorAll('#tbody-planes-turisticos tr.fila-usuario').length;
+                document.getElementById('stat-total').textContent   = total;
+                document.getElementById('stat-activos').textContent = activos;
+            } else {
+                const activos = document.querySelectorAll('#tbody-planes-gastronomicos .estado-usuario__punto--activo').length;
+                const total   = document.querySelectorAll('#tbody-planes-gastronomicos tr.fila-usuario').length;
+                document.getElementById('stat-total').textContent   = total;
+                document.getElementById('stat-activos').textContent = activos;
+            }
+        } else {
+            toast(data.msg, 'error');
+        }
+    } catch (err) {
+        toast('Error de conexión.', 'error');
+        console.error(err);
+    }
+}
+
+/* ── Bind clicks del sidebar ── */
+document.querySelectorAll('[data-seccion]').forEach(el => {
+    el.addEventListener('click', e => {
+        e.preventDefault();
+        cargarSeccion(el.getAttribute('data-seccion'));
+    });
+});
 </script>
 
 </body>
