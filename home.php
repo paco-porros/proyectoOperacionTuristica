@@ -34,7 +34,6 @@ $avatarSrc = $avatarUrl ?: 'https://ui-avatars.com/api/?name=' . urlencode($usua
       <a href="home.php">Operador Turístico y Gastronomico | Santa Rosa de Cabal</a>
     </div>
     <div class="navegacion__enlaces">
-      <a class="navegacion__enlace navegacion__enlace--activo" href="home.php">Destinos</a>
       <a class="navegacion__enlace" href="index.php#planes">Planes Turísticos</a>
       <a class="navegacion__enlace" href="index.php#gastronomia">Ofertas Gastronómicas</a>
       <a class="navegacion__enlace" href="index.php#servicios">Servicios</a>
@@ -353,7 +352,7 @@ $avatarSrc = $avatarUrl ?: 'https://ui-avatars.com/api/?name=' . urlencode($usua
     window.location.href = 'planes.php';
   });
   document.getElementById('boton-ver-todos-gastronomia').addEventListener('click', () => {
-    window.location.href = 'index.php#gastronomia';
+    window.location.href = 'gastronomia.php';
   });
 
   /* ── Render bento de planes ── */

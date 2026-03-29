@@ -1,7 +1,13 @@
 <?php
-/**
- * servicios.php — Nuestros Servicios | Operador Turístico Santa Rosa de Cabal
- */
+require_once __DIR__ . '/includes/session.php';
+$logueado  = estaLogueado();
+$usuario   = $logueado ? usuarioActual() : null;
+$avatarSrc = null;
+if ($logueado) {
+  $avatarUrl = $usuario['avatar_url'] ?? null;
+  $avatarSrc = $avatarUrl ?: 'https://ui-avatars.com/api/?name=' . urlencode($usuario['nombre']) . '&background=afedf0&color=054da4&size=40';
+}
+$inicio = $logueado ? 'home.php' : 'index.php';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -14,23 +20,83 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
   <link rel="stylesheet" href="/estilos/style-servicios.css" />
+  <style>
+    /* ── Zona usuario logueado ── */
+    .navegacion__zona-usuario{display:flex;align-items:center;gap:.75rem}
+    .navegacion__saludo{font-size:.8rem;font-weight:600;color:#582c4d}
+    .navegacion__boton-notificaciones{padding:.4rem;border-radius:9999px;background:transparent;border:none;cursor:pointer;display:flex;align-items:center;color:#582c4d;transition:background .2s}
+    .navegacion__boton-notificaciones:hover{background:rgba(162,103,105,.15)}
+    .navegacion__avatar-envoltorio{position:relative}
+    .navegacion__avatar{width:2.5rem;height:2.5rem;border-radius:9999px;overflow:hidden;border:2px solid #b8787a;cursor:pointer;transition:transform .2s}
+    .navegacion__avatar:hover{transform:scale(1.05)}
+    .navegacion__avatar-imagen{width:100%;height:100%;object-fit:cover}
+    .navegacion__dropdown{display:none;position:absolute;right:0;top:calc(100% + .5rem);background:#fff;border:1px solid rgba(162,103,105,.2);border-radius:.75rem;box-shadow:0 10px 25px rgba(88,44,77,.12);padding:.5rem;min-width:180px;z-index:100}
+    .navegacion__dropdown--visible{display:block}
+    .navegacion__dropdown-encabezado{padding:.5rem .75rem;font-size:.75rem;font-weight:700;color:#582c4d;text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid rgba(162,103,105,.1);margin-bottom:.25rem}
+    .navegacion__dropdown-item{display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem;font-size:.875rem;color:#582c4d;font-weight:600;text-decoration:none;border-radius:.5rem;transition:background .2s}
+    .navegacion__dropdown-item:hover{background:#e8d0d5}
+    .navegacion__dropdown-salir{display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem;font-size:.875rem;color:#ba1a1a;font-weight:600;background:transparent;border:none;cursor:pointer;border-radius:.5rem;width:100%;transition:background .2s}
+    .navegacion__dropdown-salir:hover{background:rgba(186,26,26,.08)}
+  </style>
 </head>
 
 <body>
 
-  <!-- ═══════════════════════════════════════════
-       NAVEGACIÓN
+    <!-- ═══════════════════════════════════════════
+       NAVEGACIÓN — condicional logueado / anónimo
   ═══════════════════════════════════════════ -->
   <nav class="navegacion">
-    <div class="navegacion__logo"><a href="#">Operador Turístico y Gastronómico | Santa Rosa de Cabal</a></div>
-    <div class="navegacion__enlaces">
-      <a class="navegacion__enlace" href="index.php#servicios">Servicios</a>
-      <a class="navegacion__enlace" href="index.php#planes">Planes Turísticos</a>
-      <a class="navegacion__enlace" href="index.php#gastronomia">Ofertas Gastronómicas</a>
+    <div class="navegacion__logo">
+      <a href="<?= $inicio ?>">Operador Turístico y Gastronómico | Santa Rosa de Cabal</a>
     </div>
-    <button class="navegacion__boton">
-      <a href="index.php">← Inicio</a>
-    </button>
+
+    <div class="navegacion__enlaces">
+      <?php if ($logueado): ?>
+        <a class="navegacion__enlace" href="home.php">Inicio</a>
+        <a class="navegacion__enlace" href="planes.php">Planes Turísticos</a>
+        <a class="navegacion__enlace" href="gastronomia.php">Ofertas Gastronómicas</a>
+        <?php if (in_array($usuario['rol'], ['admin', 'editor'])): ?>
+          <a class="navegacion__enlace" href="dashboard-administrador.php">Dashboard</a>
+        <?php endif; ?>
+      <?php else: ?>
+        <a class="navegacion__enlace" href="index.php#servicios">Servicios</a>
+        <a class="navegacion__enlace" href="planes.php">Planes Turísticos</a>
+        <a class="navegacion__enlace" href="gastronomia.php">Ofertas Gastronómicas</a>
+      <?php endif; ?>
+    </div>
+
+    <?php if ($logueado): ?>
+      <div class="navegacion__zona-usuario">
+        <span class="navegacion__saludo">
+          Hola, <?= htmlspecialchars(explode(' ', $usuario['nombre'])[0]) ?>
+        </span>
+        <button class="navegacion__boton-notificaciones" title="Notificaciones">
+          <span class="material-symbols-outlined">notifications</span>
+        </button>
+        <div class="navegacion__avatar-envoltorio">
+          <div class="navegacion__avatar" id="avatar-usuario" title="Mi cuenta">
+            <img alt="Perfil" class="navegacion__avatar-imagen" src="<?= htmlspecialchars($avatarSrc) ?>" />
+          </div>
+          <div class="navegacion__dropdown" id="menu-avatar">
+            <div class="navegacion__dropdown-encabezado">
+              <?= htmlspecialchars($usuario['nombre']) ?>
+            </div>
+            <?php if (in_array($usuario['rol'], ['admin', 'editor'])): ?>
+              <a href="dashboard-administrador.php" class="navegacion__dropdown-item">
+                <span class="material-symbols-outlined">admin_panel_settings</span> Dashboard
+              </a>
+            <?php endif; ?>
+            <button id="btn-logout" class="navegacion__dropdown-salir">
+              <span class="material-symbols-outlined">logout</span> Cerrar Sesión
+            </button>
+          </div>
+        </div>
+      </div>
+    <?php else: ?>
+      <button class="navegacion__boton">
+        <a href="index.php">← Inicio</a>
+      </button>
+    <?php endif; ?>
   </nav>
 
   <!-- ═══════════════════════════════════════════
@@ -702,7 +768,7 @@
     <div>
         <h4 class="pie__columna-titulo">Enlaces rápidos</h4>
         <ul class="pie__lista">
-            <li><a href="#">Inicio</a></li>
+            <li><a href="<?= $inicio ?>">Inicio</a></li>
           <li><a href="#alojamiento">Alojamientos</a></li>
           <li><a href="#transporte">Transporte</a></li>
           <li><a href="#alimentacion">Alimentación</a></li>
@@ -756,5 +822,21 @@
     </div>
   </footer>
 
+  <?php if ($logueado): ?>
+  <script>
+    document.getElementById('avatar-usuario').addEventListener('click', e => {
+      e.stopPropagation();
+      document.getElementById('menu-avatar').classList.toggle('navegacion__dropdown--visible');
+    });
+    document.addEventListener('click', () => {
+      const m = document.getElementById('menu-avatar');
+      if (m) m.classList.remove('navegacion__dropdown--visible');
+    });
+    document.getElementById('btn-logout').addEventListener('click', async () => {
+      await fetch('/ajax/logout.php', { method: 'POST' });
+      window.location.href = '/index.php';
+    });
+  </script>
+  <?php endif; ?>
 </body>
 </html>

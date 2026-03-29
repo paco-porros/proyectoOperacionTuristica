@@ -361,6 +361,14 @@ require_once __DIR__ . '/includes/session.php';
     }
   }
 
+  /* ── Botón "Ver todas las ofertas" → gastronomia.php ── */
+  const btnVerTodosGastro = document.getElementById('boton-ver-todos-gastronomia');
+  if (btnVerTodosGastro) {
+    btnVerTodosGastro.addEventListener('click', () => {
+      window.location.href = 'gastronomia.php';
+    });
+  }
+
   // Carga inmediata al DOMContentLoaded
   document.addEventListener('DOMContentLoaded', () => { cargarPlanes(); cargarGastronomia(); });
   </script>

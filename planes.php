@@ -48,7 +48,7 @@ if ($logueado) {
         <a class="navegacion__enlace" href="index.php#servicios">Servicios</a>
       <?php endif; ?>
       <a class="navegacion__enlace navegacion__enlace--activo" href="planes.php">Planes Turísticos</a>
-      <a class="navegacion__enlace" href="index.php#gastronomia">Ofertas Gastronómicas</a>
+      <a class="navegacion__enlace" href="gastronomia.php">Ofertas Gastronómicas</a>
       <?php if ($logueado && in_array($usuario['rol'], ['admin', 'editor'])): ?>
         <a class="navegacion__enlace" href="dashboard-administrador.php">Dashboard</a>
       <?php endif; ?>
@@ -170,7 +170,7 @@ if ($logueado) {
           <?php endif; ?>
           <li><a href="index.php#servicios">Nuestros Servicios</a></li>
           <li><a href="planes.php">Planes Turísticos</a></li>
-          <li><a href="index.php#gastronomia">Ofertas Gastronómicas</a></li>
+          <li><a href="gastronomia.php">Ofertas Gastronómicas</a></li>
         </ul>
       </div>
 
@@ -285,10 +285,12 @@ if ($logueado) {
     </div>`;
   }
 
-  /* ── Carga SIN límite para mostrar todos ── */
+  /* ── Carga SIN límite para mostrar TODOS los planes ──
+     Se pasa sin_limite=1 para que el endpoint omita cualquier LIMIT por defecto.
+     Si tu endpoint usa otro parámetro, ajústalo aquí. */
   async function cargarTodosLosPlanes() {
     try {
-      const res  = await fetch('/ajax/planes_turisticos.php');
+      const res  = await fetch('/ajax/planes_turisticos.php?sin_limite=1');
       const data = await res.json();
       const lista = document.getElementById('lista-planes');
 
