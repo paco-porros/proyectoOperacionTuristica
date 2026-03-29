@@ -22,21 +22,24 @@ $usuario  = usuarioActual();
 </head>
 <body class="cuerpo-principal">
 
-  <!-- NAVEGACIÓN -->
-  <nav class="barra-nav">
-    <div class="nav-logo">Santa Rosa de Cabal</div>
-    <div class="nav-enlaces">
-      <a class="nav-enlace" href="index.php">Inicio</a>
-      <a class="nav-enlace nav-enlace--activo" href="#">Servicios</a>
-      <a class="nav-enlace" href="#">Planes</a>
-      <a class="nav-enlace" href="#">Gastronomía</a>
+  <!-- ═══════════════════════════════════════════
+       NAVEGACIÓN
+  ═══════════════════════════════════════════ -->
+  <nav class="navegacion">
+    <div class="navegacion__logo">
+      <a href="index.php">Operador Turístico y Gastronomico | Santa Rosa de Cabal</a>
+    </div>
+    <div class="navegacion__enlaces">
+      <a class="navegacion__enlace" href="index.php#servicios">Servicios</a>
+      <a class="navegacion__enlace navegacion__enlace--activo" href="index.php#planes">Planes Turísticos</a>
+      <a class="navegacion__enlace" href="index.php#gastronomia">Ofertas Gastronómicas</a>
     </div>
     <?php if ($logueado): ?>
-      <button class="nav-boton-reservar" id="btn-logout-det">
-        <?= htmlspecialchars($usuario['nombre']) ?> · Salir
+      <button class="navegacion__boton" id="btn-logout-det">
+        Hola, <?= htmlspecialchars($usuario['nombre']) ?> · Salir
       </button>
     <?php else: ?>
-      <button class="nav-boton-reservar" onclick="window.location.href='/login.php'">Iniciar Sesión</button>
+      <button class="navegacion__boton"><a href="login.php">Iniciar Sesión</a></button>
     <?php endif; ?>
   </nav>
 
@@ -44,12 +47,12 @@ $usuario  = usuarioActual();
   <main class="contenido-principal" id="contenido-plan">
 
     <!-- Skeleton de carga -->
-    <section class="seccion-hero" style="background:#e5feff;">
-      <div style="position:absolute;inset:0;background:linear-gradient(135deg,#cbfdff,#b5f3f6);"></div>
+    <section class="seccion-hero seccion-hero--skeleton">
+      <div class="hero-skeleton__fondo"></div>
       <div class="hero-contenido">
         <div class="hero-texto">
-          <span class="hero-etiqueta" style="opacity:.4;">Cargando…</span>
-          <h1 class="hero-titulo" style="opacity:.3; background:#c3c6d4; color:transparent; border-radius:.5rem;">Cargando plan turístico</h1>
+          <span class="hero-etiqueta hero-etiqueta--skeleton">Cargando…</span>
+          <h1 class="hero-titulo hero-titulo--skeleton">Cargando plan turístico</h1>
         </div>
       </div>
     </section>
@@ -200,73 +203,90 @@ $usuario  = usuarioActual();
   </main>
 
   <!-- Toast de notificación AJAX -->
-  <div id="toast-plan" style="
-    display:none; position:fixed; bottom:1.5rem; right:1.5rem; z-index:9999;
-    padding:.875rem 1.5rem; border-radius:.75rem; font-size:.875rem; font-weight:600;
-    font-family:'Manrope',sans-serif; box-shadow:0 4px 16px rgba(0,0,0,.1);
-    transition:opacity .3s; opacity:0;
-  "></div>
+  <div id="toast-plan" class="toast-plan"></div>
 
   <!-- Modal: seleccionar fecha y personas -->
-  <div id="modal-agregar" style="
-    display:none; position:fixed; inset:0; z-index:9998; background:rgba(0,32,33,.5);
-    backdrop-filter:blur(4px); align-items:center; justify-content:center;
-  ">
-    <div style="
-      background:#e5feff; border-radius:1rem; padding:2.5rem; max-width:480px; width:90%;
-      box-shadow:0 20px 40px rgba(0,32,33,.15);
-    ">
-      <h3 style="font-family:'Plus Jakarta Sans',sans-serif; font-size:1.5rem; font-weight:700; color:#054da4; margin:0 0 1.5rem;">
-        Agregar a mi cuenta
-      </h3>
-      <div id="modal-alerta" style="display:none; margin-bottom:1rem; padding:.75rem; border-radius:.5rem; font-size:.875rem; font-weight:600;"></div>
-      <div style="margin-bottom:1rem;">
-        <label style="display:block; font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:#306388; margin-bottom:.5rem;">
-          Fecha de inicio
-        </label>
-        <input id="modal-fecha" type="date" style="
-          width:100%; padding:.75rem 1rem; border:1px solid #afedf0; border-radius:.5rem;
-          font-family:'Manrope',sans-serif; color:#002021; background:#fff; outline:none;
-          box-sizing:border-box;
-        "/>
+  <div id="modal-agregar" class="modal-overlay">
+    <div class="modal-caja">
+      <h3 class="modal-titulo">Agregar a mi cuenta</h3>
+      <div id="modal-alerta" class="modal-alerta"></div>
+      <div class="modal-campo">
+        <label class="modal-etiqueta">Fecha de inicio</label>
+        <input id="modal-fecha" type="date" class="modal-input"/>
       </div>
-      <div style="margin-bottom:2rem;">
-        <label style="display:block; font-size:.75rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:#306388; margin-bottom:.5rem;">
-          Número de adultos
-        </label>
-        <input id="modal-adultos" type="number" min="1" max="20" value="2" style="
-          width:100%; padding:.75rem 1rem; border:1px solid #afedf0; border-radius:.5rem;
-          font-family:'Manrope',sans-serif; color:#002021; background:#fff; outline:none;
-          box-sizing:border-box;
-        "/>
+      <div class="modal-campo modal-campo--ultimo">
+        <label class="modal-etiqueta">Número de adultos</label>
+        <input id="modal-adultos" type="number" min="1" max="20" value="2" class="modal-input"/>
       </div>
-      <div style="display:flex; gap:1rem;">
-        <button id="modal-cancelar" style="
-          flex:1; padding:1rem; border-radius:9999px; border:2px solid #afedf0;
-          background:transparent; color:#306388; font-weight:700; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif;
-        ">Cancelar</button>
-        <button id="modal-confirmar" style="
-          flex:2; padding:1rem; border-radius:9999px; background:#054da4; color:#fff;
-          font-weight:700; border:none; cursor:pointer; font-family:'Plus Jakarta Sans',sans-serif;
-          font-size:1rem;
-        ">Confirmar reserva</button>
+      <div class="modal-acciones">
+        <button id="modal-cancelar" class="modal-btn modal-btn--cancelar">Cancelar</button>
+        <button id="modal-confirmar" class="modal-btn modal-btn--confirmar">Confirmar reserva</button>
       </div>
     </div>
   </div>
 
   <!-- PIE DE PÁGINA -->
-  <footer class="pie-pagina">
-    <div class="pie-pagina__interior">
-      <div class="pie-pagina__marca">
-        <span class="pie-pagina__logo">Operador Turístico y Gastronomico | Santa Rosa de Cabal</span>
-        <p class="pie-pagina__copyright">© 2026 Operador Turístico y Gastronomico | Santa Rosa de Cabal.</p>
+  <footer class="pie">
+    <div class="pie__cuadricula">
+      <div>
+        <span class="pie__logo">Operador Turístico y Gastronomico | Santa Rosa de Cabal</span>
+        <p class="pie__eslogan">Redefiniendo el lujo en cada travesía. Tu horizonte, nuestra pasión.</p>
+        <div class="pie__redes">
+          <button class="pie__boton-red"><span class="material-symbols-outlined">public</span></button>
+          <button class="pie__boton-red"><span class="material-symbols-outlined">share</span></button>
+        </div>
       </div>
-      <div class="pie-pagina__enlaces">
-        <a class="pie-pagina__enlace" href="#">Privacidad</a>
-        <a class="pie-pagina__enlace" href="#">Términos</a>
-        <a class="pie-pagina__enlace" href="#">Instagram</a>
-        <a class="pie-pagina__enlace" href="#">Facebook</a>
+      <div>
+        <h4 class="pie__columna-titulo">Enlaces rápidos</h4>
+        <ul class="pie__lista">
+          <li><a href="index.php">Inicio</a></li>
+          <li><a href="index.php#servicios">Nuestros Servicios</a></li>
+          <li><a href="index.php#planes">Planes Turísticos</a></li>
+          <li><a href="index.php#gastronomia">Ofertas Gastronómicas</a></li>
+        </ul>
       </div>
+      <div>
+        <h4 class="pie__columna-titulo"><a href="nosotros.php">Sobre nosotros</a></h4>
+        <ul class="pie__lista">
+          <li><a href="nosotros.php#mision-vision">Misión y Visión</a></li>
+          <li><a href="nosotros.php#equipo">Equipo Ejecutivo</a></li>
+          <li><a href="nosotros.php#carreras">Carreras</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="pie__columna-titulo"><a href="servicios.php">Servicios</a></h4>
+        <ul class="pie__lista">
+          <li><a href="servicios.php#alojamiento">Alojamiento</a></li>
+          <li><a href="servicios.php#transporte">Transporte</a></li>
+          <li><a href="servicios.php#alimentacion">Alimentación</a></li>
+          <li><a href="servicios.php#entretenimiento">Entretenimiento</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="pie__columna-titulo"><a href="legales.php">Legales y Ayuda</a></h4>
+        <ul class="pie__lista">
+          <li><a href="legales.php#terminos">Términos y Condiciones</a></li>
+          <li><a href="legales.php#privacidad">Privacidad</a></li>
+          <li><a href="legales.php#faqs">FAQs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="pie__columna-titulo">Contacto</h4>
+        <ul class="pie__lista-contacto">
+          <li class="pie__contacto-item"><a href="mailto:info@srcabal.com">info@srcabal.com</a></li>
+          <li class="pie__contacto-item"><a href="mailto:talentohumano@srcabal.com">talentohumano@srcabal.com</a></li>
+          <li class="pie__contacto-item">+57 (606) 364-0000</li>
+          <li class="pie__contacto-item">Santa Rosa de Cabal, Risaralda</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pie__inferior">
+      <p>© 2026 Operador Turístico y Gastronomico | Santa Rosa de Cabal
+        <span class="pie__separador">|</span>
+        <a href="#">Política de Privacidad</a>
+        <span class="pie__separador">|</span>
+        <a href="#">Términos de Servicio</a>
+      </p>
     </div>
   </footer>
 
@@ -284,9 +304,7 @@ $usuario  = usuarioActual();
     const t = document.getElementById('toast-plan');
     t.textContent = msg;
     t.style.display = 'block';
-    t.style.background = tipo === 'ok' ? '#d1fae5' : '#fee2e2';
-    t.style.color      = tipo === 'ok' ? '#065f46' : '#7f1d1d';
-    t.style.border     = `1px solid ${tipo === 'ok' ? '#6ee7b7' : '#fca5a5'}`;
+    t.className = 'toast-plan toast-plan--' + (tipo === 'ok' ? 'ok' : 'error');
     requestAnimationFrame(() => { t.style.opacity = '1'; });
     setTimeout(() => {
       t.style.opacity = '0';
@@ -298,7 +316,7 @@ $usuario  = usuarioActual();
   function estrellas(n) {
     let html = '';
     for (let i = 1; i <= 5; i++) {
-      html += `<span class="material-symbols-outlined" style="font-size:1.125rem;color:#054da4;${i <= Math.round(n) ? "font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;" : ''}">${i <= Math.round(n) ? 'star' : 'star'}</span>`;
+      html += `<span class="material-symbols-outlined estrella-resena ${i <= Math.round(n) ? 'estrella-resena--activa' : ''}">star</span>`;
     }
     return html;
   }
@@ -328,19 +346,19 @@ $usuario  = usuarioActual();
 
     // Reseñas HTML
     const resenasHTML = (plan.resenas || []).map(r => `
-      <div style="padding:1rem 0; border-bottom:1px solid rgba(195,198,212,.3);">
-        <div style="display:flex;gap:.25rem;margin-bottom:.5rem;">${estrellas(r.puntuacion)}</div>
-        <p style="font-size:.875rem;font-style:italic;color:#424752;margin:0 0 .5rem;">"${r.comentario}"</p>
-        <span style="font-size:.75rem;font-weight:700;color:#002021;">— ${r.autor_nombre}${r.autor_cargo ? ', ' + r.autor_cargo : ''}</span>
+      <div class="resena-item">
+        <div class="resena-estrellas">${estrellas(r.puntuacion)}</div>
+        <p class="resena-comentario">"${r.comentario}"</p>
+        <span class="resena-autor">— ${r.autor_nombre}${r.autor_cargo ? ', ' + r.autor_cargo : ''}</span>
       </div>`).join('');
 
     // Botón agregar (solo logueados con rol cliente)
     const btnAgregar = LOGUEADO
-      ? `<button class="boton-reservar" id="btn-agregar-plan" style="margin-top:1rem;background:#00595e;">
-           <span class="material-symbols-outlined" style="margin-right:.5rem;vertical-align:middle;">add_circle</span>
+      ? `<button class="boton-reservar boton-agregar" id="btn-agregar-plan">
+           <span class="material-symbols-outlined">add_circle</span>
            Agregar a mi cuenta
          </button>`
-      : `<a href="/login.php" style="display:block;margin-top:1rem;text-align:center;font-size:.875rem;color:#306388;font-weight:600;">
+      : `<a href="/login.php" class="enlace-login-reservar">
            Inicia sesión para reservar
          </a>`;
 
@@ -434,8 +452,8 @@ $usuario  = usuarioActual();
               </div>` : ''}
 
               ${resenasHTML ? `
-              <div class="tarjeta-cristal" style="padding:1.5rem;">
-                <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.125rem;font-weight:700;color:#054da4;margin:0 0 1rem;">Opiniones</h3>
+              <div class="tarjeta-cristal tarjeta-opiniones">
+                <h3 class="opiniones-titulo">Opiniones</h3>
                 ${resenasHTML}
               </div>` : ''}
             </div>
@@ -473,7 +491,7 @@ $usuario  = usuarioActual();
 
     if (!fecha) {
       alertaEl.textContent = 'Selecciona una fecha.';
-      alertaEl.style.cssText = 'display:block;background:rgba(239,68,68,.12);color:#7f1d1d;border:1px solid #fca5a5;padding:.75rem;border-radius:.5rem;font-size:.875rem;font-weight:600;';
+      alertaEl.className = 'modal-alerta modal-alerta--error'; alertaEl.style.display = 'block';
       return;
     }
 
@@ -495,11 +513,11 @@ $usuario  = usuarioActual();
         window.location.href = '/login.php';
       } else {
         alertaEl.textContent = data.msg;
-        alertaEl.style.cssText = 'display:block;background:rgba(239,68,68,.12);color:#7f1d1d;border:1px solid #fca5a5;padding:.75rem;border-radius:.5rem;font-size:.875rem;font-weight:600;';
+        alertaEl.className = 'modal-alerta modal-alerta--error'; alertaEl.style.display = 'block';
       }
     } catch (err) {
       alertaEl.textContent = 'Error de conexión. Intenta de nuevo.';
-      alertaEl.style.cssText = 'display:block;background:rgba(239,68,68,.12);color:#7f1d1d;border:1px solid #fca5a5;padding:.75rem;border-radius:.5rem;font-size:.875rem;font-weight:600;';
+      alertaEl.className = 'modal-alerta modal-alerta--error'; alertaEl.style.display = 'block';
     }
 
     btnConf.disabled    = false;
@@ -521,7 +539,7 @@ $usuario  = usuarioActual();
   async function cargarPlan() {
     if (!PLAN_ID) {
       document.getElementById('contenido-plan').innerHTML =
-        '<p style="padding:4rem;text-align:center;color:#306388;">Plan no especificado.</p>';
+        '<p class="mensaje-estado">Plan no especificado.</p>';
       return;
     }
     try {
@@ -533,7 +551,7 @@ $usuario  = usuarioActual();
         renderPlan(data.plan);
       } else {
         document.getElementById('contenido-plan').innerHTML =
-          `<p style="padding:4rem;text-align:center;color:#ba1a1a;">${data.msg}</p>`;
+          `<p class="mensaje-estado mensaje-estado--error">${data.msg}</p>`;
       }
     } catch (err) {
       console.error('Error cargando plan:', err);
