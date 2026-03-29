@@ -1,8 +1,12 @@
 <?php
 /**
  * ajax/gastronomicos.php
- * Endpoint AJAX: GET ?id=1 (detalle) o GET (lista)
- * Solo informativo: restaurantes, dirección, planes gastronómicos
+ * Endpoint AJAX: GET ?id=1 (detalle) | ?limite=N (lista) | ?sin_limite=1 (todos)
+ *
+ * ?id=N         → detalle completo de un plan gastronómico
+ * ?limite=N     → lista plana de N planes (index/home)
+ * ?sin_limite=1 → lista plana de TODOS los planes activos (gastronomia.php)
+ * sin params    → lista de restaurantes agrupados con sus planes
  */
 
 header('Content-Type: application/json; charset=utf-8');
@@ -15,15 +19,15 @@ $id  = (int)($_GET['id'] ?? 0);
 if ($id > 0) {
     // ── Detalle de un plan gastronómico ──────────────────────────────────
     $stmt = $pdo->prepare(
-        'SELECT pg.id, pg.titulo, pg.descripcion, pg.etiqueta, pg.categoria,
+        "SELECT pg.id, pg.titulo, pg.descripcion, pg.etiqueta, pg.categoria,
                 pg.precio_desde, pg.moneda, pg.duracion_horas, pg.max_personas,
                 pg.idiomas, pg.puntuacion, pg.total_resenas, pg.imagen_hero_url,
-                r.nombre  AS restaurante_nombre,
+                r.nombre    AS restaurante_nombre,
                 r.direccion AS restaurante_direccion,
-                r.tipo    AS restaurante_tipo
+                r.tipo      AS restaurante_tipo
          FROM planes_gastronomicos pg
          JOIN restaurantes r ON r.id = pg.restaurante_id
-         WHERE pg.id = ? AND pg.estado = \'activo\' LIMIT 1'
+         WHERE pg.id = ? AND pg.estado = 'activo' LIMIT 1"
     );
     $stmt->execute([$id]);
     $plan = $stmt->fetch();
@@ -35,68 +39,74 @@ if ($id > 0) {
 
     // Platos
     $platos = $pdo->prepare(
-        'SELECT titulo, descripcion, imagen_url FROM platos WHERE plan_gastronomico_id = ? ORDER BY orden ASC'
+        'SELECT titulo, descripcion, imagen_url FROM platos
+         WHERE plan_gastronomico_id = ? ORDER BY orden ASC'
     );
     $platos->execute([$id]);
     $plan['platos'] = $platos->fetchAll();
 
     // Reseñas
     $res = $pdo->prepare(
-        'SELECT puntuacion, comentario, autor_nombre, autor_cargo
-         FROM resenas WHERE plan_gastronomico_id = ? AND estado = \'publicado\'
-         ORDER BY created_at DESC LIMIT 3'
+        "SELECT puntuacion, comentario, autor_nombre, autor_cargo
+         FROM resenas WHERE plan_gastronomico_id = ? AND estado = 'publicado'
+         ORDER BY created_at DESC LIMIT 3"
     );
     $res->execute([$id]);
     $plan['resenas'] = $res->fetchAll();
 
     $plan['precio_formateado'] = number_format((float)$plan['precio_desde'], 0, ',', '.');
-    $plan['imagen_hero_url'] = !empty($plan['imagen_hero_url'])
-        ? $plan['imagen_hero_url']
-        : '/img/fondoPortada.jpg';
+    $plan['imagen_hero_url']   = !empty($plan['imagen_hero_url'])
+        ? $plan['imagen_hero_url'] : '/img/fondoPortada.jpg';
 
     echo json_encode(['ok' => true, 'plan' => $plan]);
 
 } else {
-    $limite = (int)($_GET['limite'] ?? 0);
 
-    if ($limite > 0) {
-        // ── Lista plana de planes para el index ──────────────────────────
-        $stmt = $pdo->prepare(
-            'SELECT pg.id, pg.titulo, pg.descripcion, pg.etiqueta, pg.categoria,
-                    pg.precio_desde, pg.moneda, pg.puntuacion, pg.total_resenas,
-                    pg.imagen_hero_url,
-                    r.nombre AS restaurante_nombre
-             FROM planes_gastronomicos pg
-             JOIN restaurantes r ON r.id = pg.restaurante_id
-             WHERE pg.estado = \'activo\'
-             ORDER BY pg.puntuacion DESC
-             LIMIT ?'
-        );
-        $stmt->execute([$limite]);
+    $sinLimite = isset($_GET['sin_limite']) && $_GET['sin_limite'] === '1';
+    $limite    = $sinLimite ? null : (int)($_GET['limite'] ?? 0);
+
+    if ($sinLimite || $limite > 0) {
+        // ── Lista plana de planes (index/home con limite, gastronomia.php sin limite) ──
+        $sql = "SELECT pg.id, pg.titulo, pg.descripcion, pg.etiqueta, pg.categoria,
+                       pg.precio_desde, pg.moneda, pg.puntuacion, pg.total_resenas,
+                       pg.imagen_hero_url,
+                       r.nombre AS restaurante_nombre
+                FROM planes_gastronomicos pg
+                JOIN restaurantes r ON r.id = pg.restaurante_id
+                WHERE pg.estado = 'activo'
+                ORDER BY pg.puntuacion DESC";
+
+        if ($sinLimite) {
+            // Sin restricción — devuelve todos
+            $stmt = $pdo->query($sql);
+        } else {
+            $stmt = $pdo->prepare($sql . ' LIMIT ?');
+            $stmt->execute([$limite]);
+        }
+
         $planes = $stmt->fetchAll();
 
         foreach ($planes as &$p) {
             $p['precio_formateado'] = number_format((float)$p['precio_desde'], 0, ',', '.');
             $p['imagen_hero_url']   = !empty($p['imagen_hero_url'])
-                ? $p['imagen_hero_url']
-                : '/img/fondoPortada.jpg';
+                ? $p['imagen_hero_url'] : '/img/fondoPortada.jpg';
         }
 
         echo json_encode(['ok' => true, 'planes' => $planes]);
 
     } else {
-        // ── Lista de restaurantes y sus planes gastronómicos ─────────────
+        // ── Lista de restaurantes agrupados con sus planes ───────────────
         $restaurantes = $pdo->query(
-            'SELECT r.id, r.nombre, r.descripcion, r.direccion, r.tipo, r.icono
-             FROM restaurantes r WHERE r.estado = \'activo\' ORDER BY r.nombre ASC'
+            "SELECT r.id, r.nombre, r.descripcion, r.direccion, r.tipo, r.icono
+             FROM restaurantes r WHERE r.estado = 'activo' ORDER BY r.nombre ASC"
         )->fetchAll();
 
         foreach ($restaurantes as &$rest) {
             $pla = $pdo->prepare(
-                'SELECT id, titulo, categoria, precio_desde, moneda, puntuacion, etiqueta
+                "SELECT id, titulo, categoria, precio_desde, moneda, puntuacion, etiqueta
                  FROM planes_gastronomicos
-                 WHERE restaurante_id = ? AND estado = \'activo\'
-                 ORDER BY puntuacion DESC'
+                 WHERE restaurante_id = ? AND estado = 'activo'
+                 ORDER BY puntuacion DESC"
             );
             $pla->execute([$rest['id']]);
             $rest['planes'] = $pla->fetchAll();

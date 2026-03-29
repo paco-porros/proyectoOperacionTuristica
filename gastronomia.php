@@ -115,143 +115,26 @@ if ($logueado) {
           <span class="seccion__supratitulo">Selección culinaria</span>
           <h2 class="seccion__titulo">Todas las Ofertas</h2>
         </div>
-        <span class="gastro-main__contador" id="contador-gastro">5 ofertas disponibles</span>
+        <span class="gastro-main__contador" id="contador-gastro"></span>
       </div>
 
-      <!-- Cuadrícula de ofertas gastronómicas -->
-      <div class="gastro-main__cuadricula">
-
-        <!-- ── Oferta 1 ── -->
-        <div class="tarjeta-gastro grupo-imagen">
-          <div class="tarjeta-gastro__imagen-envoltorio">
-            <img alt="Trucha al Ajillo" class="tarjeta-gastro__imagen"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB711Yx-xQsszazQUBDqN1OqQYl4K8czjoq1Nka6XzAwDkrWX0IejB6EnX6bjk1X_vvcGNWiJIcqWzq4t5qYN1Opwg2Y8nMBxhqhzu_1R1ae4Q_8NhuJzyYxiUDDV8sQfFCgDo6LycuHewxR61A3BS_3oGw2yzY4JkuQeTM1brAg3oPmgaFMooN2Xcm4k2EjJs23RaG9pS7IWuUb7sc7WqOiWOGVE1VoaznK9VAT2w7bsR3Ycem5FSWtpZLVI9C8fuu1sUFmuMbahA"
-              loading="lazy" />
-            <span class="tarjeta-gastro__badge">Típico</span>
-          </div>
-          <div class="tarjeta-gastro__cuerpo panel-cristal borde-superior-cristal">
-            <span class="tarjeta-gastro__restaurante">Restaurante El Ciervo Rojo</span>
-            <h3 class="tarjeta-gastro__titulo">Trucha al Ajillo con Patacones</h3>
-            <p class="tarjeta-gastro__descripcion">Trucha fresca de río preparada con mantequilla de ajo, hierbas finas y acompañada de patacones crujientes típicos de la región cafetera.</p>
-            <div class="tarjeta-gastro__meta">
-              <span class="tarjeta-gastro__precio">$35,000 COP</span>
-              <span class="tarjeta-gastro__calificacion">
-                <span class="material-symbols-outlined">star</span> 4.9
-              </span>
-            </div>
-            <div class="acciones-tarjeta">
-              <button class="boton-tarjeta boton-tarjeta--principal" onclick="window.location.href='detalles-gastronomicos.php?id=4'">
-                Ver detalles <span class="material-symbols-outlined">arrow_forward</span>
-              </button>
-            </div>
-          </div>
+      <!-- Cuadrícula dinámica — se rellena con AJAX -->
+      <div class="gastro-main__cuadricula" id="cuadricula-gastro">
+        <!-- Skeletons mientras carga -->
+        <div class="tarjeta-gastro" style="opacity:.4;pointer-events:none;">
+          <div class="tarjeta-gastro__imagen-envoltorio" style="background:#d5b9b2;height:13rem;"></div>
+          <div class="tarjeta-gastro__cuerpo"><div style="height:.8rem;background:#d5b9b2;border-radius:.5rem;margin-bottom:.75rem;"></div><div style="height:.6rem;background:#d5b9b2;border-radius:.5rem;width:60%;"></div></div>
         </div>
-
-        <!-- ── Oferta 2 ── -->
-        <div class="tarjeta-gastro grupo-imagen">
-          <div class="tarjeta-gastro__imagen-envoltorio">
-            <img alt="Bandeja Paisa" class="tarjeta-gastro__imagen"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjFlGpXujdfQF-8b9gRFHXxsmyP1MibGWZWjioRuKfNBI60Jq9HU_is02Emlcpmhz96F3sT4SZ6csyzaqJjVATkr96Vcy6-hQNGPmllHVL8NdTGVvqyGi0aXpa8iXv71B--3uE6f3aGwcmkiOmI8KfjXtOhUr1D01QKnfxdjnggBPIpZXa0f_V0daOaDcp_9GSF5JMimVgcZJr7yp3zUhhbbuSpmtsKKVQzCIEbxJb5X9pmZGIrVH6-nBXTHG44GxabvfF-7AGN-Y"
-              loading="lazy" />
-            <span class="tarjeta-gastro__badge">Insignia</span>
-          </div>
-          <div class="tarjeta-gastro__cuerpo panel-cristal borde-superior-cristal">
-            <span class="tarjeta-gastro__restaurante">La Fogata</span>
-            <h3 class="tarjeta-gastro__titulo">Bandeja Paisa Premium</h3>
-            <p class="tarjeta-gastro__descripcion">La bandeja más completa del Eje Cafetero: fríjoles, chicharrón, chorizo, morcilla, huevo, arroz, hogao y arepa. Una festividad en el plato.</p>
-            <div class="tarjeta-gastro__meta">
-              <span class="tarjeta-gastro__precio">$28,000 COP</span>
-              <span class="tarjeta-gastro__calificacion">
-                <span class="material-symbols-outlined">star</span> 4.8
-              </span>
-            </div>
-            <div class="acciones-tarjeta">
-              <button class="boton-tarjeta boton-tarjeta--principal" onclick="window.location.href='detalles-gastronomicos.php?id=2'">
-                Ver detalles <span class="material-symbols-outlined">arrow_forward</span>
-              </button>
-            </div>
-          </div>
+        <div class="tarjeta-gastro" style="opacity:.25;pointer-events:none;">
+          <div class="tarjeta-gastro__imagen-envoltorio" style="background:#d5b9b2;height:13rem;"></div>
+          <div class="tarjeta-gastro__cuerpo"><div style="height:.8rem;background:#d5b9b2;border-radius:.5rem;margin-bottom:.75rem;"></div><div style="height:.6rem;background:#d5b9b2;border-radius:.5rem;width:60%;"></div></div>
         </div>
-
-        <!-- ── Oferta 3 ── -->
-        <div class="tarjeta-gastro grupo-imagen">
-          <div class="tarjeta-gastro__imagen-envoltorio">
-            <img alt="Tour Cafetero" class="tarjeta-gastro__imagen"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBclMJTecXPdKK2ee7Nqm1hnNKeODuSBdQO7f22h0Ai2Pn_xKD50h1tBxHMeNHqf32ZSFp3rDm2oNfUDSOL2Hgc4wFFSfbxLq9CIuFvyY-xeM4rSf6U0NZLKeJRI1NPZ-kFbrdUd4EL8cxVpJNdSC5VxkG77TP8RygkTo83YL2HQvLN-40KKatTvjzX8hhCz49Wagw59CxqICS09LnrUdEU-pScwieXY9yQFcGOuhJY1ziFpj0UKuwv40lUL0u79wGO4IJtttXzodM"
-              loading="lazy" />
-            <span class="tarjeta-gastro__badge">Experiencia</span>
-          </div>
-          <div class="tarjeta-gastro__cuerpo panel-cristal borde-superior-cristal">
-            <span class="tarjeta-gastro__restaurante">Finca El Descanso</span>
-            <h3 class="tarjeta-gastro__titulo">Tour Cafetero & Cata Gourmet</h3>
-            <p class="tarjeta-gastro__descripcion">Recorre los cafetales de Santa Rosa, aprende el proceso del café de origen y finaliza con una cata gourmet guiada por expertos baristas certificados.</p>
-            <div class="tarjeta-gastro__meta">
-              <span class="tarjeta-gastro__precio">$65,000 COP</span>
-              <span class="tarjeta-gastro__calificacion">
-                <span class="material-symbols-outlined">star</span> 5.0
-              </span>
-            </div>
-            <div class="acciones-tarjeta">
-              <button class="boton-tarjeta boton-tarjeta--principal" onclick="window.location.href='detalles-gastronomicos.php?id=6'">
-                Ver detalles <span class="material-symbols-outlined">arrow_forward</span>
-              </button>
-            </div>
-          </div>
+        <div class="tarjeta-gastro" style="opacity:.15;pointer-events:none;">
+          <div class="tarjeta-gastro__imagen-envoltorio" style="background:#d5b9b2;height:13rem;"></div>
+          <div class="tarjeta-gastro__cuerpo"><div style="height:.8rem;background:#d5b9b2;border-radius:.5rem;margin-bottom:.75rem;"></div><div style="height:.6rem;background:#d5b9b2;border-radius:.5rem;width:60%;"></div></div>
         </div>
+      </div>
 
-        <!-- ── Oferta 4 (nueva) ── -->
-        <div class="tarjeta-gastro grupo-imagen">
-          <div class="tarjeta-gastro__imagen-envoltorio">
-            <img alt="Arepas de Choclo" class="tarjeta-gastro__imagen"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqrYiszyVO9b5FJvsR6QPJYsqdT1GRR_mYpjMlPFWjxafulqCduopzqvrPvj3cGmkgQeW_gjY7KmGaR5QZF2cJ5nICZ31UU4QvbFe3hQvpbR3fcNkkiv4PtLHKxPWQaj-m5KvRDvg0BuZM5v2Yx1AK6kk9MFOE-pR83n69Fo6EBiS5FK3SaeIGMpyP68nUPiP33pURX9LjDtg5JKbLoWzeTPEuwFkFJaSET8JWQ8qGwPGcqgJeNRD9fPPvAF0pxhu2cdEaD2v2fV72"
-              loading="lazy" />
-            <span class="tarjeta-gastro__badge">Tradicional</span>
-          </div>
-          <div class="tarjeta-gastro__cuerpo panel-cristal borde-superior-cristal">
-            <span class="tarjeta-gastro__restaurante">Restaurante La Abuela Rosa</span>
-            <h3 class="tarjeta-gastro__titulo">Arepas de Choclo con Quesillo</h3>
-            <p class="tarjeta-gastro__descripcion">Arepas de maíz tierno artesanales, rellenas con quesillo fresco derretido y bañadas en mantequilla casera. El desayuno más emblemático del Eje Cafetero.</p>
-            <div class="tarjeta-gastro__meta">
-              <span class="tarjeta-gastro__precio">$12,000 COP</span>
-              <span class="tarjeta-gastro__calificacion">
-                <span class="material-symbols-outlined">star</span> 4.7
-              </span>
-            </div>
-            <div class="acciones-tarjeta">
-              <button class="boton-tarjeta boton-tarjeta--principal" onclick="window.location.href='detalles-gastronomicos.php?id=7'">
-                Ver detalles <span class="material-symbols-outlined">arrow_forward</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- ── Oferta 5 (nueva) ── -->
-        <div class="tarjeta-gastro grupo-imagen">
-          <div class="tarjeta-gastro__imagen-envoltorio">
-            <img alt="Lechona Risaraldense" class="tarjeta-gastro__imagen"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuALZtJ2omilYGHRKrG9x1nwXdgbTd-CLY_tL4_aKJOyNqaE4VqDD1vM-0EgYDbk1b_zQ_Bzwjaj2EL6Jug0TSFK9Q-JoDVcC2zHmYPXmPc1zpUCs9D1NvLosOig4fhqukT6z_XkcA1TJTQ3z1izAZLfA9vpyDhxsvALNQAMbO2erryl9DKcG8sCxPDIU7jo1FK55zo9d97q8LeZ2rLMly0ow4RZmUu4fjbaSEys11NOkjGrGZcKesu4mXcv8VQI1xP2rcQ5i7H1vsOt"
-              loading="lazy" />
-            <span class="tarjeta-gastro__badge">Regional</span>
-          </div>
-          <div class="tarjeta-gastro__cuerpo panel-cristal borde-superior-cristal">
-            <span class="tarjeta-gastro__restaurante">El Rancho Típico</span>
-            <h3 class="tarjeta-gastro__titulo">Lechona Risaraldense Festiva</h3>
-            <p class="tarjeta-gastro__descripcion">Cerdo entero horneado por 12 horas relleno de arroz, arveja y especias regionales. Servido con chicharrón crocante y arepa de maíz pelado, ideal para celebraciones.</p>
-            <div class="tarjeta-gastro__meta">
-              <span class="tarjeta-gastro__precio">$42,000 COP</span>
-              <span class="tarjeta-gastro__calificacion">
-                <span class="material-symbols-outlined">star</span> 4.8
-              </span>
-            </div>
-            <div class="acciones-tarjeta">
-              <button class="boton-tarjeta boton-tarjeta--principal" onclick="window.location.href='detalles-gastronomicos.php?id=8'">
-                Ver detalles <span class="material-symbols-outlined">arrow_forward</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- /gastro-main__cuadricula -->
     </div>
   </main>
 
@@ -337,8 +220,64 @@ if ($logueado) {
 
   <script>
   /* ════════════════════════════════════════════════════
-     GASTRONOMIA.PHP — menú avatar y logout (logueado)
+     GASTRONOMIA.PHP — carga todas las ofertas desde la BD
   ════════════════════════════════════════════════════ */
+
+  function renderTarjetaGastro(plan) {
+    const precio    = plan.precio_formateado;
+    const moneda    = plan.moneda === 'COP' ? 'COP' : plan.moneda;
+    const estrellas = parseFloat(plan.puntuacion).toFixed(1);
+    const img       = plan.imagen_hero_url || '/img/fondoPortada.jpg';
+    const desc      = (plan.descripcion || '').substring(0, 130);
+
+    return `
+    <div class="tarjeta-gastro grupo-imagen">
+      <div class="tarjeta-gastro__imagen-envoltorio">
+        <img class="tarjeta-gastro__imagen" src="${img}" alt="${plan.titulo}" loading="lazy"/>
+        <span class="tarjeta-gastro__badge">${plan.etiqueta || ''}</span>
+      </div>
+      <div class="tarjeta-gastro__cuerpo panel-cristal borde-superior-cristal">
+        <span class="tarjeta-gastro__restaurante">${plan.restaurante_nombre}</span>
+        <h3 class="tarjeta-gastro__titulo">${plan.titulo}</h3>
+        <p class="tarjeta-gastro__descripcion">${desc}${plan.descripcion && plan.descripcion.length > 130 ? '…' : ''}</p>
+        <div class="tarjeta-gastro__meta">
+          <span class="tarjeta-gastro__precio">$${precio} ${moneda}</span>
+          <span class="tarjeta-gastro__calificacion">
+            <span class="material-symbols-outlined">star</span> ${estrellas}
+          </span>
+        </div>
+        <div class="acciones-tarjeta">
+          <button class="boton-tarjeta boton-tarjeta--principal"
+                  onclick="window.location.href='detalles-gastronomicos.php?id=${plan.id}'">
+            Ver detalles <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  /* ── Carga SIN límite — devuelve todas las ofertas activas ── */
+  async function cargarTodasLasOfertas() {
+    try {
+      const res  = await fetch('/ajax/gastronomicos.php?sin_limite=1');
+      const data = await res.json();
+      const grid = document.getElementById('cuadricula-gastro');
+
+      if (data.ok && data.planes.length) {
+        grid.innerHTML = data.planes.map(p => renderTarjetaGastro(p)).join('');
+        const contador = document.getElementById('contador-gastro');
+        if (contador) {
+          const n = data.planes.length;
+          contador.textContent = `${n} ${n === 1 ? 'oferta disponible' : 'ofertas disponibles'}`;
+        }
+      } else {
+        grid.innerHTML = '<p class="gastro-main__vacio">No hay ofertas disponibles en este momento.</p>';
+      }
+    } catch (err) {
+      console.error('Error cargando gastronomía:', err);
+    }
+  }
+
   <?php if ($logueado): ?>
   document.getElementById('avatar-usuario').addEventListener('click', (e) => {
     e.stopPropagation();
@@ -353,6 +292,8 @@ if ($logueado) {
     window.location.href = '/index.php';
   });
   <?php endif; ?>
+
+  document.addEventListener('DOMContentLoaded', cargarTodasLasOfertas);
   </script>
 
 </body>
