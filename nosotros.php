@@ -614,11 +614,11 @@
       </div>
 
     <div>
-        <h4 class="pie__columna-titulo">Legales y ayuda</h4>
+        <h4 class="pie__columna-titulo"><a href="legales.php">Legales y Ayuda</a></h4>
         <ul class="pie__lista">
-          <li><a href="#">Términos y Condiciones</a></li>
-          <li><a href="#">Privacidad</a></li>
-          <li><a href="#">FAQs</a></li>
+          <li><a href="legales.php#terminos">Términos y Condiciones</a></li>
+          <li><a href="legales.php#privacidad">Privacidad</a></li>
+          <li><a href="legales.php#faqs">FAQs</a></li>
         </ul>
       </div>
 

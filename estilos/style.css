@@ -77,10 +77,11 @@ a { text-decoration: none; }
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 20px 40px rgba(88, 44, 77, 0.07);
+  background: rgba(236, 226, 208, 0.90);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: none;
+  border-bottom: 1px solid rgba(162, 103, 105, 0.18);
 }
 
 .navegacion__logo {
@@ -107,15 +108,15 @@ a { text-decoration: none; }
   font-size: 0.875rem;
   letter-spacing: 0.05em;
   color: #6b4558;
-  transition: color 0.2s;
+  padding-bottom: 3px;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.38s cubic-bezier(0.4, 0, 0.2, 1), color 0.38s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.navegacion__enlace:hover { color: var(--color-primario); }
-
+.navegacion__enlace:hover,
 .navegacion__enlace--activo {
-  color: var(--color-primario);
-  border-bottom: 2px solid #d5b9b2;
-  padding-bottom: 0.25rem;
+  color: var(--color-terciario);
+  border-bottom-color: var(--color-terciario);
 }
 
 .navegacion__boton {
@@ -127,12 +128,14 @@ a { text-decoration: none; }
   font-weight: 500;
   font-size: 0.875rem;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.15s;
-  transform: scale(0.95);
+  transition: background-color 0.38s cubic-bezier(0.4, 0, 0.2, 1), transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.navegacion__boton:hover  { background-color: var(--color-primario-contenedor); }
-.navegacion__boton:active { transform: scale(0.9); }
+.navegacion__boton:hover  {
+  background-color: var(--color-terciario);
+  transform: translateY(-1px);
+}
+.navegacion__boton:active { transform: scale(0.95); }
 
 /* ============================================================
    PORTADA (HERO)
@@ -766,9 +769,7 @@ a { text-decoration: none; }
    PIE DE PÁGINA
    ============================================================ */
 .pie {
-  background-color: rgba(46, 20, 40, 0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background-color: #582c4d;
   width: 100%;
   margin-top: auto;
 }
