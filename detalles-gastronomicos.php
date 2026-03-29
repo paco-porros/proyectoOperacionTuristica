@@ -25,7 +25,7 @@ $usuario  = usuarioActual();
 
   <!-- NAVEGACIÓN -->
   <nav class="barra-nav">
-    <div class="nav-logo">Azure Voyager</div>
+    <a class="nav-logo" href="/index.php">Azure Voyager</a>
     <div class="nav-enlaces">
       <a class="nav-enlace" href="index.php">Inicio</a>
       <a class="nav-enlace" href="#">Servicios</a>
@@ -34,11 +34,7 @@ $usuario  = usuarioActual();
       <a class="nav-enlace nav-enlace--activo" href="#">Gastronomía</a>
     </div>
     <div class="nav-acciones">
-      <div class="nav-buscador">
-        <span class="material-symbols-outlined nav-buscador__icono">search</span>
-        <input class="nav-buscador__input" placeholder="Buscar..." type="text"/>
-      </div>
-      <?php if ($logueado): ?>
+<?php if ($logueado): ?>
         <button class="nav-boton-reservar" id="btn-logout-gastro"><?= htmlspecialchars($usuario['nombre']) ?> · Salir</button>
       <?php else: ?>
         <button class="nav-boton-reservar" onclick="window.location.href='/login.php'">Iniciar Sesión</button>
@@ -162,17 +158,6 @@ $usuario  = usuarioActual();
   function renderDetalle(plan) {
     const imgHero = plan.imagen_hero_url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCVyCZ2FExmqXaMFwH23NJmftIQOA29hIqHlw4QVhAyepxIP0qPmqft0EUBSzlc28rmNRLQeWkcsbAthowjVD7Ov8tO8TmnGOd6kMpXYHMGvzcTt7nBtEijjwUxIA7Xqtab9OFW9f4D2DOdhkVPEI9EtdcOs20Tu3k2INSFHQ0fHSgtHFqFjhWArit9OSR3uw9dshnJU4AClXYlhUcWLwO76ZZ4emwujwsnGxR4H2dYMakb5BLUruCP_FnBlwjPvO-R5Vyvf59CpI0B';
 
-    const platosHTML = (plan.platos || []).map(p => `
-      <div class="plato">
-        <div class="plato__imagen-envoltorio">
-          <img class="plato__imagen" src="${p.imagen_url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuAERIc4zxlLattoIydkblU9vwFfzgioXPnhg6QVJEjbWnsq1M-CQBhoBmTIkvPqJ9DBqd-OHgphca5EgyPLSe4rAUCptAXc5sDhTNRrwZQTz7UICm3qsmUZXVNhqPk7Tvt7c0-0Do0m4p3I9AJ2z9HZxo7U5OfI7yCqThYZAMSM3JVsXPH1Fy7M5yOTrizSMZH-kkdfh4KPYUCvz9Lw7yLHoLe-RPVGA8ZHZfaB57vODJFL_ZyJOBqT05UgJoGqQvSWaoBWBHH_B7wS'}" alt="${p.titulo}" loading="lazy"/>
-        </div>
-        <div class="plato__info">
-          <h3 class="plato__titulo">${p.titulo}</h3>
-          <p class="plato__descripcion">${p.descripcion}</p>
-        </div>
-      </div>`).join('');
-
     const resenasHTML = (plan.resenas || []).map(r => `
       <div class="opinion opinion--con-borde">
         <div class="opinion__estrellas">${estrellas(r.puntuacion)}</div>
@@ -198,15 +183,6 @@ $usuario  = usuarioActual();
 
           <!-- Columna izquierda -->
           <div class="columna-contenido">
-
-            ${platosHTML ? `
-            <div class="tarjeta-cristal">
-              <div class="tarjeta-cristal__encabezado">
-                <span class="material-symbols-outlined icono-primario">restaurant_menu</span>
-                <h2 class="titulo-seccion">Descripción del Plato</h2>
-              </div>
-              <div class="lista-platos">${platosHTML}</div>
-            </div>` : ''}
 
             <!-- Información del restaurante -->
             <div class="cuadricula-dos-columnas">

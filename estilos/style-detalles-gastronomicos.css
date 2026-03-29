@@ -110,6 +110,7 @@
   font-weight: 700;
   letter-spacing: -0.05em;
   color: var(--color-primary-container);
+  text-decoration: none;
 }
 
 .nav-enlaces {
