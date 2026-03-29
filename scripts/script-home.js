@@ -1,218 +1,147 @@
-/* ============================================================
-   script-home.js — Ethereal Voyager · Página principal
-   ============================================================ */
+/* ════════════════════════════════════════════════════
+   HOME.PHP — Bento de planes AJAX + menú avatar
+════════════════════════════════════════════════════ */
 
-document.addEventListener("DOMContentLoaded", () => {
+const IMGS_DEFAULT = [
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuB711Yx-xQsszazQUBDqN1OqQYl4K8czjoq1Nka6XzAwDkrWX0IejB6EnX6bjk1X_vvcGNWiJIcqWzq4t5qYN1Opwg2Y8nMBxhqhzu_1R1ae4Q_8NhuJzyYxiUDDV8sQfFCgDo6LycuHewxR61A3BS_3oGw2yzY4JkuQeTM1brAg3oPmgaFMooN2Xcm4k2EjJs23RaG9pS7IWuUb7sc7WqOiWOGVE1VoaznK9VAT2w7bsR3Ycem5FSWtpZLVI9C8fuu1sUFmuMbahA',
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuAjFlGpXujdfQF-8b9gRFHXxsmyP1MibGWZWjioRuKfNBI60Jq9HU_is02Emlcpmhz96F3sT4SZ6csyzaqJjVATkr96Vcy6-hQNGPmllHVL8NdTGVvqyGi0aXpa8iXv71B--3uE6f3aGwcmkiOmI8KfjXtOhUr1D01QKnfxdjnggBPIpZXa0f_V0daOaDcp_9GSF5JMimVgcZJr7yp3zUhhbbuSpmtsKKVQzCIEbxJb5X9pmZGIrVH6-nBXTHG44GxabvfF-7AGN-Y',
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuBclMJTecXPdKK2ee7Nqm1hnNKeODuSBdQO7f22h0Ai2Pn_xKD50h1tBxHMeNHqf32ZSFp3rDm2oNfUDSOL2Hgc4wFFSfbxLq9CIuFvyY-xeM4rSf6U0NZLKeJRI1NPZ-kFbrdUd4EL8cxVpJNdSC5VxkG77TP8RygkTo83YL2HQvLN-40KKatTvjzX8hhCz49Wagw59CxqICS09LnrUdEU-pScwieXY9yQFcGOuhJY1ziFpj0UKuwv40lUL0u79wGO4IJtttXzodM',
+];
 
-  /* ----------------------------------------------------------
-     Referencias a elementos del DOM
-     ---------------------------------------------------------- */
-  const inputBusqueda       = document.getElementById("input-busqueda");
-  const botonExplorar       = document.getElementById("boton-explorar");
-  const botonVerTodos       = document.getElementById("boton-ver-todos-itinerarios");
-  const botonNotificaciones = document.getElementById("boton-notificaciones");
-  const avatarUsuario       = document.getElementById("avatar-usuario");
-  const inputBoletin        = document.getElementById("input-boletin");
-  const botonBoletin        = document.getElementById("boton-boletin");
-  const listaSocios         = document.getElementById("lista-socios");
-
-  /* ----------------------------------------------------------
-     Barra de búsqueda hero
-     ---------------------------------------------------------- */
-  botonExplorar.addEventListener("click", () => {
-    const destino = inputBusqueda.value.trim();
-    if (!destino) {
-      inputBusqueda.focus();
-      return;
-    }
-    // Aquí se conectaría con el motor de búsqueda de destinos
-    console.log("Explorando destino:", destino);
-    mostrarNotificacion(`Buscando: "${destino}"`, "info");
-  });
-
-  // También permite buscar presionando Enter
-  inputBusqueda.addEventListener("keydown", (evento) => {
-    if (evento.key === "Enter") botonExplorar.click();
-  });
-
-  /* ----------------------------------------------------------
-     Botón "Ver todos" en gastronomía
-     ---------------------------------------------------------- */
-  const botonVerTodosGastronomia = document.getElementById("boton-ver-todos-gastronomia");
-  if (botonVerTodosGastronomia) {
-    botonVerTodosGastronomia.addEventListener("click", () => {
-      console.log("Navegar a todas las ofertas gastronómicas.");
-      // Aquí se navegaría a la página de gastronomía
-    });
-  }
-
-  /* ----------------------------------------------------------
-     Botones de tarjetas gastronómicas (delegación de eventos)
-     ---------------------------------------------------------- */
-  document.querySelectorAll(".tarjeta-gastro .boton-tarjeta--cristal").forEach((boton) => {
-    boton.addEventListener("click", () => {
-      const nombrePlato = boton
-        .closest(".tarjeta-gastro")
-        ?.querySelector(".tarjeta-gastro__titulo")
-        ?.textContent?.trim();
-      console.log("Reservando:", nombrePlato);
-      mostrarNotificacion(`Reserva iniciada para "${nombrePlato}".`, "exito");
-    });
-  });
-
-  document.querySelectorAll(".tarjeta-gastro .boton-tarjeta--blanco").forEach((boton) => {
-    boton.addEventListener("click", () => {
-      console.log("Ver menú del restaurante.");
-    });
-  });
-
-  /* ----------------------------------------------------------
-     Botón "Ver todos" en itinerarios
-     ---------------------------------------------------------- */
-  botonVerTodos.addEventListener("click", () => {
-    console.log("Navegar a todos los itinerarios.");
-    // Aquí se navegaría a la página de itinerarios
-  });
-
-  /* ----------------------------------------------------------
-     Botones de tarjetas de itinerarios (delegación de eventos)
-     ---------------------------------------------------------- */
-  document.querySelectorAll(".boton-tarjeta--blanco").forEach((boton) => {
-    boton.addEventListener("click", () => {
-      console.log("Ver detalles del destino.");
-    });
-  });
-
-  document.querySelectorAll(".boton-tarjeta--cristal").forEach((boton) => {
-    boton.addEventListener("click", () => {
-      const nombreDestino = boton
-        .closest(".info-tarjeta")
-        ?.querySelector(".nombre-destino, .nombre-destino-principal")
-        ?.textContent?.trim();
-      console.log("Agregando a lista:", nombreDestino);
-      mostrarNotificacion(`"${nombreDestino}" agregado a tu lista.`, "exito");
-    });
-  });
-
-  /* ----------------------------------------------------------
-     Notificaciones del nav
-     ---------------------------------------------------------- */
-  botonNotificaciones.addEventListener("click", () => {
-    console.log("Abrir panel de notificaciones.");
-  });
-
-  /* ----------------------------------------------------------
-     Avatar de usuario
-     ---------------------------------------------------------- */
-  avatarUsuario.addEventListener("click", () => {
-    console.log("Abrir perfil de usuario.");
-  });
-
-  /* ----------------------------------------------------------
-     Boletín informativo (pie de página)
-     ---------------------------------------------------------- */
-  botonBoletin.addEventListener("click", () => {
-    const correo = inputBoletin.value.trim();
-
-    if (!correo || !validarCorreo(correo)) {
-      mostrarNotificacion("Por favor ingresa un correo válido.", "error");
-      inputBoletin.focus();
-      return;
-    }
-
-    // Aquí se conectaría con el servicio de boletín
-    console.log("Suscripción al boletín:", correo);
-    mostrarNotificacion("¡Suscripción exitosa! Bienvenido al boletín.", "exito");
-    inputBoletin.value = "";
-  });
-
-  inputBoletin.addEventListener("keydown", (evento) => {
-    if (evento.key === "Enter") botonBoletin.click();
-  });
-
-  /* ----------------------------------------------------------
-     Íconos de redes sociales en el pie
-     ---------------------------------------------------------- */
-  document.getElementById("icono-web").addEventListener("click", () => {
-    console.log("Abrir sitio web principal.");
-  });
-
-  document.getElementById("icono-foro").addEventListener("click", () => {
-    console.log("Abrir comunidad / foro.");
-  });
-
-  /* ----------------------------------------------------------
-     Efecto de socios: hover con grayscale (ya en CSS,
-     esto es por si se quiere extender con lógica futura)
-     ---------------------------------------------------------- */
-  if (listaSocios) {
-    // Placeholder para futuras animaciones de socios
-  }
-
-  /* ----------------------------------------------------------
-     Utilidades
-     ---------------------------------------------------------- */
-
-  /**
-   * Valida el formato de un correo electrónico.
-   * @param {string} correo
-   * @returns {boolean}
-   */
-  function validarCorreo(correo) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
-  }
-
-  /**
-   * Muestra una notificación flotante temporal en pantalla.
-   * @param {string} texto  - Mensaje a mostrar.
-   * @param {string} tipo   - "exito" | "error" | "info"
-   */
-  function mostrarNotificacion(texto, tipo) {
-    const previa = document.getElementById("notificacion-flotante");
-    if (previa) previa.remove();
-
-    const colores = {
-      exito: { fondo: "#d1fae5", texto: "#065f46", borde: "#6ee7b7" },
-      error: { fondo: "#fee2e2", texto: "#7f1d1d", borde: "#fca5a5" },
-      info:  { fondo: "#dbeafe", texto: "#1e3a8a", borde: "#93c5fd" },
-    };
-
-    const paleta = colores[tipo] || colores.info;
-
-    const notificacion = document.createElement("div");
-    notificacion.id = "notificacion-flotante";
-    notificacion.textContent = texto;
-
-    Object.assign(notificacion.style, {
-      position:     "fixed",
-      bottom:       "1.5rem",
-      right:        "1.5rem",
-      zIndex:       "9999",
-      padding:      "0.875rem 1.5rem",
-      borderRadius: "0.75rem",
-      fontSize:     "0.875rem",
-      fontWeight:   "600",
-      fontFamily:   "Manrope, sans-serif",
-      backgroundColor: paleta.fondo,
-      color:        paleta.texto,
-      border:       `1px solid ${paleta.borde}`,
-      boxShadow:    "0 4px 16px rgba(0,0,0,0.1)",
-      transition:   "opacity 0.3s ease",
-      opacity:      "0",
-    });
-
-    document.body.appendChild(notificacion);
-
-    // Aparece con fadeIn
-    requestAnimationFrame(() => {
-      notificacion.style.opacity = "1";
-    });
-
-    // Desaparece después de 3.5 segundos
-    setTimeout(() => {
-      notificacion.style.opacity = "0";
-      setTimeout(() => notificacion.remove(), 300);
-    }, 3500);
-  }
-
+/* ── Menú avatar toggle ── */
+document.getElementById('avatar-usuario').addEventListener('click', (e) => {
+  e.stopPropagation();
+  const menu = document.getElementById('menu-avatar');
+  menu.classList.toggle('navegacion__dropdown--visible');
 });
+document.addEventListener('click', () => {
+  document.getElementById('menu-avatar').classList.remove('navegacion__dropdown--visible');
+});
+
+/* ── Logout AJAX ── */
+document.getElementById('btn-logout-home').addEventListener('click', async () => {
+  await fetch('/ajax/logout.php', { method: 'POST' });
+  window.location.href = '/index.php';
+});
+
+/* ── Botones de navegación ── */
+document.getElementById('boton-ver-todos-itinerarios').addEventListener('click', () => {
+  window.location.href = 'planes.php';
+});
+document.getElementById('boton-ver-todos-gastronomia').addEventListener('click', () => {
+  window.location.href = 'gastronomia.php';
+});
+
+/* ── Render tarjeta gastronómica (formato home) ── */
+function renderTarjetaGastroHome(plan) {
+  const precio    = plan.precio_formateado;
+  const moneda    = plan.moneda === 'COP' ? 'COP' : plan.moneda;
+  const estrellas = parseFloat(plan.puntuacion).toFixed(1);
+  const img       = plan.imagen_hero_url || '/img/fondoPortada.jpg';
+  return `
+  <div class="tarjeta-gastro grupo-imagen">
+    <div class="tarjeta-gastro__imagen-envoltorio">
+      <img class="tarjeta-gastro__imagen" src="${img}" alt="${plan.titulo}" loading="lazy"/>
+      <span class="tarjeta-gastro__badge">${plan.etiqueta || ''}</span>
+    </div>
+    <div class="tarjeta-gastro__cuerpo panel-cristal borde-superior-cristal">
+      <span class="tarjeta-gastro__restaurante">${plan.restaurante_nombre}</span>
+      <h3 class="tarjeta-gastro__titulo">${plan.titulo}</h3>
+      <div class="tarjeta-gastro__meta">
+        <span class="tarjeta-gastro__precio">$${precio} ${moneda}</span>
+        <span class="tarjeta-gastro__calificacion">
+          <span class="material-symbols-outlined">star</span> ${estrellas}
+        </span>
+      </div>
+      <div class="acciones-tarjeta">
+        <button class="boton-tarjeta boton-tarjeta--blanco boton-tarjeta--pequeno"
+                onclick="window.location.href='detalles-gastronomicos.php?id=${plan.id}'">
+          Ver info <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ── Carga 3 ofertas gastronómicas desde la BD ── */
+async function cargarGastronomiaHome() {
+  try {
+    const res  = await fetch('/ajax/gastronomicos.php?limite=3');
+    const data = await res.json();
+    const grid = document.getElementById('cuadricula-gastronomia');
+    if (data.ok && data.planes.length) {
+      grid.innerHTML = data.planes.map(p => renderTarjetaGastroHome(p)).join('');
+    } else {
+      grid.innerHTML = '<p style="padding:2rem;color:#6b4558;">No hay ofertas disponibles.</p>';
+    }
+  } catch (err) {
+    console.error('Error cargando gastronomía home:', err);
+  }
+}
+
+/* ── Render bento de planes ── */
+function renderBento(planes) {
+  if (!planes || planes.length === 0) return;
+
+  const principal = planes[0];
+  const laterales = planes.slice(1, 3);
+  const imgP = principal.imagen_hero_url || IMGS_DEFAULT[0];
+
+  let html = `
+  <div class="tarjeta-bento tarjeta-bento--principal grupo-imagen">
+    <img alt="${principal.titulo}" class="imagen-tarjeta" src="${imgP}" loading="lazy"/>
+    <div class="sombra-gradiente-tarjeta"></div>
+    <div class="info-tarjeta panel-cristal borde-superior-cristal">
+      <div class="fila-info-tarjeta">
+        <div>
+          <span class="etiqueta-categoria">${principal.duracion_dias} ${principal.duracion_dias > 1 ? 'Días' : 'Día'} · ${principal.etiqueta || 'Premium'}</span>
+          <h3 class="nombre-destino-principal">${principal.titulo}</h3>
+        </div>
+        <span class="precio-destino">$${principal.precio_formateado} ${principal.moneda === 'COP' ? 'COP' : ''}</span>
+      </div>
+      <div class="acciones-tarjeta">
+        <button class="boton-tarjeta boton-tarjeta--blanco" onclick="window.location.href='detalles-turisticos.php?id=${principal.id}'">
+          Ver detalles <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+        <button class="boton-tarjeta boton-tarjeta--cristal" onclick="window.location.href='detalles-turisticos.php?id=${principal.id}'">Explorar</button>
+      </div>
+    </div>
+  </div>
+  <div class="columna-bento-lateral">`;
+
+  laterales.forEach((p, i) => {
+    const img = p.imagen_hero_url || IMGS_DEFAULT[(i + 1) % IMGS_DEFAULT.length];
+    html += `
+    <div class="tarjeta-bento grupo-imagen">
+      <img alt="${p.titulo}" class="imagen-tarjeta" src="${img}" loading="lazy"/>
+      <div class="sombra-gradiente-tarjeta"></div>
+      <div class="info-tarjeta panel-cristal borde-superior-cristal">
+        <h3 class="nombre-destino">${p.titulo}</h3>
+        <div class="acciones-tarjeta">
+          <button class="boton-tarjeta boton-tarjeta--blanco boton-tarjeta--pequeno" onclick="window.location.href='detalles-turisticos.php?id=${p.id}'">
+            Ver detalles <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+          <button class="boton-tarjeta boton-tarjeta--cristal boton-tarjeta--pequeno" onclick="window.location.href='detalles-turisticos.php?id=${p.id}'">Explorar</button>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  html += '</div>';
+  document.getElementById('bento-planes').innerHTML = html;
+}
+
+/* ── Cargar planes ── */
+async function cargarBento() {
+  try {
+    const res  = await fetch('/ajax/planes_turisticos.php?limite=3');
+    const data = await res.json();
+    if (data.ok && data.planes.length) {
+      renderBento(data.planes);
+    }
+  } catch (err) {
+    console.error('Error cargando planes bento:', err);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => { cargarBento(); cargarGastronomiaHome(); });

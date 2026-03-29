@@ -1,8 +1,7 @@
 /* ════════════════════════════════════════════════════
-   INDEX.PHP — Carga dinámica de planes turísticos
+   PLANES.PHP — Carga todos los planes desde la BD
 ════════════════════════════════════════════════════ */
 
-/* Imagen placeholder por defecto cuando no hay imagen en la BD */
 const IMG_DEFAULT = [
   'https://lh3.googleusercontent.com/aida-public/AB6AXuAqrYiszyVO9b5FJvsR6QPJYsqdT1GRR_mYpjMlPFWjxafulqCduopzqvrPvj3cGmkgQeW_gjY7KmGaR5QZF2cJ5nICZ31UU4QvbFe3hQvpbR3fcNkkiv4PtLHKxPWQaj-m5KvRDvg0BuZM5v2Yx1AK6kk9MFOE-pR83n69Fo6EBiS5FK3SaeIGMpyP68nUPiP33pURX9LjDtg5JKbLoWzeTPEuwFkFJaSET8JWQ8qGwPGcqgJeNRD9fPPvAF0pxhu2cdEaD2v2fV72',
   'https://lh3.googleusercontent.com/aida-public/AB6AXuALZtJ2omilYGHRKrG9x1nwXdgbTd-CLY_tL4_aKJOyNqaE4VqDD1vM-0EgYDbk1b_zQ_Bzwjaj2EL6Jug0TSFK9Q-JoDVcC2zHmYPXmPc1zpUCs9D1NvLosOig4fhqukT6z_XkcA1TJTQ3z1izAZLfA9vpyDhxsvALNQAMbO2erryl9DKcG8sCxPDIU7jo1FK55zo9d97q8LeZ2rLMly0ow4RZmUu4fjbaSEys11NOkjGrGZcKesu4mXcv8VQI1xP2rcQ5i7H1vsOt',
@@ -52,90 +51,24 @@ function renderPlan(plan, idx) {
   </div>`;
 }
 
-async function cargarPlanes() {
+async function cargarTodosLosPlanes() {
   try {
-    const res   = await fetch('/ajax/planes_turisticos.php?limite=3');
+    const res   = await fetch('/ajax/planes_turisticos.php?sin_limite=1');
     const data  = await res.json();
     const lista = document.getElementById('lista-planes');
 
     if (data.ok && data.planes.length) {
       lista.innerHTML = data.planes.map((p, i) => renderPlan(p, i)).join('');
+      const contador = document.getElementById('contador-planes');
+      if (contador) {
+        contador.textContent = `${data.planes.length} ${data.planes.length === 1 ? 'plan disponible' : 'planes disponibles'}`;
+      }
     } else {
-      lista.innerHTML = '<p style="padding:2rem;color:#6b4558;">No hay planes disponibles en este momento.</p>';
+      lista.innerHTML = '<p class="planes-main__vacio">No hay planes disponibles en este momento.</p>';
     }
   } catch (err) {
     console.error('Error cargando planes:', err);
   }
 }
 
-/* ── Cerrar sesión AJAX ── */
-const btnSalir = document.getElementById('btn-cerrar-sesion');
-if (btnSalir) {
-  btnSalir.addEventListener('click', async () => {
-    await fetch('/ajax/logout.php', { method: 'POST' });
-    window.location.href = '/login.php';
-  });
-}
-
-function renderPlanGastronomico(plan) {
-  const precio    = plan.precio_formateado;
-  const moneda    = plan.moneda === 'COP' ? 'COP' : plan.moneda;
-  const estrellas = parseFloat(plan.puntuacion).toFixed(1);
-
-  return `
-  <div class="tarjeta-gastronomia panel-vidrio borde-vidrio">
-    <div class="tarjeta-gastronomia__imagen-envoltorio">
-      <img class="tarjeta-gastronomia__imagen" src="${plan.imagen_hero_url}" alt="${plan.titulo}" loading="lazy"/>
-      <span class="tarjeta-gastronomia__badge">${plan.etiqueta || ''}</span>
-    </div>
-    <div class="tarjeta-gastronomia__cuerpo">
-      <div>
-        <div class="tarjeta-gastronomia__fila-superior">
-          <h3 class="tarjeta-gastronomia__titulo">${plan.titulo}</h3>
-          <span class="tarjeta-gastronomia__etiqueta">${plan.categoria || ''}</span>
-        </div>
-        <p class="tarjeta-gastronomia__descripcion">${plan.descripcion.substring(0, 120)}…</p>
-        <div class="tarjeta-gastronomia__meta">
-          <span class="tarjeta-gastronomia__meta-item"><span class="material-symbols-outlined">restaurant</span> ${plan.restaurante_nombre}</span>
-          <span class="tarjeta-gastronomia__meta-item"><span class="material-symbols-outlined">star</span> ${estrellas}</span>
-        </div>
-      </div>
-      <div class="tarjeta-gastronomia__pie">
-        <div>
-          <span class="tarjeta-gastronomia__precio-desde">Desde</span>
-          <span class="tarjeta-gastronomia__precio">$${precio} <span class="tarjeta-gastronomia__precio-unidad">${moneda} / pers</span></span>
-        </div>
-        <button class="tarjeta-gastronomia__boton" onclick="window.location.href='detalles-gastronomicos.php?id=${plan.id}'">
-          Ver detalles <span class="material-symbols-outlined">visibility</span>
-        </button>
-      </div>
-    </div>
-  </div>`;
-}
-
-async function cargarGastronomia() {
-  try {
-    const res   = await fetch('/ajax/gastronomicos.php?limite=3');
-    const data  = await res.json();
-    const lista = document.getElementById('lista-gastronomia');
-
-    if (data.ok && data.planes.length) {
-      lista.innerHTML = data.planes.map(p => renderPlanGastronomico(p)).join('');
-    } else {
-      lista.innerHTML = '<p style="padding:2rem;color:#6b4558;">No hay ofertas disponibles en este momento.</p>';
-    }
-  } catch (err) {
-    console.error('Error cargando gastronomía:', err);
-  }
-}
-
-/* ── Botón "Ver todas las ofertas" → gastronomia.php ── */
-const btnVerTodosGastro = document.getElementById('boton-ver-todos-gastronomia');
-if (btnVerTodosGastro) {
-  btnVerTodosGastro.addEventListener('click', () => {
-    window.location.href = 'gastronomia.php';
-  });
-}
-
-/* Carga inmediata al DOMContentLoaded */
-document.addEventListener('DOMContentLoaded', () => { cargarPlanes(); cargarGastronomia(); });
+document.addEventListener('DOMContentLoaded', cargarTodosLosPlanes);
