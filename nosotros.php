@@ -683,20 +683,7 @@ $inicio = $logueado ? 'home.php' : 'index.php';
   </footer>
 
   <?php if ($logueado): ?>
-  <script>
-    document.getElementById('avatar-usuario').addEventListener('click', e => {
-      e.stopPropagation();
-      document.getElementById('menu-avatar').classList.toggle('navegacion__dropdown--visible');
-    });
-    document.addEventListener('click', () => {
-      const m = document.getElementById('menu-avatar');
-      if (m) m.classList.remove('navegacion__dropdown--visible');
-    });
-    document.getElementById('btn-logout').addEventListener('click', async () => {
-      await fetch('/ajax/logout.php', { method: 'POST' });
-      window.location.href = '/index.php';
-    });
-  </script>
+  <script src="/scripts/avatar-menu.js"></script>
   <?php endif; ?>
 </body>
 </html>
