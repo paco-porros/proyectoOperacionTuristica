@@ -1,8 +1,7 @@
 <?php
 /**
  * detalles-gastronomicos.php
- * Página INFORMATIVA: restaurante, dirección, contacto, platos.
- * No permite agregar a planes turísticos.
+ * Página de detalle de plan gastronómico con reserva AJAX.
  * Datos cargados vía AJAX desde la BD.
  */
 require_once __DIR__ . '/includes/session.php';
@@ -72,6 +71,26 @@ $usuario  = usuarioActual();
 
   <!-- Toast de notificación -->
   <div id="toast-plan" class="toast-plan"></div>
+
+  <!-- Modal: seleccionar fecha y personas -->
+  <div id="modal-agregar" class="modal-overlay">
+    <div class="modal-caja">
+      <h3 class="modal-titulo">Reservar plan gastronómico</h3>
+      <div id="modal-alerta" class="modal-alerta"></div>
+      <div class="modal-campo">
+        <label class="modal-etiqueta">Fecha de visita</label>
+        <input id="modal-fecha" type="date" class="modal-input"/>
+      </div>
+      <div class="modal-campo modal-campo--ultimo">
+        <label class="modal-etiqueta">Número de personas</label>
+        <input id="modal-adultos" type="number" min="1" max="20" value="2" class="modal-input"/>
+      </div>
+      <div class="modal-acciones">
+        <button id="modal-cancelar" class="modal-btn modal-btn--cancelar">Cancelar</button>
+        <button id="modal-confirmar" class="modal-btn modal-btn--confirmar">Confirmar reserva</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══════════════════════════════════════════
        PIE DE PÁGINA
@@ -146,7 +165,8 @@ $usuario  = usuarioActual();
      Carga datos del restaurante y plan desde la BD vía AJAX
   ════════════════════════════════════════════════════ */
 
-  const PLAN_ID = <?= $planId ?>;
+  const PLAN_ID  = <?= $planId ?>;
+  const LOGUEADO = <?= $logueado ? 'true' : 'false' ?>;
 
   /* ── Toast ── */
   function mostrarToast(msg, tipo) {
@@ -363,8 +383,17 @@ $usuario  = usuarioActual();
                     <span class="reserva-campo__valor">${plan.duracion_horas} horas</span>
                   </div>` : ''}
                 </div>
-                <a href="index.php#planes" class="boton-reservar" style="display:block;text-align:center;text-decoration:none;">Ver Planes Turísticos</a>
-                <p class="reserva-nota">Esta página es solo informativa. Para reservar visita la sección de Planes Turísticos.</p>
+                <button class="boton-reservar" id="btn-reservar-ahora">Reservar Ahora</button>
+                ${LOGUEADO
+                  ? `<button class="boton-reservar boton-agregar" id="btn-agregar-gastro">
+                       <span class="material-symbols-outlined">add_circle</span>
+                       Agregar a mi cuenta
+                     </button>`
+                  : `<a href="/login.php" class="enlace-login-reservar">
+                       Inicia sesión para reservar
+                     </a>`
+                }
+                <p class="reserva-nota">Cancelación gratuita hasta 15 días antes.</p>
               </div>
 
               ${incluyeHTML ? `
@@ -384,7 +413,73 @@ $usuario  = usuarioActual();
 
         </div>
       </section>`;
+
+    // Enlazar botones al modal
+    document.getElementById('btn-reservar-ahora')?.addEventListener('click', abrirModal);
+    document.getElementById('btn-agregar-gastro')?.addEventListener('click', abrirModal);
   }
+
+  /* ── Modal reserva ── */
+  function abrirModal() {
+    if (!LOGUEADO) { window.location.href = '/login.php'; return; }
+    const hoy = new Date().toISOString().split('T')[0];
+    document.getElementById('modal-fecha').min   = hoy;
+    document.getElementById('modal-fecha').value = hoy;
+    document.getElementById('modal-alerta').style.display = 'none';
+    document.getElementById('modal-agregar').style.display = 'flex';
+  }
+
+  document.getElementById('modal-cancelar').addEventListener('click', () => {
+    document.getElementById('modal-agregar').style.display = 'none';
+  });
+
+  document.getElementById('modal-agregar').addEventListener('click', function(e) {
+    if (e.target === this) this.style.display = 'none';
+  });
+
+  document.getElementById('modal-confirmar').addEventListener('click', async () => {
+    const fecha      = document.getElementById('modal-fecha').value;
+    const adultos    = parseInt(document.getElementById('modal-adultos').value) || 1;
+    const alertaEl   = document.getElementById('modal-alerta');
+    const btnConf    = document.getElementById('modal-confirmar');
+
+    if (!fecha) {
+      alertaEl.textContent = 'Selecciona una fecha.';
+      alertaEl.className = 'modal-alerta modal-alerta--error';
+      alertaEl.style.display = 'block';
+      return;
+    }
+
+    btnConf.disabled    = true;
+    btnConf.textContent = 'Procesando…';
+
+    try {
+      const res  = await fetch('/ajax/agregar_gastronomico.php', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ plan_id: PLAN_ID, fecha_inicio: fecha, num_adultos: adultos }),
+      });
+      const data = await res.json();
+
+      if (data.ok) {
+        document.getElementById('modal-agregar').style.display = 'none';
+        mostrarToast(data.msg, 'ok');
+      } else if (data.login) {
+        window.location.href = '/login.php';
+      } else {
+        alertaEl.textContent = data.msg;
+        alertaEl.className = 'modal-alerta modal-alerta--error';
+        alertaEl.style.display = 'block';
+      }
+    } catch (err) {
+      alertaEl.textContent = 'Error de conexión. Intenta de nuevo.';
+      alertaEl.className = 'modal-alerta modal-alerta--error';
+      alertaEl.style.display = 'block';
+    }
+
+    btnConf.disabled    = false;
+    btnConf.textContent = 'Confirmar reserva';
+  });
 
   /* ── Carga de datos ── */
   async function cargarGastronomico() {
