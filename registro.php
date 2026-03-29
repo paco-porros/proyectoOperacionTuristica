@@ -52,7 +52,7 @@ if (estaLogueado()) {
           <label class="etiqueta-campo" for="nombre-completo">Nombre Completo</label>
           <div class="contenedor-input-icono">
             <span class="material-symbols-outlined icono-campo">person</span>
-            <input class="campo-cristal" id="nombre-completo" name="nombre" placeholder="Juan Pérez" type="text" autocomplete="name"/>
+            <input class="campo-cristal" id="nombre-completo" name="nombre" placeholder="Juan Pérez" type="text" autocomplete="name" style="color:#000;"/>
           </div>
         </div>
 
@@ -60,7 +60,7 @@ if (estaLogueado()) {
           <label class="etiqueta-campo" for="correo">Correo Electrónico</label>
           <div class="contenedor-input-icono">
             <span class="material-symbols-outlined icono-campo">mail</span>
-            <input class="campo-cristal" id="correo" name="email" placeholder="tu@email.com" type="email" autocomplete="email"/>
+            <input class="campo-cristal" id="correo" name="email" placeholder="tu@email.com" type="email" autocomplete="email" style="color:#000;"/>
           </div>
         </div>
 
@@ -69,7 +69,7 @@ if (estaLogueado()) {
             <label class="etiqueta-campo" for="contrasena">Contraseña</label>
             <div class="contenedor-input-icono">
               <span class="material-symbols-outlined icono-campo">lock</span>
-              <input class="campo-cristal" id="contrasena" name="password" placeholder="••••••••" type="password" autocomplete="new-password"/>
+              <input class="campo-cristal" id="contrasena" name="password" placeholder="••••••••" type="password" autocomplete="new-password" style="color:#000;"/>
               <span class="material-symbols-outlined icono-ojo" id="togglePassword">visibility</span>
             </div>
           </div>
@@ -78,7 +78,7 @@ if (estaLogueado()) {
             <label class="etiqueta-campo" for="confirmar-contrasena">Confirmar Contraseña</label>
             <div class="contenedor-input-icono">
               <span class="material-symbols-outlined icono-campo">verified_user</span>
-              <input class="campo-cristal" id="confirmar-contrasena" name="confirmar" placeholder="••••••••" type="password" autocomplete="new-password"/>
+              <input class="campo-cristal" id="confirmar-contrasena" name="confirmar" placeholder="••••••••" type="password" autocomplete="new-password" style="color:#000;"/>
               <span class="material-symbols-outlined icono-ojo" id="togglePassword2">visibility</span>
             </div>
           </div>
@@ -124,12 +124,12 @@ if (estaLogueado()) {
     const btn = document.getElementById(btnId);
     if (!btn || !inp) return;
 
-    inp.style.color = '#2e1428';
+    inp.style.color = '#000';
     btn.addEventListener('click', function () {
       const show = inp.type === 'password';
       inp.type = show ? 'text' : 'password';
       this.textContent = show ? 'visibility_off' : 'visibility';
-      inp.style.color = '#2e1428';
+      inp.style.color = '#000';
       inp.focus();
     });
   });
