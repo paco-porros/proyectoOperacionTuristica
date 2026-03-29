@@ -679,3 +679,66 @@ body {
 .paginacion__boton--inactivo:hover {
     background: rgba(255, 255, 255, 0.4);
 }
+
+/* =============================================
+   SECCIONES DINÁMICAS DE PLANES
+   ============================================= */
+
+.seccion-dinamica {
+    margin-top: 2rem;
+    animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.seccion-planes__encabezado {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.seccion-planes__subtitulo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #054da4;
+    margin: 0;
+}
+
+.etiqueta-planes-count {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    background: rgba(5, 77, 164, 0.1);
+    color: #054da4;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.celda-cargando {
+    padding: 2.5rem;
+    text-align: center;
+    color: #306388;
+    font-style: italic;
+}
+
+/* Avatar para imágenes de planes */
+.avatar-plan {
+    width: 3.5rem;
+    height: 2.25rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-plan__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
