@@ -30,7 +30,8 @@ if (estaLogueado()) {
 <body class="fondo-principal fuente-cuerpo texto-superficie seleccion-primaria sin-desbordamiento-horizontal">
 
   <nav class="barra-navegacion">
-    <div class="logo-marca">Operador Turístico y Gastronomico | Santa Rosa de Cabal</div>
+    <div class="logo-marca">
+      <a href="index.php">Operador Turístico y Gastronomico | Santa Rosa de Cabal</a></div>
   </nav>
 
   <main class="contenedor-principal">

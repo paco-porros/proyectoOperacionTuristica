@@ -23,6 +23,53 @@ if (estaLogueado()) {
   <style>
     .contenedor-input-icono { position: relative; }
     .icono-ojo { position: absolute; right: 10px; cursor: pointer; color: #aaa; }
+
+    /* Nav y footer visibles sobre el fondo fijo */
+    .barra-navegacion {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      z-index: 9999 !important;
+      display: flex !important;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: rgba(236, 226, 208, 0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 4px 20px rgba(236, 226, 208, 0.08);
+    }
+    .logo-marca {
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #3066be;
+    }
+    .logo-marca a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .pie-pagina {
+      position: relative !important;
+      z-index: 10 !important;
+      width: 100%;
+      padding: 3rem 2rem;
+      display: flex !important;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      background-color: rgba(46, 20, 40, 0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      margin-top: auto;
+    }
+    @media (min-width: 768px) { .pie-pagina { flex-direction: row; gap: 0; } }
+    .logo-pie  { font-weight: 700; color: #adc6ff; }
+    .enlaces-pie { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; }
+    .enlace-pie  { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(232,208,213,.6); text-decoration: none; }
+    .enlace-pie:hover { color: #adc6ff; }
+    .copyright-pie { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(232,208,213,.5); }
   </style>
 </head>
 <body class="fuente-cuerpo texto-superficie fondo-principal altura-minima columna-flexible relativo sin-desbordamiento-horizontal">
@@ -31,6 +78,12 @@ if (estaLogueado()) {
     <img class="imagen-fondo" alt="Vista panorámica" src="./img/santarosa.webp"/>
     <div class="superposicion-fondo"></div>
   </div>
+
+  <nav class="barra-navegacion">
+    <div class="logo-marca">
+      <a href="index.php">Operador Turístico y Gastronomico | Santa Rosa de Cabal</a>
+    </div>
+  </nav>
 
   <main class="contenedor-principal">
     <div class="tarjeta-registro">
@@ -109,8 +162,15 @@ if (estaLogueado()) {
     </div>
   </main>
 
-  <footer class="pie-pagina-registro">
-    <span class="copyright-registro">© 2024 Operador Turístico y Gastronomico</span>
+  <footer class="pie-pagina">
+    <div class="logo-pie">Operador Turístico y Gastronomico | Santa Rosa de Cabal</div>
+    <div class="enlaces-pie">
+      <a class="enlace-pie" href="#">Privacy Policy</a>
+      <a class="enlace-pie" href="#">Terms of Service</a>
+      <a class="enlace-pie" href="#">Support</a>
+      <a class="enlace-pie" href="#">Contact</a>
+    </div>
+    <div class="copyright-pie">© 2024 Operador Turístico y Gastronomico | Santa Rosa de Cabal.</div>
   </footer>
 
   <script>

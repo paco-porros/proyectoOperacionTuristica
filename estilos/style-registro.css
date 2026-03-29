@@ -102,8 +102,9 @@ a { text-decoration: none; }
   filter: brightness(0.9);
 }
 
-/* Superposición adaptada a paleta vino/rosa (igual que login) */
+/*barra de header */
 .superposicion-fondo {
+  
   position: absolute;
   inset: 0;
   background: radial-gradient(
@@ -125,10 +126,11 @@ a { text-decoration: none; }
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
+  padding-top: 6rem;
 }
 
 @media (min-width: 768px) {
-  .contenedor-principal { padding: 3rem; }
+  .contenedor-principal { padding: 3rem; padding-top: 7rem; }
 }
 
 /* ============================================================
@@ -508,4 +510,95 @@ a { text-decoration: none; }
 
 .enlace-pie-registro:hover {
   color: var(--color-primario-fijo-tenue);
+}
+/* ============================================================
+   BARRA DE NAVEGACIÓN (igual que login)
+   ============================================================ */
+.barra-navegacion {
+  position: fixed !important;
+  top: 0 !important;
+  width: 100% !important;
+  z-index: 9999 !important;
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: rgba(236, 226, 208, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(236, 226, 208, 0.08);
+}
+
+.logo-marca {
+  font-family: var(--fuente-titular);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-primario);
+  font-size: 1.5rem;
+}
+
+.logo-marca a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ============================================================
+   PIE DE PÁGINA (igual que login)
+   ============================================================ */
+.pie-pagina {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  background-color: rgba(46, 20, 40, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  margin-top: auto;
+}
+
+@media (min-width: 768px) {
+  .pie-pagina {
+    flex-direction: row;
+    gap: 0;
+  }
+}
+
+.logo-pie {
+  font-family: var(--fuente-titular);
+  font-weight: 700;
+  color: var(--color-primario-fijo-tenue);
+}
+
+.enlaces-pie {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.enlace-pie {
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(232, 208, 213, 0.6);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.enlace-pie:hover {
+  color: var(--color-primario-fijo-tenue);
+}
+
+.copyright-pie {
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(232, 208, 213, 0.5);
 }
