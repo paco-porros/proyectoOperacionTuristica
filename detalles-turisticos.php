@@ -15,13 +15,8 @@ $usuario  = usuarioActual();
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<<<<<<< HEAD
   <title>Detalle Plan Turístico | Operador Santa Rosa de Cabal</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-=======
-  <title>Escapada A Termales | Santa Rosa de Cabal</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&;family=Manrope:wght@400;500;600;700&;display=swap" rel="stylesheet"/>
->>>>>>> 16e14b6b1b8412fbec3ff2aacff89f9ad261fedf
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/estilos/style-detalles-turisticos.css"/>
 </head>
@@ -31,10 +26,7 @@ $usuario  = usuarioActual();
   <nav class="barra-nav">
     <div class="nav-logo">Santa Rosa de Cabal</div>
     <div class="nav-enlaces">
-<<<<<<< HEAD
       <a class="nav-enlace" href="index.php">Inicio</a>
-=======
->>>>>>> 16e14b6b1b8412fbec3ff2aacff89f9ad261fedf
       <a class="nav-enlace nav-enlace--activo" href="#">Servicios</a>
       <a class="nav-enlace" href="#">Planes</a>
       <a class="nav-enlace" href="#">Gastronomía</a>
@@ -51,7 +43,6 @@ $usuario  = usuarioActual();
   <!-- CONTENIDO PRINCIPAL — se rellena vía AJAX -->
   <main class="contenido-principal" id="contenido-plan">
 
-<<<<<<< HEAD
     <!-- Skeleton de carga -->
     <section class="seccion-hero" style="background:#e5feff;">
       <div style="position:absolute;inset:0;background:linear-gradient(135deg,#cbfdff,#b5f3f6);"></div>
@@ -59,32 +50,6 @@ $usuario  = usuarioActual();
         <div class="hero-texto">
           <span class="hero-etiqueta" style="opacity:.4;">Cargando…</span>
           <h1 class="hero-titulo" style="opacity:.3; background:#c3c6d4; color:transparent; border-radius:.5rem;">Cargando plan turístico</h1>
-=======
-    <!-- Hero -->
-    <section class="seccion-hero">
-      <div class="hero-fondo">
-        <img
-          class="hero-imagen"
-          alt="Termales de Santa Rosa de Cabal"
-          src="img/termales2.jpg"
-        />
-        <div class="hero-degradado"></div>
-      </div>
-      <div class="hero-contenido">
-        <div class="hero-texto">
-          <span class="hero-etiqueta">Experiencia Exclusiva</span>
-          <h1 class="hero-titulo">Escapada a Termales</h1>
-          <div class="hero-meta">
-            <div class="hero-meta__item">
-              <span class="material-symbols-outlined">location_on</span>
-              <span>Santa Rosa de Cabal, Colombia</span>
-            </div>
-            <div class="hero-meta__item hero-meta__item--precio">
-              <span class="material-symbols-outlined">payments</span>
-              <span>Desde $2,499</span>
-            </div>
-          </div>
->>>>>>> 16e14b6b1b8412fbec3ff2aacff89f9ad261fedf
         </div>
       </div>
     </section>
