@@ -246,6 +246,17 @@ require_once __DIR__ . '/includes/session.php';
           <button class="pie__boton-red"><span class="material-symbols-outlined">share</span></button>
         </div>
       </div>
+
+      <div>
+        <h4 class="pie__columna-titulo">Enlaces rápidos</h4>
+        <ul class="pie__lista">
+          <li><a href="index.php">Inicio</a></li>
+          <li><a href="#servicios">Nuestros Servicios</a></li>
+          <li><a href="#planes">Planes Turísticos</a></li>
+          <li><a href="#gastronomia">Ofertas Gastronómicas</a></li>
+        </ul>
+      </div>
+
       <div>
         <h4 class="pie__columna-titulo"><a href="nosotros.php">Sobre nosotros</a></h4>
         <ul class="pie__lista">
@@ -256,12 +267,12 @@ require_once __DIR__ . '/includes/session.php';
       </div>
 
       <div>
-        <h4 class="pie__columna-titulo">Enlaces rápidos</h4>
-        <ul class="pie__lista">
-          <li><a href="index.php">Inicio</a></li>
-          <li><a href="#servicios">Nuestros Servicios</a></li>
-          <li><a href="#planes">Planes Turísticos</a></li>
-          <li><a href="#gastronomia">Ofertas Gastronómicas</a></li>
+        <h4 class="pie__columna-titulo"><a href="servicios.php">Servicios</a></h4>
+          <ul class="pie__lista">
+          <li><a href="servicios.php#alojamiento">Alojamiento</a></li>
+          <li><a href="servicios.php#transporte">Transporte</a></li>
+          <li><a href="servicios.php#alimentacion">Alimentación</a></li>
+          <li><a href="servicios.php#entretenimiento">Entretenimiento</a></li>
         </ul>
       </div>
 

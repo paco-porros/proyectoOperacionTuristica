@@ -592,23 +592,36 @@
           <button class="pie__boton-red"><span class="simbolo-material">share</span></button>
         </div>
       </div>
-      <div>
-        <h4 class="pie__columna-titulo">Sobre nosotros</h4>
-        <ul class="pie__lista">
-          <li><a href="#mision-vision">Misión y Visión</a></li>
-          <li><a href="#equipo">Equipo Ejecutivo</a></li>
-          <li><a href="#carreras">Carreras</a></li>
-        </ul>
-      </div>
+
       <div>
         <h4 class="pie__columna-titulo">Enlaces rápidos</h4>
         <ul class="pie__lista">
-          <li><a href="index.php">Inicio</a></li>
-          <li><a href="servicios.php">Nuestros Servicios</a></li>
-          <li><a href="index.php#planes">Planes Turísticos</a></li>
-          <li><a href="index.php#gastronomia">Ofertas Gastronómicas</a></li>
+          <li><a href="#">Inicio</a></li>
+          <li><a href="#mision-vision">Mision y vision</a></li>
+          <li><a href="#equipo">Equipo ejecutivo</a></li>
+          <li><a href="#carreras">Carreras</a></li>
         </ul>
       </div>
+
+      <div>
+        <h4 class="pie__columna-titulo"><a href="servicios.php">Servicios</a></h4>
+          <ul class="pie__lista">
+          <li><a href="servicios.php#alojamiento">Alojamiento</a></li>
+          <li><a href="servicios.php#transporte">Transporte</a></li>
+          <li><a href="servicios.php#alimentacion">Alimentación</a></li>
+          <li><a href="servicios.php#entretenimiento">Entretenimiento</a></li>
+        </ul>
+      </div>
+
+    <div>
+        <h4 class="pie__columna-titulo">Legales y ayuda</h4>
+        <ul class="pie__lista">
+          <li><a href="#">Términos y Condiciones</a></li>
+          <li><a href="#">Privacidad</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+
       <div>
         <h4 class="pie__columna-titulo">Contacto</h4>
         <ul class="pie__lista-contacto">
