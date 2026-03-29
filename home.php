@@ -1,8 +1,12 @@
 <?php
 /**
- * home.php — Página principal para usuarios autenticados
- * Redirige al index si no hay sesión.
+ * home.php — DASHBOARD USUARIO LOGUEADO
+ * Dashboard personal tras login exitoso
+ * Requiere: autenticación obligatoria, redirige a /index.php si no logueado
  */
+
+// BLOQUE 1 - Validar autenticación requerida
+// requiereLogin() intercepta acceso sin sesión
 require_once __DIR__ . '/includes/session.php';
 requiereLogin('/index.php');
 

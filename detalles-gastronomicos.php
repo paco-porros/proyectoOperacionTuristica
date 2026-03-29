@@ -1,9 +1,13 @@
 <?php
 /**
- * detalles-gastronomicos.php
- * Página de detalle de plan gastronómico con reserva AJAX.
- * Datos cargados vía AJAX desde la BD.
+ * detalles-gastronomicos.php — DETALLE DE PLAN GASTRONÓMICO
+ * Página de detalle con platos, restaurante y reserva AJAX
+ * GET ?id=N requerido, carga datos vía AJAX de gastronomicos.php
  */
+
+// BLOQUE 1 - Validar ID del plan y estado de autenticación
+// $planId de GET para cargar vía AJAX
+// $logueado detecta si muestra botón "Reservar"
 require_once __DIR__ . '/includes/session.php';
 
 $planId  = (int)($_GET['id'] ?? 0);

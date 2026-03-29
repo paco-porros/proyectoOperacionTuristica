@@ -1,7 +1,12 @@
 <?php
 /**
- * login.php — con autenticación AJAX
+ * login.php — FORMULARIO DE INICIO DE SESIÓN
+ * Autenticación vía AJAX POST a ajax/login.php
+ * Redirige a dashboard si ya está logueado
  */
+
+// BLOQUE 1 - Detectar si ya está logueado
+// Si sí: redirigir a dashboard (admin/editor) o home (cliente)
 require_once __DIR__ . '/includes/session.php';
 
 // Si ya está logueado, redirigir

@@ -1,4 +1,12 @@
 <?php
+/**
+ * nosotros.php — PÁGINA SOBRE NOSOTROS
+ * Información de la empresa, misión, visión, equipo
+ * Públicamente accesible
+ */
+
+// BLOQUE 1 - Detectar estado de autenticación
+// estaLogueado() — mostrar navbar usuario o login button
 require_once __DIR__ . '/includes/session.php';
 $logueado  = estaLogueado();
 $usuario   = $logueado ? usuarioActual() : null;

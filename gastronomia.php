@@ -1,8 +1,13 @@
 <?php
 /**
- * gastronomia.php — Catálogo completo de ofertas gastronómicas.
- * Funciona tanto para visitantes anónimos como para usuarios autenticados.
+ * gastronomia.php — CATÁLOGO DE OFERTAS GASTRONÓMICAS
+ * Públicamente accesible para anónimos y logueados
+ * Listado con paginación vía AJAX desde gastronomicos.php
  */
+
+// BLOQUE 1 - Detectar estado de autenticación
+// estaLogueado() → mostrar navbar usuario o login button
+// usuarioActual() → obtener datos si está logueado
 require_once __DIR__ . '/includes/session.php';
 
 $logueado  = estaLogueado();

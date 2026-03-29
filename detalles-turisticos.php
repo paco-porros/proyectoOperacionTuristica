@@ -1,9 +1,13 @@
 <?php
 /**
- * detalles-turisticos.php
- * Carga el detalle del plan vía AJAX (evita conflictos de recarga).
- * El botón "Agregar plan" solo aparece si el usuario está logueado.
+ * detalles-turisticos.php — DETALLE DE PLAN TURÍSTICO
+ * Página de detalle con itinerario, incluye y reserva AJAX
+ * GET ?id=N requerido, carga datos vía AJAX de plan_turistico_detalle.php
  */
+
+// BLOQUE 1 - Validar ID del plan y estado de autenticación
+// $planId de GET para cargar vía AJAX
+// $logueado detecta si muestra botón "Agregar plan"
 require_once __DIR__ . '/includes/session.php';
 
 $planId   = (int)($_GET['id'] ?? 0);

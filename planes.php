@@ -1,8 +1,13 @@
 <?php
 /**
- * planes.php — Catálogo completo de planes turísticos.
- * Funciona tanto para visitantes anónimos como para usuarios autenticados.
+ * planes.php — CATÁLOGO DE PLANES TURÍSTICOS
+ * Públicamente accesible para anónimos y logueados
+ * Listado con paginación vía AJAX desde planes_turisticos.php
  */
+
+// BLOQUE 1 - Detectar estado de autenticación
+// estaLogueado() → mostrar navbar usuario o login button
+// usuarioActual() → obtener datos si está logueado
 require_once __DIR__ . '/includes/session.php';
 
 $logueado  = estaLogueado();

@@ -1,7 +1,12 @@
 <?php
 /**
- * registro.php — con registro AJAX
+ * registro.php — FORMULARIO DE REGISTRO
+ * Creación de nueva cuenta via AJAX POST a ajax/registro.php
+ * Auto-login tras registro exitoso
  */
+
+// BLOQUE 1 - Detectar si ya está logueado
+// Si sí: redirigir a home, no necesita registro
 require_once __DIR__ . '/includes/session.php';
 
 if (estaLogueado()) {

@@ -1,7 +1,12 @@
 <?php
 /**
- * index.php — Página principal con planes turísticos desde la BD
+ * index.php — PÁGINA PRINCIPAL PÚBLICA
+ * Visitantes anónimos y logueados pueden ver servicios, planes y gastronomía
+ * Requiere: session.php para verificar autenticación
  */
+
+// BLOQUE 1 - Inicializar sesión y detectar usuario
+// estaLogueado(), usuarioActual() — helpers de session.php
 require_once __DIR__ . '/includes/session.php';
 ?>
 <!DOCTYPE html>

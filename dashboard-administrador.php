@@ -1,9 +1,13 @@
 <?php
 /**
- * dashboard-administrador.php
- * Solo accesible por admin y editor.
- * Gestión de usuarios completamente vía AJAX.
+ * dashboard-administrador.php — PANEL DE ADMINISTRACIÓN
+ * Gestión de usuarios, planes turísticos y gastronómicos vía AJAX
+ * Solo accesible por admin y editor
  */
+
+// BLOQUE 1 - Validar autenticación y permisos
+// requiereLogin() — redirige a /login.php si no logueado
+// requiereRol() — redirige a /home.php si no es admin/editor
 require_once __DIR__ . '/includes/session.php';
 requiereLogin('/login.php');
 requiereRol(['admin', 'editor'], '/home.php');
@@ -1381,39 +1385,119 @@ document.querySelectorAll('[data-seccion]').forEach(el => {
 
 /* ════════════════════════════════════════════════════
    MODAL — Crear nuevos planes
-════════════════════════════════════════════════════ */
+════════════════════════════════════════════════════
+   
+   DESCRIPCIÓN GENERAL:
+   Esta sección maneja la apertura del modal para crear nuevos planes
+   (turísticos o gastronómicos). Incluye la preparación de la interfaz,
+   carga de datos dinámicos (restaurantes) y validación de campos.
+   
+   FLUJO:
+   1. Usuario hace click en "Agregar Plan" (turístico o gastronómico)
+   2. Se invoca abrirCrearPlan(tipo) que prepara el modal
+   3. Carga datos dinámicos (restaurantes para tipo gastronomico)
+   4. Usuario llena el formulario
+   5. Al enviar, se validan campos y se envía FormData al servidor
+   6. Servidor procesa imagen + datos y devuelve { ok, msg, data }
+   
+*/
 
+/**
+ * BLOQUE 1 - Abrir Modal Crear Plan
+ * ────────────────────────────────────────────
+ * Propósito: Preparar y mostrar el modal para crear un nuevo plan
+ * 
+ * Parámetro: tipo = 'turistico' | 'gastronomico'
+ *   - Si es 'turistico': muestra campos de ubicación y duración en días
+ *   - Si es 'gastronomico': muestra select de restaurantes y duración en horas
+ * 
+ * Qué hace:
+ * 1. Guarda el tipo en un input hidden para usarlo en el formulario submit
+ * 2. Oculta cualquier alerta anterior
+ * 3. Limpia el formulario con reset() (borra todos los inputs)
+ * 4. Configura campos según el tipo (mostrar/ocultar divs)
+ * 5. Si es gastronómico, carga lista de restaurantes vía AJAX
+ * 6. Muestra el modal (display: flex lo centra)
+ * 
+ * Por qué es importante:
+ * - Los campos turísticos y gastronómicos son completamente diferentes
+ * - El usuario solo ve lo que necesita (UX mejorada)
+ * - Los restaurantes se cargan dinámicamente (datos actualizados)
+ * - El tipo se guarda para saber adónde enviar el formulario
+ */
 function abrirCrearPlan(tipo) {
+    // BLOQUE 1a - Registrar tipo y limpiar estado anterior
     console.log('Abriendo modal de crear plan:', tipo);
-    
     document.getElementById('crear-plan-tipo').value = tipo;
     document.getElementById('modal-crear-plan-alerta').style.display = 'none';
     document.getElementById('preview-contenedor').style.display = 'none';
     
-    // Limpiar formulario
+    // BLOQUE 1b - Limpiar formulario (todos los inputs vuelven a vacío)
+    // Importante: esto borra texto, valores, archivos, selecciones, etc.
     document.getElementById('form-crear-plan').reset();
     
-    // Mostrar/ocultar campos según tipo
+    // BLOQUE 1c - Mostrar/ocultar campos según tipo de plan
     if (tipo === 'turistico') {
+        // Plan turístico: necesita ubicación + duración en DÍAS
         document.getElementById('modal-crear-plan-titulo').textContent = 'Nuevo Plan Turístico';
         document.getElementById('campos-crear-turistico').style.display = '';
         document.getElementById('campos-crear-gastronomico').style.display = 'none';
     } else {
+        // Plan gastronómico: necesita restaurante + duración en HORAS + categoría
         document.getElementById('modal-crear-plan-titulo').textContent = 'Nuevo Plan Gastronómico';
         document.getElementById('campos-crear-turistico').style.display = 'none';
         document.getElementById('campos-crear-gastronomico').style.display = '';
         
-        // Cargar restaurantes
+        // BLOQUE 1d - Cargar lista de restaurantes para el <select>
+        // Esto hace una petición GET a admin_planes_gastronomicos.php
         cargarRestaurantes();
     }
     
+    // BLOQUE 1e - Mostrar modal (display: flex + inset:0 lo centra en la pantalla)
     document.getElementById('modal-crear-plan').style.display = 'flex';
 }
 
+/**
+ * BLOQUE 2 - Cerrar Modal Crear Plan
+ * ────────────────────────────────────────────
+ * Propósito: Ocultar el modal de crear plan
+ * 
+ * Qué hace:
+ * - Cambia display a 'none' (oculta el modal completamente)
+ * 
+ * Cuándo se llama:
+ * - Usuario hace click en botón "Cancelar"
+ * - Usuario hace click fuera del modal (background)
+ * - Después de crear exitosamente un plan
+ */
 function cerrarCrearPlan() {
     document.getElementById('modal-crear-plan').style.display = 'none';
 }
 
+/**
+ * BLOQUE 3 - Mostrar Alerta en Modal de Crear Plan
+ * ────────────────────────────────────────────
+ * Propósito: Mostrar mensajes de error o éxito DENTRO del modal
+ * 
+ * Parámetros:
+ *   - msg: mensaje a mostrar (string)
+ *   - tipo: 'ok' para verde/éxito, 'error' para rojo/error
+ * 
+ * Qué hace:
+ * 1. Asigna el texto del mensaje
+ * 2. Muestra la alerta (display: block)
+ * 3. Aplica estilos de color según el tipo
+ *    - 'ok': fondo verde claro, texto verde oscuro
+ *    - 'error': fondo rojo claro, texto rojo oscuro
+ * 4. Agrega un borde del color correspondiente
+ * 
+ * Ejemplo: alertaModalCrearPlan('El título es requerido.', 'error')
+ * Resultado: Alerta roja diciendo "El título es requerido."
+ * 
+ * Nota: Esta alerta es DIFERENTE al toast que aparece abajo
+ * - Alerta: dentro del modal (debe cerrar modal para verla bien)
+ * - Toast: esquina inferior derecha (no requiere cerrar nada)
+ */
 function alertaModalCrearPlan(msg, tipo) {
     const el = document.getElementById('modal-crear-plan-alerta');
     el.textContent   = msg;
@@ -1423,50 +1507,149 @@ function alertaModalCrearPlan(msg, tipo) {
     el.style.border     = `1px solid ${tipo === 'ok' ? '#6ee7b7' : '#fca5a5'}`;
 }
 
-/* Cargar restaurantes para el select */
+/**
+ * BLOQUE 4 - Cargar Restaurantes para Planes Gastronómicos
+ * ────────────────────────────────────────────
+ * Propósito: Llenar el <select> de restaurantes con datos del servidor
+ * 
+ * Qué hace:
+ * 1. Hace un fetch GET a /ajax/admin_planes_gastronomicos.php
+ *    (el mismo endpoint que lista planes, pero aquí pedimos restaurantes)
+ * 
+ * 2. Si respuesta es exitosa (data.ok):
+ *    - Obtiene el <select id="crear-plan-restaurante">
+ *    - Guarda la opción seleccionada actual (si existe)
+ *    - Limpia todas las opciones previas
+ *    - Agrega opción "Selecciona un restaurante" (placeholder)
+ *    - Para cada restaurante en data.restaurantes:
+ *      * Crea un <option> con id del restaurante y nombre
+ *      * Lo agrega al select
+ *    - Restaura la selección previa si la había
+ * 
+ * 3. Si falla o no hay restaurantes: Solo hace console.error
+ *    (no muestra error al usuario, pero se puede ver en DevTools)
+ * 
+ * Cuándo se llama:
+ * - Cuando abrirCrearPlan('gastronomico') se ejecuta
+ * - Cada vez que se abre el modal de planes gastronómicos
+ * 
+ * Importante:
+ * - Se llama CADA VEZ que se abre el modal (datos actualizados)
+ * - Si usuario creó nuevo restaurante hace poco, lo verá aquí
+ */
 async function cargarRestaurantes() {
+    // BLOQUE 4a - Hacer petición al servidor
     try {
         const res = await fetch('/ajax/admin_planes_gastronomicos.php');
         const data = await res.json();
         
+        // BLOQUE 4b - Si la respuesta tiene restaurantes
         if (data.ok && data.restaurantes) {
             const select = document.getElementById('crear-plan-restaurante');
-            const optionActual = select.value;
+            const optionActual = select.value; // Guardar selección actual
             
+            // BLOQUE 4c - Limpiar select y agregar placeholder
             select.innerHTML = '<option value="">Selecciona un restaurante</option>';
+            
+            // BLOQUE 4d - Llenar con restaurantes del servidor
             data.restaurantes.forEach(r => {
                 const opt = document.createElement('option');
-                opt.value = r.id;
-                opt.textContent = r.nombre;
+                opt.value = r.id;  // Value es el ID del restaurante
+                opt.textContent = r.nombre; // Display es el nombre
                 select.appendChild(opt);
             });
             
-            select.value = optionActual; // Restaurar selección si existía
+            // BLOQUE 4e - Restaurar selección anterior si la había
+            select.value = optionActual;
         }
     } catch (err) {
+        // BLOQUE 4f - Error handling (silencioso, solo en consola)
         console.error('Error cargando restaurantes:', err);
     }
 }
 
-/* Preview de imagen */
+/**
+ * BLOQUE 5 - Preview de Imagen en Formulario
+ * ────────────────────────────────────────────
+ * Propósito: Mostrar una vista previa de la imagen antes de enviarla
+ * 
+ * Qué hace este event listener:
+ * 1. Se dispara cuando el usuario selecciona un archivo en el input
+ * 2. Obtiene el archivo: this.files[0]
+ * 3. Si no hay archivo seleccionado: oculta el preview
+ * 4. Si hay archivo:
+ *    - Crea un FileReader (herramienta para leer archivos locales)
+ *    - Configura función onload (qué hacer cuando se cargue el archivo)
+ *    - Lee el archivo como DataURL (convierte a formato imagen)
+ *    - Muestra la imagen en el <img id="preview-imagen">
+ *    - Hace visible el contenedor del preview
+ * 
+ * CONCEPTO IMPORTANTE — FileReader:
+ * El usuario selecciona un archivo en su máquina local. El navegador
+ * NO puede acceder directamente a <input type="file"> por seguridad.
+ * FileReader permite leer el contenido del archivo y convertirlo a:
+ *   - readAsDataURL: Base64 (para mostrar en <img> o enviar en JSON)
+ *   - readAsText: Texto plano
+ *   - readAsArrayBuffer: Bytes crudos
+ * 
+ * DataURL ejemplo:
+ * data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD...
+ * 
+ * Cuándo ocurre:
+ * - Usuario hace click en input file
+ * - Selecciona imagen desde su computadora
+ * - Se muestra preview automáticamente
+ * 
+ * Ejemplo flujo:
+ *   Usuario selecciona: '/home/juan/foto.jpg'
+ *   → FileReader lo lee como DataURL
+ *   → Se muestra en <img> del modal
+ *   → Usuario ve preview antes de crear plan
+ */
 document.getElementById('crear-plan-imagen').addEventListener('change', function(e) {
+    // BLOQUE 5a - Obtener primer archivo seleccionado
     const archivo = this.files[0];
+    
+    // BLOQUE 5b - Si no hay archivo, ocultar preview
     if (!archivo) {
         document.getElementById('preview-contenedor').style.display = 'none';
         return;
     }
     
-    // Mostrar preview
+    // BLOQUE 5c - Crear FileReader y mostrar preview
     const reader = new FileReader();
+    
+    // BLOQUE 5d - Configurar qué hacer cuando se cargue el archivo
     reader.onload = (evt) => {
+        // evt.target.result contiene el DataURL de la imagen
         const preview = document.getElementById('preview-imagen');
-        preview.src = evt.target.result;
+        preview.src = evt.target.result; // Asignar a <img src="">
+        
+        // Mostrar contenedor que está oculto por defecto
         document.getElementById('preview-contenedor').style.display = 'block';
     };
+    
+    // BLOQUE 5e - Iniciar lectura del archivo (dispara onload cuando termine)
     reader.readAsDataURL(archivo);
 });
 
-/* Botones para abrir modal de crear plans */
+/**
+ * BLOQUE 6 - Event Listeners para Abrir Modal Crear Plan
+ * ────────────────────────────────────────────
+ * Propósito: Permitir al usuario abirir el modal desde dos botones
+ * 
+ * Los botones están en:
+ * - id="btn-agregar-plan-turistico" en la tabla de Planes Turísticos
+ * - id="btn-agregar-plan-gastronomico" en la tabla de Planes Gastronómicos
+ * 
+ * Qué hace:
+ * - Cada botón tiene addEventListener('click', ...)
+ * - Uno llama abrirCrearPlan('turistico')
+ * - Otro llama abrirCrearPlan('gastronomico')
+ * 
+ * UX: El usuario navega a "Planes Turísticos" y hace click
+ * en botón "+ Agregar Plan" → se abre el modal preparado para turístico
+ */
 document.getElementById('btn-agregar-plan-turistico').addEventListener('click', () => {
     abrirCrearPlan('turistico');
 });
@@ -1475,38 +1658,100 @@ document.getElementById('btn-agregar-plan-gastronomico').addEventListener('click
     abrirCrearPlan('gastronomico');
 });
 
-/* Cerrar modal de crear plan */
+/**
+ * BLOQUE 7 - Cerrar Modal al Hacer Click en Botón o Fuera
+ * ────────────────────────────────────────────
+ * Propósito: Permitir cerrar el modal de varias formas
+ */
 document.getElementById('modal-crear-plan-cerrar').addEventListener('click', cerrarCrearPlan);
 document.getElementById('modal-crear-plan-btn-cancelar').addEventListener('click', cerrarCrearPlan);
 
+// Cerrar si usuario hace click en el fondo (background overlay)
 document.getElementById('modal-crear-plan').addEventListener('click', function(e) {
     if (e.target === this) cerrarCrearPlan();
 });
 
-/* Envío del formulario de crear plan */
+/**
+ * BLOQUE 8 - Envío/Submit del Formulario de Crear Plan
+ * ════════════════════════════════════════════════════════
+ * 
+ * DESCRIPCIÓN GENERAL:
+ * Este es el CORAZÓN de la funcionalidad. Cuando el usuario hace click
+ * en "Crear Plan", ocurren MÚLTIPLES validaciones, luego se crea un
+ * FormData (para enviar archivos), y se hace un POST al servidor.
+ * 
+ * FLUJO COMPLETO:
+ * 1. Usuario llena formulario + selecciona imagen
+ * 2. Hace click en "Crear Plan"
+ * 3. Se ejecuta este event listener
+ * 4. Extrae valores de todos los inputs
+ * 5. Valida cada campo (cliente-side)
+ * 6. Crea FormData (especial para archivos)
+ * 7. Envía FormData via fetch POST
+ * 8. Servidor procesa imagen + datos + inserta en BD
+ * 9. Responde con { ok, msg, data }
+ * 10. Si ok: cierra modal, muestra toast, recarga tabla
+ *     Si error: muestra alerta en el modal
+ * 
+ * ¿POR QUÉ FORMDATA?
+ * FormData es necesario para enviar ARCHIVOS + DATOS juntos:
+ * - NO se puede usar JSON porque JSON no soporta archivos
+ * - FormData automáticamente:
+ *   * Codifica como multipart/form-data
+ *   * Maneja archivo binario
+ *   * Mantiene compatibilidad con todos los navegadores
+ * 
+ * VALIDACIONES (Frontend):
+ * 1. Título no vacío
+ * 2. Precio >= 0
+ * 3. Si turístico: ubicación no vacía, días > 0
+ * 4. Si gastronómico: restaurante seleccionado, categoría no vacía
+ * 
+ * NOTA IMPORTANTE:
+ * El servidor hace VALIDACIONES ADICIONALES (backend):
+ * - Tipo MIME permitido
+ * - Tamaño imagen < 5MB
+ * - Datos requeridos no nulos
+ * - Usuario es admin/editor
+ * Por eso es importante validar EN AMBOS LADOS (frontend + backend)
+ */
 document.getElementById('form-crear-plan').addEventListener('submit', async function(e) {
+    // BLOQUE 8a - Prevenir envío del formulario por defecto
     e.preventDefault();
     
+    /* ─────────────────────────────────────────────
+       SECCIÓN I: Extracción de valores del formulario
+    ───────────────────────────────────────────────*/
+    
+    // BLOQUE 8b - Obtener tipo de plan (se guardó en abrirCrearPlan)
     const tipo      = document.getElementById('crear-plan-tipo').value;
+    
+    // BLOQUE 8c - Campos COMUNES a ambos tipos
     const titulo    = document.getElementById('crear-plan-titulo').value.trim();
     const desc      = document.getElementById('crear-plan-descripcion').value.trim();
     const precio    = parseFloat(document.getElementById('crear-plan-precio').value) || 0;
     const estado    = document.getElementById('crear-plan-estado').value;
     const archivo   = document.getElementById('crear-plan-imagen').files[0];
     
-    // Validaciones
+    /* ─────────────────────────────────────────────
+       SECCIÓN II: Validaciones (Frontend)
+    ───────────────────────────────────────────────*/
+    
+    // BLOQUE 8d - Validar título (requerido)
     if (!titulo) {
         alertaModalCrearPlan('El título es requerido.', 'error');
         return;
     }
     
+    // BLOQUE 8e - Validar precio (no negativo)
     if (precio < 0) {
         alertaModalCrearPlan('El precio no puede ser negativo.', 'error');
         return;
     }
     
-    // Validar campos específicos
+    // BLOQUE 8f - Validaciones específicas por tipo de plan
     if (tipo === 'turistico') {
+        // Plan Turístico requiere: ubicación + días
         const ubicacion = document.getElementById('crear-plan-ubicacion').value.trim();
         const dias      = parseInt(document.getElementById('crear-plan-duracion-dias').value) || 1;
         
@@ -1514,7 +1759,11 @@ document.getElementById('form-crear-plan').addEventListener('submit', async func
             alertaModalCrearPlan('La ubicación es requerida.', 'error');
             return;
         }
+        
+        // Note: días se valida server-side también
+        
     } else {
+        // Plan Gastronómico requiere: restaurante + categoría
         const restaurante = document.getElementById('crear-plan-restaurante').value;
         const categoria   = document.getElementById('crear-plan-categoria').value.trim();
         
@@ -1529,60 +1778,97 @@ document.getElementById('form-crear-plan').addEventListener('submit', async func
         }
     }
     
-    // Crear FormData (importante para enviar archivos)
+    /* ─────────────────────────────────────────────
+       SECCIÓN III: Crear FormData (para archivo + datos)
+    ───────────────────────────────────────────────*/
+    
+    // BLOQUE 8g - Inicializar FormData (reemplaza JSON para archivos)
+    // FormData = estructura especial que permite mezclar archivos y texto
     const formData = new FormData();
+    
+    // BLOQUE 8h - Agregar campos COMUNES al FormData
     formData.append('titulo', titulo);
     formData.append('descripcion', desc);
     formData.append('precio_desde', precio);
     formData.append('estado', estado);
     
+    // BLOQUE 8i - Agregar archivo si existe
     if (archivo) {
         formData.append('imagen', archivo);
+        // Server recibirá esto en $_FILES['imagen']
     }
     
+    // BLOQUE 8j - Agregar campos específicos según tipo
     if (tipo === 'turistico') {
+        // Campos turísticos
         formData.append('ubicacion', document.getElementById('crear-plan-ubicacion').value.trim());
         formData.append('duracion_dias', parseInt(document.getElementById('crear-plan-duracion-dias').value) || 1);
     } else {
+        // Campos gastronómicos
         formData.append('restaurante_id', document.getElementById('crear-plan-restaurante').value);
         formData.append('categoria', document.getElementById('crear-plan-categoria').value.trim());
         formData.append('duracion_horas', parseFloat(document.getElementById('crear-plan-duracion-horas').value) || 0);
         formData.append('max_personas', parseInt(document.getElementById('crear-plan-max-personas').value) || 10);
     }
     
+    /* ─────────────────────────────────────────────
+       SECCIÓN IV: Enviar FormData al servidor (Fetch)
+    ───────────────────────────────────────────────*/
+    
+    // BLOQUE 8k - Deshabilitar botón y cambiar texto (UX: usuario sabe qué ocurre)
     const btn = document.getElementById('modal-crear-plan-btn-guardar');
     btn.disabled    = true;
     btn.textContent = 'Creando…';
     
     try {
+        // BLOQUE 8l - Determinar endpoint según tipo de plan
         const endpoint = tipo === 'turistico' 
             ? '/ajax/crear_plan_turistico.php'
             : '/ajax/crear_plan_gastronomico.php';
         
+        // BLOQUE 8m - Hacer petición POST con FormData
         const res  = await fetch(endpoint, {
             method: 'POST',
-            body:   formData, // FormData maneja automáticamente multipart/form-data
+            body:   formData,
+            // NOTE: NO ponemos header 'Content-Type': el navegador lo setea
+            // automáticamente a multipart/form-data + boundary (importante)
         });
+        
+        // BLOQUE 8n - Parsear respuesta como JSON
         const data = await res.json();
         
+        // BLOQUE 8o - Procesar respuesta del servidor
         if (data.ok) {
+            // ✓ ÉXITO: Plan creado
+            
+            // 1. Cerrar modal automáticamente
             cerrarCrearPlan();
+            
+            // 2. Mostrar toast de éxito (esquina inferior derecha)
             toast(data.msg, 'ok');
             
-            // Recargar tabla correspondiente
+            // 3. Recargar tabla correspondiente (sin hacer F5)
             if (tipo === 'turistico') {
-                cargarPlanesTuristicos();
+                cargarPlanesTuristicos(); // Mediante AJAX
             } else {
-                cargarPlanesGastronomicos();
+                cargarPlanesGastronomicos(); // Mediante AJAX
             }
+            
+            // Usuario ve la tabla actualizada automáticamente
+            
         } else {
+            // ✗ ERROR: Servidor rechazó el plan
             alertaModalCrearPlan(data.msg || 'Error al crear el plan.', 'error');
+            // Modal permanece abierto para que usuario vea el error y corrija
         }
+        
     } catch (err) {
+        // BLOQUE 8p - Error de conexión (red, timeout, etc)
         alertaModalCrearPlan('Error de conexión: ' + err.message, 'error');
         console.error(err);
     }
     
+    // BLOQUE 8q - Re-habilitar botón (permití otro intento)
     btn.disabled    = false;
     btn.textContent = 'Crear Plan';
 });

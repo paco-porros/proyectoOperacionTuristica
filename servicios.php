@@ -1,4 +1,12 @@
 <?php
+/**
+ * servicios.php — PÁGINA DE SERVICIOS
+ * Información sobre servicios (alojamiento, transporte, gastronomía, entretenimiento)
+ * Públicamente accesible para anónimos y logueados
+ */
+
+// BLOQUE 1 - Inicializar sesión y detectar usuario
+// Mostrar navbar personalizado según estado de autenticación
 require_once __DIR__ . '/includes/session.php';
 $logueado  = estaLogueado();
 $usuario   = $logueado ? usuarioActual() : null;

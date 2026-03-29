@@ -1,15 +1,26 @@
 <?php
 /**
- * includes/db.php
- * Conexión PDO a la base de datos MySQL
+ * includes/db.php — POOL DE CONEXIÓN PDO
+ * Conecta a MySQL con configuración centralizada
+ * Singletons: solo una conexión por ejecución
  */
 
+// BLOQUE 1 - Constantes de conexión
+// DB_HOST, DB_NAME, DB_USER, DB_PASS, DB_CHARSET
+// Modificar según entorno (localhost para desarrollo)
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'operador_turistico_src');
 define('DB_USER', 'root');        // ← cambia según tu entorno
 define('DB_PASS', '');            // ← cambia según tu entorno
 define('DB_CHARSET', 'utf8mb4');
 
+/*
+   BLOQUE 2 - getDB() — Retorna instancia PDO singleton
+   - Crea DSN con host, db, charset
+   - Configura opciones: modo excepción, fetch asociativo, prepared sin emulación
+   - Try/catch con error 500 si falla conexión
+   - Única conexión reutilizada en toda la sesión (static $pdo)
+*/
 function getDB(): PDO {
     static $pdo = null;
     if ($pdo === null) {

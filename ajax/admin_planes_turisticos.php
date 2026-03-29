@@ -1,18 +1,21 @@
 <?php
 /**
- * ajax/admin_planes_turisticos.php
- * Endpoint AJAX para gestión de planes turísticos en el dashboard admin.
- * GET  → lista todos los planes (activos + inactivos) + stats
- * PUT  → editar campos de un plan
- * POST action=toggle → activar / inactivar
- * Solo admin y editor.
+ * ajax/admin_planes_turisticos.php — GESTIÓN DE PLANES TURÍSTICOS
+ * GET  → Lista planes + stats
+ * PUT  → Edita un plan existente
+ * POST action=toggle → Activa/inactiva un plan
+ * Auth: admin/editor
  */
 
 header('Content-Type: application/json; charset=utf-8');
-
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/session.php';
 
+/*
+   BLOQUE 1 - Autenticación y Autorización
+   - Verifica usuario logueado (401 si no)
+   - Verifica rol admin/editor (403 si no)
+*/
 if (!estaLogueado()) {
     http_response_code(401);
     echo json_encode(['ok' => false, 'msg' => 'No autenticado.']);
@@ -29,7 +32,13 @@ if (!in_array($usuario['rol'], ['admin', 'editor'], true)) {
 $pdo    = getDB();
 $method = $_SERVER['REQUEST_METHOD'];
 
-// ── GET: lista todos los planes ──────────────────────────────────────────────
+/*
+   BLOQUE 2 - GET: Listar Planes Turísticos
+   - Query SELECT todos los planes (turísticos)
+   - Formatea precios a formato legible
+   - Calcula stats (total, activos)
+   - Devuelve { planes, stats }
+*/
 if ($method === 'GET') {
     $stmt = $pdo->query(
         "SELECT id, titulo, descripcion, ubicacion, duracion_dias,
@@ -54,7 +63,14 @@ if ($method === 'GET') {
     exit;
 }
 
-// ── PUT: editar un plan ──────────────────────────────────────────────────────
+/*
+   BLOQUE 3 - PUT: Editar Plan Turístico
+   - Parsea JSON del body
+   - Extrae y valida parámetros (id, titulo, ubicacion, dias, precio)
+   - Verifica que plan existe
+   - UPDATE con prepared statement
+   - Devuelve { ok: true, msg }
+*/
 if ($method === 'PUT') {
     $d      = json_decode(file_get_contents('php://input'), true) ?? [];
     $id     = (int)($d['id'] ?? 0);
@@ -91,7 +107,14 @@ if ($method === 'PUT') {
     exit;
 }
 
-// ── POST action=toggle: activar / inactivar ──────────────────────────────────
+/*
+   BLOQUE 4 - POST action=toggle: Activar/Inactivar
+   - Parsea JSON/POST
+   - Valida action="toggle" e id
+   - Obtiene estado actual
+   - Calcula nuevo estado (inverso)
+   - UPDATE plan, devuelve { ok, msg, estado }
+*/
 if ($method === 'POST') {
     $d      = json_decode(file_get_contents('php://input'), true) ?? $_POST;
     $action = trim($d['action'] ?? '');
@@ -123,4 +146,5 @@ if ($method === 'POST') {
     exit;
 }
 
+// BLOQUE 5 - Método no soportado
 echo json_encode(['ok' => false, 'msg' => 'Método no soportado.']);

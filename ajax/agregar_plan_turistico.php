@@ -1,9 +1,8 @@
 <?php
 /**
- * ajax/agregar_plan_turistico.php
- * POST multipart/form-data — crea un nuevo plan turístico.
- * Sube la imagen a /img/ y guarda la ruta en la BD.
- * Solo admin y editor.
+ * ajax/agregar_plan_turistico.php — CREAR PLAN TURÍSTICO
+ * POST multipart/form-data — crea nuevo plan con imagen hero
+ * Solo admin/editor. Responde: { ok, msg, id }
  */
 
 header('Content-Type: application/json; charset=utf-8');
@@ -11,12 +10,14 @@ header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/session.php';
 
+// BLOQUE 1 - Validar autenticación
 if (!estaLogueado()) {
     http_response_code(401);
     echo json_encode(['ok' => false, 'msg' => 'No autenticado.']);
     exit;
 }
 
+// BLOQUE 2 - Validar rol (admin o editor)
 $usuario = usuarioActual();
 if (!in_array($usuario['rol'], ['admin', 'editor'], true)) {
     http_response_code(403);
@@ -24,12 +25,17 @@ if (!in_array($usuario['rol'], ['admin', 'editor'], true)) {
     exit;
 }
 
+// BLOQUE 3 - Validar método HTTP POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['ok' => false, 'msg' => 'Método no permitido.']);
     exit;
 }
 
-// ── Leer campos de texto ─────────────────────────────────────────────────────
+/*
+   BLOQUE 4 - Extraer campos de texto
+   - titulo, descripción, ubicación, duracion_dias, precio_desde, moneda, etiqueta, estado
+   - Sanitizar y validar tipos
+*/
 $titulo   = trim($_POST['titulo']      ?? '');
 $desc     = trim($_POST['descripcion'] ?? '');
 $ubic     = trim($_POST['ubicacion']   ?? '');
@@ -39,12 +45,22 @@ $moneda   = trim($_POST['moneda']   ?? 'COP');
 $etiqueta = trim($_POST['etiqueta'] ?? '');
 $estado   = in_array($_POST['estado'] ?? '', ['activo', 'inactivo']) ? $_POST['estado'] : 'activo';
 
+/*
+   BLOQUE 5 - Validar título requerido
+   - Si no hay título: error
+*/
 if (!$titulo) {
     echo json_encode(['ok' => false, 'msg' => 'El título es requerido.']);
     exit;
 }
 
-// ── Subida de imagen ─────────────────────────────────────────────────────────
+/*
+   BLOQUE 6 - Procesar subida de imagen
+   - Validar extensión (jpg, jpeg, png, webp)
+   - Validar tamaño máximo 5MB
+   - Generar nombre único con timestamp + random bytes
+   - Move uploaded file a /img/
+*/
 $imagen_url = '';
 
 if (!empty($_FILES['imagen']['name'])) {
@@ -79,7 +95,12 @@ if (!empty($_FILES['imagen']['name'])) {
     $imagen_url = 'img/' . $nombre_archivo;
 }
 
-// ── Insertar en BD ───────────────────────────────────────────────────────────
+/*
+   BLOQUE 7 - Insertar plan en BD
+   - INSERT INTO planes_turisticos con todos los campos
+   - puntuacion y total_resenas inicializados en 0
+   - Obtener lastInsertId() para la respuesta
+*/
 $pdo  = getDB();
 $stmt = $pdo->prepare(
     "INSERT INTO planes_turisticos
@@ -90,6 +111,10 @@ $stmt = $pdo->prepare(
 $stmt->execute([$titulo, $desc, $ubic, $dias, $precio, $moneda, $etiqueta, $imagen_url, $estado]);
 $nuevo_id = (int)$pdo->lastInsertId();
 
+/*
+   BLOQUE 8 - Devolver éxito
+   - { ok: true, msg: confirmación, id: nuevo_id }
+*/
 echo json_encode([
     'ok'  => true,
     'msg' => 'Plan turístico "' . $titulo . '" creado correctamente.',

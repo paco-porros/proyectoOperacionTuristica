@@ -1,4 +1,12 @@
 <?php
+/**
+ * legales.php — PÁGINA LEGALES Y AYUDA
+ * Términos y condiciones, privacidad, FAQs
+ * Públicamente accesible
+ */
+
+// BLOQUE 1 - Detectar estado de autenticación
+// estaLogueado() — mostrar navbar usuario o login button
 require_once __DIR__ . '/includes/session.php';
 $logueado  = estaLogueado();
 $usuario   = $logueado ? usuarioActual() : null;
