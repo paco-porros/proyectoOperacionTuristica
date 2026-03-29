@@ -28,9 +28,9 @@ require_once __DIR__ . '/includes/session.php';
       <a href="#">Operador Turístico y Gastronomico | Santa Rosa de Cabal</a>
     </div>
     <div class="navegacion__enlaces">
-      <a class="navegacion__enlace" href="#servicios">Servicios</a>
       <a class="navegacion__enlace" href="#planes">Planes Turísticos</a>
       <a class="navegacion__enlace" href="#gastronomia">Ofertas Gastronómicas</a>
+      <a class="navegacion__enlace" href="#servicios">Servicios</a>
     </div>
     <?php if (estaLogueado()): $u = usuarioActual(); ?>
       <button class="navegacion__boton" id="btn-cerrar-sesion">
@@ -111,7 +111,7 @@ require_once __DIR__ . '/includes/session.php';
           <span class="seccion__supratitulo">Selección premium</span>
           <h2 class="seccion__titulo">Planes Recomendados</h2>
         </div>
-        <button class="planes__boton-todos" id="btn-ver-todos-planes">Ver todos los planes</button>
+        <button class="planes__boton-todos" id="btn-ver-todos-planes"><a href="planes.php">Ver todos los planes</a></button>
       </div>
       <!-- Contenedor dinámico -->
       <div class="planes__lista" id="lista-planes">
