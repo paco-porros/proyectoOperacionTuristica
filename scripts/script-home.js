@@ -103,7 +103,6 @@ function renderBento(planes) {
         <button class="boton-tarjeta boton-tarjeta--blanco" onclick="window.location.href='detalles-turisticos.php?id=${principal.id}'">
           Ver detalles <span class="material-symbols-outlined">arrow_forward</span>
         </button>
-        <button class="boton-tarjeta boton-tarjeta--cristal" onclick="window.location.href='detalles-turisticos.php?id=${principal.id}'">Explorar</button>
       </div>
     </div>
   </div>
@@ -121,7 +120,6 @@ function renderBento(planes) {
           <button class="boton-tarjeta boton-tarjeta--blanco boton-tarjeta--pequeno" onclick="window.location.href='detalles-turisticos.php?id=${p.id}'">
             Ver detalles <span class="material-symbols-outlined">arrow_forward</span>
           </button>
-          <button class="boton-tarjeta boton-tarjeta--cristal boton-tarjeta--pequeno" onclick="window.location.href='detalles-turisticos.php?id=${p.id}'">Explorar</button>
         </div>
       </div>
     </div>`;

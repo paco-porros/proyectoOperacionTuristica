@@ -211,9 +211,9 @@ $avatarSrc = $avatarUrl ?: 'https://ui-avatars.com/api/?name=' . urlencode($usua
         <h4 class="pie__columna-titulo">Enlaces rápidos</h4>
         <ul class="pie__lista">
           <li><a href="home.php">Inicio</a></li>
-          <li><a href="index.php#servicios">Nuestros Servicios</a></li>
-          <li><a href="index.php#planes">Planes Turísticos</a></li>
-          <li><a href="index.php#gastronomia">Ofertas Gastronómicas</a></li>
+          <li><a href="home.php#servicios">Nuestros Servicios</a></li>
+          <li><a href="home.php#planes">Planes Turísticos</a></li>
+          <li><a href="home.php#gastronomia">Ofertas Gastronómicas</a></li>
         </ul>
       </div>
 
