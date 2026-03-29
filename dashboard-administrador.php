@@ -151,8 +151,14 @@ $usuario = usuarioActual();
     ═══════════════════════════════════════════ -->
     <section class="seccion-tabla panel-vidrio seccion-dinamica" id="seccion-planes-turisticos" style="display:none;">
         <div class="seccion-planes__encabezado">
-            <h3 class="seccion-planes__subtitulo">Planes turísticos</h3>
-            <span class="etiqueta-planes-count" id="planes-turisticos-count"></span>
+            <div>
+                <h3 class="seccion-planes__subtitulo">Planes turísticos</h3>
+                <span class="etiqueta-planes-count" id="planes-turisticos-count"></span>
+            </div>
+            <button class="boton-nuevo-usuario" id="btn-agregar-plan-turistico" style="margin:0;">
+                <span class="material-symbols-outlined">add</span>
+                + Agregar Plan
+            </button>
         </div>
         <div class="tabla-contenedor">
             <table class="tabla-usuarios">
@@ -178,8 +184,14 @@ $usuario = usuarioActual();
     ═══════════════════════════════════════════ -->
     <section class="seccion-tabla panel-vidrio seccion-dinamica" id="seccion-planes-gastronomicos" style="display:none;">
         <div class="seccion-planes__encabezado">
-            <h3 class="seccion-planes__subtitulo">Planes gastronómicos</h3>
-            <span class="etiqueta-planes-count" id="planes-gastronomicos-count"></span>
+            <div>
+                <h3 class="seccion-planes__subtitulo">Planes gastronómicos</h3>
+                <span class="etiqueta-planes-count" id="planes-gastronomicos-count"></span>
+            </div>
+            <button class="boton-nuevo-usuario" id="btn-agregar-plan-gastronomico" style="margin:0;">
+                <span class="material-symbols-outlined">add</span>
+                + Agregar Plan
+            </button>
         </div>
         <div class="tabla-contenedor">
             <table class="tabla-usuarios">
@@ -448,6 +460,156 @@ $usuario = usuarioActual();
                     font-weight:700;border:none;cursor:pointer;
                     font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;
                 ">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     MODAL — Crear Plan (turístico / gastronómico)
+════════════════════════════════════════ -->
+<div id="modal-crear-plan" style="
+    display:none; position:fixed; inset:0; z-index:1003;
+    background:rgba(0,32,33,.55); backdrop-filter:blur(4px);
+    align-items:center; justify-content:center;
+">
+    <div style="
+        background:#e5feff; border-radius:1rem; padding:2.5rem;
+        max-width:580px; width:90%; box-shadow:0 20px 40px rgba(0,32,33,.15);
+        max-height:90vh; overflow-y:auto;
+    ">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+            <h3 id="modal-crear-plan-titulo" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.5rem;font-weight:700;color:#054da4;margin:0;">
+                Nuevo Plan
+            </h3>
+            <button id="modal-crear-plan-cerrar" style="background:transparent;border:none;cursor:pointer;color:#306388;font-size:1.5rem;line-height:1;">✕</button>
+        </div>
+
+        <div id="modal-crear-plan-alerta" style="display:none;margin-bottom:1rem;padding:.75rem 1rem;border-radius:.5rem;font-size:.875rem;font-weight:600;"></div>
+
+        <!-- Preview de imagen -->
+        <div id="preview-contenedor" style="display:none;margin-bottom:1.5rem;text-align:center;">
+            <img id="preview-imagen" src="" style="max-width:100%;max-height:200px;border-radius:.5rem;"/>
+        </div>
+
+        <form id="form-crear-plan" novalidate enctype="multipart/form-data">
+            <input type="hidden" id="crear-plan-tipo" value=""/>
+
+            <div style="margin-bottom:1rem;">
+                <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Título *</label>
+                <input id="crear-plan-titulo" type="text" placeholder="Nombre del plan" style="
+                    width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                    font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                "/>
+            </div>
+
+            <div style="margin-bottom:1rem;">
+                <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Descripción</label>
+                <textarea id="crear-plan-descripcion" rows="3" placeholder="Descripción del plan" style="
+                    width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                    font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;
+                    box-sizing:border-box;resize:vertical;
+                "></textarea>
+            </div>
+
+            <!-- Campos solo para turístico -->
+            <div id="campos-crear-turistico" style="display:none;">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+                    <div>
+                        <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Ubicación</label>
+                        <input id="crear-plan-ubicacion" type="text" placeholder="Santa Rosa de Cabal" style="
+                            width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                            font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                        "/>
+                    </div>
+                    <div>
+                        <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Duración (días)</label>
+                        <input id="crear-plan-duracion-dias" type="number" min="1" placeholder="3" value="1" style="
+                            width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                            font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                        "/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campos solo para gastronómico -->
+            <div id="campos-crear-gastronomico" style="display:none;">
+                <div style="margin-bottom:1rem;">
+                    <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Restaurante *</label>
+                    <select id="crear-plan-restaurante" style="
+                        width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                        font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                    ">
+                        <option value="">Selecciona un restaurante</option>
+                    </select>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+                    <div>
+                        <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Categoría</label>
+                        <input id="crear-plan-categoria" type="text" placeholder="Degustación, Parrilla…" style="
+                            width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                            font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                        "/>
+                    </div>
+                    <div>
+                        <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Duración (horas)</label>
+                        <input id="crear-plan-duracion-horas" type="number" min="0" step="0.5" placeholder="2" value="1" style="
+                            width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                            font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                        "/>
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+                    <div>
+                        <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Máximo de personas</label>
+                        <input id="crear-plan-max-personas" type="number" min="1" placeholder="10" value="10" style="
+                            width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                            font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                        "/>
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+                <div>
+                    <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Precio (USD)</label>
+                    <input id="crear-plan-precio" type="number" min="0" step="0.01" placeholder="0.00" value="0" style="
+                        width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                        font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                    "/>
+                </div>
+                <div>
+                    <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Estado</label>
+                    <select id="crear-plan-estado" style="
+                        width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                        font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                    ">
+                        <option value="activo">Activo</option>
+                        <option value="inactivo">Inactivo</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="margin-bottom:1.5rem;">
+                <label style="display:block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#306388;margin-bottom:.5rem;">Imagen (JPG, PNG, WebP - máx 5MB)</label>
+                <input id="crear-plan-imagen" type="file" accept="image/jpeg,image/png,image/webp" style="
+                    width:100%;padding:.75rem 1rem;border:1px solid #afedf0;border-radius:.5rem;
+                    font-family:'Manrope',sans-serif;color:#002021;background:#fff;outline:none;box-sizing:border-box;
+                "/>
+            </div>
+
+            <div style="display:flex;gap:1rem;">
+                <button type="button" id="modal-crear-plan-btn-cancelar" style="
+                    flex:1;padding:1rem;border-radius:9999px;border:2px solid #afedf0;
+                    background:transparent;color:#306388;font-weight:700;cursor:pointer;
+                    font-family:'Plus Jakarta Sans',sans-serif;
+                ">Cancelar</button>
+                <button type="submit" id="modal-crear-plan-btn-guardar" style="
+                    flex:2;padding:1rem;border-radius:9999px;background:#054da4;color:#fff;
+                    font-weight:700;border:none;cursor:pointer;
+                    font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;
+                ">Crear Plan</button>
             </div>
         </form>
     </div>
@@ -1215,6 +1377,214 @@ document.querySelectorAll('[data-seccion]').forEach(el => {
         e.preventDefault();
         cargarSeccion(el.getAttribute('data-seccion'));
     });
+});
+
+/* ════════════════════════════════════════════════════
+   MODAL — Crear nuevos planes
+════════════════════════════════════════════════════ */
+
+function abrirCrearPlan(tipo) {
+    console.log('Abriendo modal de crear plan:', tipo);
+    
+    document.getElementById('crear-plan-tipo').value = tipo;
+    document.getElementById('modal-crear-plan-alerta').style.display = 'none';
+    document.getElementById('preview-contenedor').style.display = 'none';
+    
+    // Limpiar formulario
+    document.getElementById('form-crear-plan').reset();
+    
+    // Mostrar/ocultar campos según tipo
+    if (tipo === 'turistico') {
+        document.getElementById('modal-crear-plan-titulo').textContent = 'Nuevo Plan Turístico';
+        document.getElementById('campos-crear-turistico').style.display = '';
+        document.getElementById('campos-crear-gastronomico').style.display = 'none';
+    } else {
+        document.getElementById('modal-crear-plan-titulo').textContent = 'Nuevo Plan Gastronómico';
+        document.getElementById('campos-crear-turistico').style.display = 'none';
+        document.getElementById('campos-crear-gastronomico').style.display = '';
+        
+        // Cargar restaurantes
+        cargarRestaurantes();
+    }
+    
+    document.getElementById('modal-crear-plan').style.display = 'flex';
+}
+
+function cerrarCrearPlan() {
+    document.getElementById('modal-crear-plan').style.display = 'none';
+}
+
+function alertaModalCrearPlan(msg, tipo) {
+    const el = document.getElementById('modal-crear-plan-alerta');
+    el.textContent   = msg;
+    el.style.display = 'block';
+    el.style.background = tipo === 'ok' ? 'rgba(16,185,129,.12)' : 'rgba(239,68,68,.12)';
+    el.style.color      = tipo === 'ok' ? '#065f46' : '#7f1d1d';
+    el.style.border     = `1px solid ${tipo === 'ok' ? '#6ee7b7' : '#fca5a5'}`;
+}
+
+/* Cargar restaurantes para el select */
+async function cargarRestaurantes() {
+    try {
+        const res = await fetch('/ajax/admin_planes_gastronomicos.php');
+        const data = await res.json();
+        
+        if (data.ok && data.restaurantes) {
+            const select = document.getElementById('crear-plan-restaurante');
+            const optionActual = select.value;
+            
+            select.innerHTML = '<option value="">Selecciona un restaurante</option>';
+            data.restaurantes.forEach(r => {
+                const opt = document.createElement('option');
+                opt.value = r.id;
+                opt.textContent = r.nombre;
+                select.appendChild(opt);
+            });
+            
+            select.value = optionActual; // Restaurar selección si existía
+        }
+    } catch (err) {
+        console.error('Error cargando restaurantes:', err);
+    }
+}
+
+/* Preview de imagen */
+document.getElementById('crear-plan-imagen').addEventListener('change', function(e) {
+    const archivo = this.files[0];
+    if (!archivo) {
+        document.getElementById('preview-contenedor').style.display = 'none';
+        return;
+    }
+    
+    // Mostrar preview
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+        const preview = document.getElementById('preview-imagen');
+        preview.src = evt.target.result;
+        document.getElementById('preview-contenedor').style.display = 'block';
+    };
+    reader.readAsDataURL(archivo);
+});
+
+/* Botones para abrir modal de crear plans */
+document.getElementById('btn-agregar-plan-turistico').addEventListener('click', () => {
+    abrirCrearPlan('turistico');
+});
+
+document.getElementById('btn-agregar-plan-gastronomico').addEventListener('click', () => {
+    abrirCrearPlan('gastronomico');
+});
+
+/* Cerrar modal de crear plan */
+document.getElementById('modal-crear-plan-cerrar').addEventListener('click', cerrarCrearPlan);
+document.getElementById('modal-crear-plan-btn-cancelar').addEventListener('click', cerrarCrearPlan);
+
+document.getElementById('modal-crear-plan').addEventListener('click', function(e) {
+    if (e.target === this) cerrarCrearPlan();
+});
+
+/* Envío del formulario de crear plan */
+document.getElementById('form-crear-plan').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const tipo      = document.getElementById('crear-plan-tipo').value;
+    const titulo    = document.getElementById('crear-plan-titulo').value.trim();
+    const desc      = document.getElementById('crear-plan-descripcion').value.trim();
+    const precio    = parseFloat(document.getElementById('crear-plan-precio').value) || 0;
+    const estado    = document.getElementById('crear-plan-estado').value;
+    const archivo   = document.getElementById('crear-plan-imagen').files[0];
+    
+    // Validaciones
+    if (!titulo) {
+        alertaModalCrearPlan('El título es requerido.', 'error');
+        return;
+    }
+    
+    if (precio < 0) {
+        alertaModalCrearPlan('El precio no puede ser negativo.', 'error');
+        return;
+    }
+    
+    // Validar campos específicos
+    if (tipo === 'turistico') {
+        const ubicacion = document.getElementById('crear-plan-ubicacion').value.trim();
+        const dias      = parseInt(document.getElementById('crear-plan-duracion-dias').value) || 1;
+        
+        if (!ubicacion) {
+            alertaModalCrearPlan('La ubicación es requerida.', 'error');
+            return;
+        }
+    } else {
+        const restaurante = document.getElementById('crear-plan-restaurante').value;
+        const categoria   = document.getElementById('crear-plan-categoria').value.trim();
+        
+        if (!restaurante) {
+            alertaModalCrearPlan('Debes seleccionar un restaurante.', 'error');
+            return;
+        }
+        
+        if (!categoria) {
+            alertaModalCrearPlan('La categoría es requerida.', 'error');
+            return;
+        }
+    }
+    
+    // Crear FormData (importante para enviar archivos)
+    const formData = new FormData();
+    formData.append('titulo', titulo);
+    formData.append('descripcion', desc);
+    formData.append('precio_desde', precio);
+    formData.append('estado', estado);
+    
+    if (archivo) {
+        formData.append('imagen', archivo);
+    }
+    
+    if (tipo === 'turistico') {
+        formData.append('ubicacion', document.getElementById('crear-plan-ubicacion').value.trim());
+        formData.append('duracion_dias', parseInt(document.getElementById('crear-plan-duracion-dias').value) || 1);
+    } else {
+        formData.append('restaurante_id', document.getElementById('crear-plan-restaurante').value);
+        formData.append('categoria', document.getElementById('crear-plan-categoria').value.trim());
+        formData.append('duracion_horas', parseFloat(document.getElementById('crear-plan-duracion-horas').value) || 0);
+        formData.append('max_personas', parseInt(document.getElementById('crear-plan-max-personas').value) || 10);
+    }
+    
+    const btn = document.getElementById('modal-crear-plan-btn-guardar');
+    btn.disabled    = true;
+    btn.textContent = 'Creando…';
+    
+    try {
+        const endpoint = tipo === 'turistico' 
+            ? '/ajax/crear_plan_turistico.php'
+            : '/ajax/crear_plan_gastronomico.php';
+        
+        const res  = await fetch(endpoint, {
+            method: 'POST',
+            body:   formData, // FormData maneja automáticamente multipart/form-data
+        });
+        const data = await res.json();
+        
+        if (data.ok) {
+            cerrarCrearPlan();
+            toast(data.msg, 'ok');
+            
+            // Recargar tabla correspondiente
+            if (tipo === 'turistico') {
+                cargarPlanesTuristicos();
+            } else {
+                cargarPlanesGastronomicos();
+            }
+        } else {
+            alertaModalCrearPlan(data.msg || 'Error al crear el plan.', 'error');
+        }
+    } catch (err) {
+        alertaModalCrearPlan('Error de conexión: ' + err.message, 'error');
+        console.error(err);
+    }
+    
+    btn.disabled    = false;
+    btn.textContent = 'Crear Plan';
 });
 </script>
 

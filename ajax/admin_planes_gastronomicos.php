@@ -54,7 +54,11 @@ if ($method === 'GET') {
          FROM planes_gastronomicos"
     )->fetch();
 
-    echo json_encode(['ok' => true, 'planes' => $planes, 'stats' => $stats]);
+    // También traer lista de restaurantes disponibles
+    $stmtRest = $pdo->query("SELECT id, nombre FROM restaurantes ORDER BY nombre ASC");
+    $restaurantes = $stmtRest->fetchAll();
+
+    echo json_encode(['ok' => true, 'planes' => $planes, 'stats' => $stats, 'restaurantes' => $restaurantes]);
     exit;
 }
 
