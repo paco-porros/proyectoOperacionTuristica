@@ -11,6 +11,10 @@ require_once __DIR__ . '/includes/session.php';
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Operador Turístico y Gastronomico</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0" />
   <link rel="stylesheet" href="/estilos/style.css" />
 </head>
 
@@ -20,11 +24,13 @@ require_once __DIR__ . '/includes/session.php';
        NAVEGACIÓN
   ═══════════════════════════════════════════ -->
   <nav class="navegacion">
-    <div class="navegacion__logo">Operador Turístico y Gastronomico | Santa Rosa de Cabal</div>
+    <div class="navegacion__logo">
+      <a href="#">Operador Turístico y Gastronomico | Santa Rosa de Cabal</a>
+    </div>
     <div class="navegacion__enlaces">
-      <a class="navegacion__enlace" href="#">Servicios</a>
-      <a class="navegacion__enlace" href="#">Planes Turísticos</a>
-      <a class="navegacion__enlace" href="#">Ofertas Gastronómicas</a>
+      <a class="navegacion__enlace" href="#servicios">Servicios</a>
+      <a class="navegacion__enlace" href="#planes">Planes Turísticos</a>
+      <a class="navegacion__enlace" href="#gastronomia">Ofertas Gastronómicas</a>
     </div>
     <?php if (estaLogueado()): $u = usuarioActual(); ?>
       <button class="navegacion__boton" id="btn-cerrar-sesion">
@@ -52,11 +58,11 @@ require_once __DIR__ . '/includes/session.php';
   <!-- ═══════════════════════════════════════════
        SERVICIOS DESTACADOS
   ═══════════════════════════════════════════ -->
-  <section class="servicios">
+  <section id="servicios" class="servicios">
     <div class="servicios__encabezado">
       <div>
         <span class="seccion__supratitulo">Mas de Santa Rosa</span>
-        <h2 class="seccion__titulo">Nuestros Servicios</h2>
+        <h2 class="seccion__titulo"><a href="servicios.php">Nuestros Servicios <span class="material-symbols-outlined">arrow_forward</span></a></h2>
       </div>
     </div>
     <div class="servicios__cuadricula">
@@ -66,7 +72,7 @@ require_once __DIR__ . '/includes/session.php';
         </div>
         <h3 class="tarjeta-servicio__titulo">Alojamiento</h3>
         <p class="tarjeta-servicio__descripcion">Desde hoteles boutique hasta villas privadas de ensueño.</p>
-        <button class="tarjeta-servicio__enlace">Ver más <span class="material-symbols-outlined">arrow_forward</span></button>
+        <button class="tarjeta-servicio__enlace"><a href="servicios.php#alojamiento">Ver más </a><span class="material-symbols-outlined">arrow_forward</span></button>
       </div>
       <div class="tarjeta-servicio panel-vidrio borde-vidrio">
         <div class="tarjeta-servicio__icono-envoltorio">
@@ -74,7 +80,7 @@ require_once __DIR__ . '/includes/session.php';
         </div>
         <h3 class="tarjeta-servicio__titulo">Transporte</h3>
         <p class="tarjeta-servicio__descripcion">Traslados ejecutivos y alquiler de vehículos de alta gama.</p>
-        <button class="tarjeta-servicio__enlace">Ver más <span class="material-symbols-outlined">arrow_forward</span></button>
+        <button class="tarjeta-servicio__enlace"><a href="servicios.php#transporte">Ver más </a><span class="material-symbols-outlined">arrow_forward</span></button>
       </div>
       <div class="tarjeta-servicio panel-vidrio borde-vidrio">
         <div class="tarjeta-servicio__icono-envoltorio">
@@ -82,7 +88,7 @@ require_once __DIR__ . '/includes/session.php';
         </div>
         <h3 class="tarjeta-servicio__titulo">Alimentación</h3>
         <p class="tarjeta-servicio__descripcion">Experiencias gastronómicas locales y cenas gourmet privadas.</p>
-        <button class="tarjeta-servicio__enlace">Ver más <span class="material-symbols-outlined">arrow_forward</span></button>
+        <button class="tarjeta-servicio__enlace"><a href="servicios.php#alimentacion">Ver más</a><span class="material-symbols-outlined">arrow_forward</span></button>
       </div>
       <div class="tarjeta-servicio panel-vidrio borde-vidrio">
         <div class="tarjeta-servicio__icono-envoltorio">
@@ -90,7 +96,7 @@ require_once __DIR__ . '/includes/session.php';
         </div>
         <h3 class="tarjeta-servicio__titulo">Entretenimiento</h3>
         <p class="tarjeta-servicio__descripcion">Tours exclusivos, deportes de aventura y eventos culturales.</p>
-        <button class="tarjeta-servicio__enlace">Ver más <span class="material-symbols-outlined">arrow_forward</span></button>
+        <button class="tarjeta-servicio__enlace"><a href="servicios.php#entretenimiento">Ver más </a><span class="material-symbols-outlined">arrow_forward</span></button>
       </div>
     </div>
   </section>
@@ -98,7 +104,7 @@ require_once __DIR__ . '/includes/session.php';
   <!-- ═══════════════════════════════════════════
        PLANES RECOMENDADOS — cargados vía AJAX desde la BD
   ═══════════════════════════════════════════ -->
-  <section class="planes">
+  <section id="planes" class="planes">
     <div class="planes__interior">
       <div class="planes__encabezado">
         <div>
@@ -107,7 +113,6 @@ require_once __DIR__ . '/includes/session.php';
         </div>
         <button class="planes__boton-todos" id="btn-ver-todos-planes">Ver todos los planes</button>
       </div>
-
       <!-- Contenedor dinámico -->
       <div class="planes__lista" id="lista-planes">
         <!-- Skeleton mientras carga -->
@@ -132,7 +137,7 @@ require_once __DIR__ . '/includes/session.php';
   <!-- ═══════════════════════════════════════════
        OFERTAS GASTRONÓMICAS
   ═══════════════════════════════════════════ -->
-  <section class="gastronomia">
+  <section id="gastronomia" class="gastronomia">
     <div class="gastronomia__interior">
       <div class="gastronomia__encabezado">
         <div>
@@ -229,43 +234,7 @@ require_once __DIR__ . '/includes/session.php';
       </div>
     </div>
   </section>
-
-  <!-- ═══════════════════════════════════════════
-       OFERENTES DESTACADOS
-  ═══════════════════════════════════════════ -->
-  <section class="oferentes">
-    <div class="oferentes__encabezado">
-      <span class="seccion__supratitulo">Nuestros Aliados</span>
-      <h2 class="seccion__titulo">Oferentes Destacados</h2>
-    </div>
-    <div class="oferentes__cuadricula">
-      <div class="tarjeta-oferente">
-        <div class="tarjeta-oferente__logo panel-vidrio borde-vidrio">
-          <span class="material-symbols-outlined tarjeta-oferente__icono">airplanemode_active</span>
-        </div>
-        <span class="tarjeta-oferente__nombre">AeroLuxe Travel</span>
-      </div>
-      <div class="tarjeta-oferente">
-        <div class="tarjeta-oferente__logo panel-vidrio borde-vidrio">
-          <span class="material-symbols-outlined tarjeta-oferente__icono">apartment</span>
-        </div>
-        <span class="tarjeta-oferente__nombre">Zenith Hotels</span>
-      </div>
-      <div class="tarjeta-oferente">
-        <div class="tarjeta-oferente__logo panel-vidrio borde-vidrio">
-          <span class="material-symbols-outlined tarjeta-oferente__icono">directions_boat</span>
-        </div>
-        <span class="tarjeta-oferente__nombre">Oceanic Cruises</span>
-      </div>
-      <div class="tarjeta-oferente">
-        <div class="tarjeta-oferente__logo panel-vidrio borde-vidrio">
-          <span class="material-symbols-outlined tarjeta-oferente__icono">hiking</span>
-        </div>
-        <span class="tarjeta-oferente__nombre">WildPeak Tours</span>
-      </div>
-    </div>
-  </section>
-
+  
   <!-- PIE DE PÁGINA -->
   <footer class="pie">
     <div class="pie__cuadricula">
@@ -278,15 +247,26 @@ require_once __DIR__ . '/includes/session.php';
         </div>
       </div>
       <div>
-        <h4 class="pie__columna-titulo">Sobre nosotros</h4>
+        <h4 class="pie__columna-titulo"><a href="nosotros.php">Sobre nosotros</a></h4>
         <ul class="pie__lista">
-          <li><a href="#">Misión y Visión</a></li>
-          <li><a href="#">Equipo Ejecutivo</a></li>
-          <li><a href="#">Carreras</a></li>
+          <li><a href="nosotros.php#mision-vision">Misión y Visión</a></li>
+          <li><a href="nosotros.php#equipo">Equipo Ejecutivo</a></li>
+          <li><a href="nosotros.php#carreras">Carreras</a></li>
         </ul>
       </div>
+
       <div>
         <h4 class="pie__columna-titulo">Enlaces rápidos</h4>
+        <ul class="pie__lista">
+          <li><a href="index.php">Inicio</a></li>
+          <li><a href="#servicios">Nuestros Servicios</a></li>
+          <li><a href="#planes">Planes Turísticos</a></li>
+          <li><a href="#gastronomia">Ofertas Gastronómicas</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="pie__columna-titulo">Legales y ayuda</h4>
         <ul class="pie__lista">
           <li><a href="#">Términos y Condiciones</a></li>
           <li><a href="#">Privacidad</a></li>
@@ -297,12 +277,16 @@ require_once __DIR__ . '/includes/session.php';
         <h4 class="pie__columna-titulo">Contacto</h4>
         <ul class="pie__lista-contacto">
           <li class="pie__contacto-item">
-            <span class="material-symbols-outlined">mail</span>
             <a href="mailto:info@srcabal.com">info@srcabal.com</a>
           </li>
           <li class="pie__contacto-item">
-            <span class="material-symbols-outlined">call</span>
+            <a href="mailto:talentohumano@srcabal.com">talentohumano@srcabal.com</a>
+          </li>
+          <li class="pie__contacto-item">
             +57 (606) 364-0000
+          </li>
+          <li class="pie__contacto-item">
+            Santa Rosa de Cabal, Risaralda
           </li>
         </ul>
       </div>
