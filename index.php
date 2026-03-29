@@ -146,92 +146,7 @@ require_once __DIR__ . '/includes/session.php';
         </div>
         <button class="gastronomia__boton-todos" id="boton-ver-todos-gastronomia">Ver todas las ofertas</button>
       </div>
-      <div class="gastronomia__lista">
-        <div class="tarjeta-gastronomia panel-vidrio borde-vidrio">
-          <div class="tarjeta-gastronomia__imagen-envoltorio">
-            <img class="tarjeta-gastronomia__imagen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqrYiszyVO9b5FJvsR6QPJYsqdT1GRR_mYpjMlPFWjxafulqCduopzqvrPvj3cGmkgQeW_gjY7KmGaR5QZF2cJ5nICZ31UU4QvbFe3hQvpbR3fcNkkiv4PtLHKxPWQaj-m5KvRDvg0BuZM5v2Yx1AK6kk9MFOE-pR83n69Fo6EBiS5FK3SaeIGMpyP68nUPiP33pURX9LjDtg5JKbLoWzeTPEuwFkFJaSET8JWQ8qGwPGcqgJeNRD9fPPvAF0pxhu2cdEaD2v2fV72" alt="Trucha al ajillo"/>
-            <span class="tarjeta-gastronomia__badge">Típico</span>
-          </div>
-          <div class="tarjeta-gastronomia__cuerpo">
-            <div>
-              <div class="tarjeta-gastronomia__fila-superior">
-                <h3 class="tarjeta-gastronomia__titulo">Trucha al Ajillo con Patacones</h3>
-                <span class="tarjeta-gastronomia__etiqueta">Plato fuerte</span>
-              </div>
-              <p class="tarjeta-gastronomia__descripcion">Trucha fresca de los ríos de Santa Rosa, preparada con mantequilla de ajo, hierbas aromáticas locales y acompañada de patacones artesanales.</p>
-              <div class="tarjeta-gastronomia__meta">
-                <span class="tarjeta-gastronomia__meta-item"><span class="material-symbols-outlined">restaurant</span> Restaurante El Manantial</span>
-                <span class="tarjeta-gastronomia__meta-item"><span class="material-symbols-outlined">star</span> 4.9</span>
-              </div>
-            </div>
-            <div class="tarjeta-gastronomia__pie">
-              <div>
-                <span class="tarjeta-gastronomia__precio-desde">Desde</span>
-                <span class="tarjeta-gastronomia__precio">$35,000 <span class="tarjeta-gastronomia__precio-unidad">COP / pers</span></span>
-              </div>
-              <button class="tarjeta-gastronomia__boton" onclick="window.location.href='detalles-gastronomicos.php?id=4'">
-                Ver detalles <span class="material-symbols-outlined">visibility</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="tarjeta-gastronomia panel-vidrio borde-vidrio">
-          <div class="tarjeta-gastronomia__imagen-envoltorio">
-            <img class="tarjeta-gastronomia__imagen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALZtJ2omilYGHRKrG9x1nwXdgbTd-CLY_tL4_aKJOyNqaE4VqDD1vM-0EgYDbk1b_zQ_Bzwjaj2EL6Jug0TSFK9Q-JoDVcC2zHmYPXmPc1zpUCs9D1NvLosOig4fhqukT6z_XkcA1TJTQ3z1izAZLfA9vpyDhxsvALNQAMbO2erryl9DKcG8sCxPDIU7jo1FK55zo9d97q8LeZ2rLMly0ow4RZmUu4fjbaSEys11NOkjGrGZcKesu4mXcv8VQI1xP2rcQ5i7H1vsOt" alt="Bandeja Paisa"/>
-            <span class="tarjeta-gastronomia__badge">Insignia</span>
-          </div>
-          <div class="tarjeta-gastronomia__cuerpo">
-            <div>
-              <div class="tarjeta-gastronomia__fila-superior">
-                <h3 class="tarjeta-gastronomia__titulo">Bandeja Paisa Premium</h3>
-                <span class="tarjeta-gastronomia__etiqueta">Tradición</span>
-              </div>
-              <p class="tarjeta-gastronomia__descripcion">La reina de la gastronomía antioqueña en su versión más completa: frijoles, chicharrón, chorizo artesanal, huevo, arroz, aguacate y arepa de maíz.</p>
-              <div class="tarjeta-gastronomia__meta">
-                <span class="tarjeta-gastronomia__meta-item"><span class="material-symbols-outlined">restaurant</span> La Fonda Paisa</span>
-                <span class="tarjeta-gastronomia__meta-item"><span class="material-symbols-outlined">star</span> 4.8</span>
-              </div>
-            </div>
-            <div class="tarjeta-gastronomia__pie">
-              <div>
-                <span class="tarjeta-gastronomia__precio-desde">Desde</span>
-                <span class="tarjeta-gastronomia__precio">$28,000 <span class="tarjeta-gastronomia__precio-unidad">COP / pers</span></span>
-              </div>
-              <button class="tarjeta-gastronomia__boton" onclick="window.location.href='detalles-gastronomicos.php?id=2'">
-                Ver detalles <span class="material-symbols-outlined">visibility</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="tarjeta-gastronomia panel-vidrio borde-vidrio">
-          <div class="tarjeta-gastronomia__imagen-envoltorio">
-            <img class="tarjeta-gastronomia__imagen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGZj183QMPNxArCGjvbpRWb8nIGbfTxzu7KKzsUUwoup4opovL_2ax7638xLfXWsTVJ1v0jzegSzjCRDmhpBuss3YW7lxJc7zEbj7DB-JGTHSRu24vIj4BFSU3WGWajncHqKD4tDTAe35nhNLhcqzJlbtmsBL8xsEyZpj1x8ZGtQeKs0da94l9vSQaoV_fGaAYWq2uPje0-b20Ubur2D8KewvzKCXDnLgnFTPtyV1wnH9ZvVnLXKAA8g6BO7Ol7BbeE0q0uXo3eBwO" alt="Tour Cafetero"/>
-            <span class="tarjeta-gastronomia__badge">Experiencia</span>
-          </div>
-          <div class="tarjeta-gastronomia__cuerpo">
-            <div>
-              <div class="tarjeta-gastronomia__fila-superior">
-                <h3 class="tarjeta-gastronomia__titulo">Tour Cafetero & Cata Gourmet</h3>
-                <span class="tarjeta-gastronomia__etiqueta">Experiencia</span>
-              </div>
-              <p class="tarjeta-gastronomia__descripcion">Recorre los cafetales de la región, conoce el proceso del café de origen y disfruta una cata guiada con maridaje de postres artesanales locales.</p>
-              <div class="tarjeta-gastronomia__meta">
-                <span class="tarjeta-gastronomia__meta-item"><span class="material-symbols-outlined">schedule</span> 3 horas</span>
-                <span class="tarjeta-gastronomia__meta-item"><span class="material-symbols-outlined">star</span> 5.0</span>
-              </div>
-            </div>
-            <div class="tarjeta-gastronomia__pie">
-              <div>
-                <span class="tarjeta-gastronomia__precio-desde">Desde</span>
-                <span class="tarjeta-gastronomia__precio">$65,000 <span class="tarjeta-gastronomia__precio-unidad">COP / pers</span></span>
-              </div>
-              <button class="tarjeta-gastronomia__boton" onclick="window.location.href='detalles-gastronomicos.php?id=6'">
-                Ver detalles <span class="material-symbols-outlined">visibility</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div class="gastronomia__lista" id="lista-gastronomia"></div>
     </div>
   </section>
   
@@ -394,8 +309,60 @@ require_once __DIR__ . '/includes/session.php';
     });
   }
 
+  function renderPlanGastronomico(plan) {
+    const precio   = plan.precio_formateado;
+    const moneda   = plan.moneda === 'COP' ? 'COP' : plan.moneda;
+    const estrellas = parseFloat(plan.puntuacion).toFixed(1);
+
+    return `
+    <div class="tarjeta-gastronomia panel-vidrio borde-vidrio">
+      <div class="tarjeta-gastronomia__imagen-envoltorio">
+        <img class="tarjeta-gastronomia__imagen" src="${plan.imagen_hero_url}" alt="${plan.titulo}" loading="lazy"/>
+        <span class="tarjeta-gastronomia__badge">${plan.etiqueta || ''}</span>
+      </div>
+      <div class="tarjeta-gastronomia__cuerpo">
+        <div>
+          <div class="tarjeta-gastronomia__fila-superior">
+            <h3 class="tarjeta-gastronomia__titulo">${plan.titulo}</h3>
+            <span class="tarjeta-gastronomia__etiqueta">${plan.categoria || ''}</span>
+          </div>
+          <p class="tarjeta-gastronomia__descripcion">${plan.descripcion.substring(0, 120)}…</p>
+          <div class="tarjeta-gastronomia__meta">
+            <span class="tarjeta-gastronomia__meta-item"><span class="material-symbols-outlined">restaurant</span> ${plan.restaurante_nombre}</span>
+            <span class="tarjeta-gastronomia__meta-item"><span class="material-symbols-outlined">star</span> ${estrellas}</span>
+          </div>
+        </div>
+        <div class="tarjeta-gastronomia__pie">
+          <div>
+            <span class="tarjeta-gastronomia__precio-desde">Desde</span>
+            <span class="tarjeta-gastronomia__precio">$${precio} <span class="tarjeta-gastronomia__precio-unidad">${moneda} / pers</span></span>
+          </div>
+          <button class="tarjeta-gastronomia__boton" onclick="window.location.href='detalles-gastronomicos.php?id=${plan.id}'">
+            Ver detalles <span class="material-symbols-outlined">visibility</span>
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }
+
+  async function cargarGastronomia() {
+    try {
+      const res  = await fetch('/ajax/gastronomicos.php?limite=3');
+      const data = await res.json();
+      const lista = document.getElementById('lista-gastronomia');
+
+      if (data.ok && data.planes.length) {
+        lista.innerHTML = data.planes.map(p => renderPlanGastronomico(p)).join('');
+      } else {
+        lista.innerHTML = '<p style="padding:2rem;color:#6b4558;">No hay ofertas disponibles en este momento.</p>';
+      }
+    } catch (err) {
+      console.error('Error cargando gastronomía:', err);
+    }
+  }
+
   // Carga inmediata al DOMContentLoaded
-  document.addEventListener('DOMContentLoaded', cargarPlanes);
+  document.addEventListener('DOMContentLoaded', () => { cargarPlanes(); cargarGastronomia(); });
   </script>
 
 </body>

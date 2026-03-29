@@ -57,5 +57,10 @@ $res->execute([$id]);
 $plan['resenas'] = $res->fetchAll();
 
 $plan['precio_formateado'] = number_format((float)$plan['precio_desde'], 0, ',', '.');
+// Normalizar ruta de imagen — si es relativa, dejar como está; si es null, asignar fallback
+$plan['imagen_hero_url'] = !empty($plan['imagen_hero_url'])
+    ? $plan['imagen_hero_url']
+    : '/img/fondoPortada.jpg';
+
 
 echo json_encode(['ok' => true, 'plan' => $plan]);

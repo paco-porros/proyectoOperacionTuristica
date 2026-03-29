@@ -50,26 +50,58 @@ if ($id > 0) {
     $plan['resenas'] = $res->fetchAll();
 
     $plan['precio_formateado'] = number_format((float)$plan['precio_desde'], 0, ',', '.');
+    $plan['imagen_hero_url'] = !empty($plan['imagen_hero_url'])
+        ? $plan['imagen_hero_url']
+        : '/img/fondoPortada.jpg';
 
     echo json_encode(['ok' => true, 'plan' => $plan]);
 
 } else {
-    // ── Lista de restaurantes y sus planes gastronómicos ─────────────────
-    $restaurantes = $pdo->query(
-        'SELECT r.id, r.nombre, r.descripcion, r.direccion, r.tipo, r.icono
-         FROM restaurantes r WHERE r.estado = \'activo\' ORDER BY r.nombre ASC'
-    )->fetchAll();
+    $limite = (int)($_GET['limite'] ?? 0);
 
-    foreach ($restaurantes as &$rest) {
-        $pla = $pdo->prepare(
-            'SELECT id, titulo, categoria, precio_desde, moneda, puntuacion, etiqueta
-             FROM planes_gastronomicos
-             WHERE restaurante_id = ? AND estado = \'activo\'
-             ORDER BY puntuacion DESC'
+    if ($limite > 0) {
+        // ── Lista plana de planes para el index ──────────────────────────
+        $stmt = $pdo->prepare(
+            'SELECT pg.id, pg.titulo, pg.descripcion, pg.etiqueta, pg.categoria,
+                    pg.precio_desde, pg.moneda, pg.puntuacion, pg.total_resenas,
+                    pg.imagen_hero_url,
+                    r.nombre AS restaurante_nombre
+             FROM planes_gastronomicos pg
+             JOIN restaurantes r ON r.id = pg.restaurante_id
+             WHERE pg.estado = \'activo\'
+             ORDER BY pg.puntuacion DESC
+             LIMIT ?'
         );
-        $pla->execute([$rest['id']]);
-        $rest['planes'] = $pla->fetchAll();
-    }
+        $stmt->execute([$limite]);
+        $planes = $stmt->fetchAll();
 
-    echo json_encode(['ok' => true, 'restaurantes' => $restaurantes]);
+        foreach ($planes as &$p) {
+            $p['precio_formateado'] = number_format((float)$p['precio_desde'], 0, ',', '.');
+            $p['imagen_hero_url']   = !empty($p['imagen_hero_url'])
+                ? $p['imagen_hero_url']
+                : '/img/fondoPortada.jpg';
+        }
+
+        echo json_encode(['ok' => true, 'planes' => $planes]);
+
+    } else {
+        // ── Lista de restaurantes y sus planes gastronómicos ─────────────
+        $restaurantes = $pdo->query(
+            'SELECT r.id, r.nombre, r.descripcion, r.direccion, r.tipo, r.icono
+             FROM restaurantes r WHERE r.estado = \'activo\' ORDER BY r.nombre ASC'
+        )->fetchAll();
+
+        foreach ($restaurantes as &$rest) {
+            $pla = $pdo->prepare(
+                'SELECT id, titulo, categoria, precio_desde, moneda, puntuacion, etiqueta
+                 FROM planes_gastronomicos
+                 WHERE restaurante_id = ? AND estado = \'activo\'
+                 ORDER BY puntuacion DESC'
+            );
+            $pla->execute([$rest['id']]);
+            $rest['planes'] = $pla->fetchAll();
+        }
+
+        echo json_encode(['ok' => true, 'restaurantes' => $restaurantes]);
+    }
 }
