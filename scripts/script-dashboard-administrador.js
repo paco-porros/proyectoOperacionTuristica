@@ -458,6 +458,12 @@ const CONFIG_SECCIONES = {
         stat1:       'Total Experiencias',
         stat2:       'Activas',
     },
+    'reservas': {
+        titulo:      'Gestión de Reservas',
+        descripcion: 'Administra todas las reservas turísticas y gastronómicas de la plataforma.',
+        stat1:       'Total Reservas',
+        stat2:       'Confirmadas',
+    },
 };
 
 let seccionActiva = 'usuarios';
@@ -501,6 +507,12 @@ async function cargarSeccion(seccion) {
     document.getElementById('seccion-usuarios').style.display             = seccion === 'usuarios'             ? '' : 'none';
     document.getElementById('seccion-planes-turisticos').style.display    = seccion === 'planes-turisticos'    ? '' : 'none';
     document.getElementById('seccion-planes-gastronomicos').style.display = seccion === 'planes-gastronomicos' ? '' : 'none';
+    document.getElementById('seccion-reservas').style.display             = seccion === 'reservas'             ? '' : 'none';
+
+    /* Mostrar tarjetas extra solo en la sección reservas */
+    const esReservas = seccion === 'reservas';
+    document.getElementById('stat-extra-1').style.display = esReservas ? '' : 'none';
+    document.getElementById('stat-extra-2').style.display = esReservas ? '' : 'none';
 
     /* El botón "Nuevo Usuario" y el buscador solo aparecen en la sección de usuarios */
     document.getElementById('btn-nuevo-usuario').style.display = seccion === 'usuarios' ? '' : 'none';
@@ -515,6 +527,9 @@ async function cargarSeccion(seccion) {
         await cargarPlanesTuristicos();
     } else if (seccion === 'planes-gastronomicos') {
         await cargarPlanesGastronomicos();
+    } else if (seccion === 'reservas') {
+        paginaReservas = 1;
+        await cargarReservas(1);
     }
 }
 
@@ -1091,3 +1106,306 @@ document.getElementById('form-crear-plan').addEventListener('submit', async func
     btn.disabled    = false;
     btn.textContent = 'Crear Plan';
 });
+
+/* =============================================
+   MÓDULO — GESTIÓN DE RESERVAS
+   Variables de estado para paginación,
+   filtros y la reserva pendiente de eliminar.
+   ============================================= */
+let paginaReservas          = 1;
+let busquedaReservasTimer   = null;
+let idReservaEliminar       = null;
+let precioUnitarioReserva   = 0; // para recalcular precio al editar
+
+/* ─── Badge de estado de reserva ─── */
+function estadoBadgeReserva(estado) {
+    const mapa = {
+        pendiente:  { cls: 'etiqueta-rol--viewer',  icono: 'schedule'      },
+        confirmada: { cls: 'etiqueta-rol--editor',  icono: 'check_circle'  },
+        cancelada:  { cls: 'etiqueta-rol--admin',   icono: 'cancel'        },
+        completada: { cls: 'etiqueta-estado-completada', icono: 'task_alt' },
+    };
+    const cfg = mapa[estado] || mapa.pendiente;
+    return `<span class="etiqueta-rol ${cfg.cls}" style="display:inline-flex;align-items:center;gap:.25rem;">
+        <span class="material-symbols-outlined" style="font-size:.9rem;">${cfg.icono}</span>
+        ${estado.charAt(0).toUpperCase() + estado.slice(1)}
+    </span>`;
+}
+
+/* ─── Badge de tipo de plan ─── */
+function tipoBadgeReserva(tipo) {
+    const esGastro = tipo === 'gastronomico';
+    return `<span class="etiqueta-rol ${esGastro ? 'etiqueta-rol--viewer' : 'etiqueta-rol--editor'}"
+                  style="display:inline-flex;align-items:center;gap:.25rem;">
+        <span class="material-symbols-outlined" style="font-size:.9rem;">${esGastro ? 'restaurant' : 'explore'}</span>
+        ${esGastro ? 'Gastronómico' : 'Turístico'}
+    </span>`;
+}
+
+/* ─── Alerta dentro del modal de reserva ─── */
+function alertaModalReserva(msg, tipo) {
+    const el = document.getElementById('modal-reserva-alerta');
+    el.textContent      = msg;
+    el.style.display    = 'block';
+    el.style.background = tipo === 'ok' ? 'rgba(16,185,129,.12)' : 'rgba(239,68,68,.12)';
+    el.style.color      = tipo === 'ok' ? '#065f46' : '#7f1d1d';
+    el.style.border     = `1px solid ${tipo === 'ok' ? '#6ee7b7' : '#fca5a5'}`;
+}
+
+/* =============================================
+   CARGAR RESERVAS (AJAX)
+   Consulta el endpoint con paginación y filtros,
+   renderiza la tabla y las estadísticas.
+   ============================================= */
+async function cargarReservas(pagina = 1) {
+    paginaReservas = pagina;
+    const tbody = document.getElementById('tbody-reservas');
+    tbody.innerHTML = '<tr><td colspan="9" class="celda-cargando">Cargando reservas…</td></tr>';
+
+    const q      = document.getElementById('buscador-reservas').value.trim();
+    const estado = document.getElementById('filtro-reserva-estado').value;
+    const tipo   = document.getElementById('filtro-reserva-tipo').value;
+
+    try {
+        const params = new URLSearchParams({ page: pagina });
+        if (q)      params.append('q',      q);
+        if (estado) params.append('estado', estado);
+        if (tipo)   params.append('tipo',   tipo);
+
+        const res  = await fetch('/ajax/admin_reservas.php?' + params.toString());
+        const data = await res.json();
+
+        if (!data.ok) { toast(data.msg || 'Error al cargar reservas.', 'error'); return; }
+
+        /* — Actualizar estadísticas — */
+        document.getElementById('stat-total').textContent   = data.stats.total   ?? '—';
+        document.getElementById('stat-activos').textContent = data.stats.confirmadas ?? '—';
+        document.getElementById('stat-pendientes').textContent = data.stats.pendientes ?? '—';
+        document.getElementById('stat-ingresos').textContent = '$' + (data.stats.ingresos_formateados ?? '0');
+        document.getElementById('reservas-count').textContent =
+            `${data.total} reserva${data.total !== 1 ? 's' : ''}`;
+
+        /* — Renderizar filas — */
+        if (!data.reservas.length) {
+            tbody.innerHTML = '<tr><td colspan="9" class="celda-cargando">No se encontraron reservas.</td></tr>';
+            document.getElementById('info-paginacion-reservas').textContent = '';
+            document.getElementById('paginacion-reservas').innerHTML = '';
+            return;
+        }
+
+        tbody.innerHTML = data.reservas.map(r => {
+            const fecha = r.fecha_inicio
+                ? new Date(r.fecha_inicio + 'T00:00:00').toLocaleDateString('es-CO', { day:'2-digit', month:'short', year:'numeric' })
+                : '—';
+            const esEliminable = r.estado === 'pendiente' || r.estado === 'cancelada';
+            return `<tr>
+                <td class="tabla-usuarios__td" style="font-weight:600;color:#054da4;">#${r.id}</td>
+                <td class="tabla-usuarios__td">
+                    <div style="line-height:1.3;">
+                        <span style="font-weight:600;">${escHtml(r.usuario_nombre ?? '—')}</span><br/>
+                        <span style="font-size:.75rem;color:#737783;">${escHtml(r.usuario_email ?? '')}</span>
+                    </div>
+                </td>
+                <td class="tabla-usuarios__td" style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="${escHtml(r.plan_titulo ?? '')}">
+                    ${escHtml(r.plan_titulo ?? '—')}
+                </td>
+                <td class="tabla-usuarios__td">${tipoBadgeReserva(r.tipo_plan)}</td>
+                <td class="tabla-usuarios__td">${fecha}</td>
+                <td class="tabla-usuarios__td" style="text-align:center;">${r.num_adultos}</td>
+                <td class="tabla-usuarios__td" style="font-weight:600;">
+                    $${r.precio_formateado} <span style="font-size:.7rem;color:#737783;">${r.moneda}</span>
+                </td>
+                <td class="tabla-usuarios__td">${estadoBadgeReserva(r.estado)}</td>
+                <td class="tabla-usuarios__td--derecha">
+                    <div class="acciones-fila">
+                        <button class="boton-accion boton-accion--editar"
+                                title="Editar reserva"
+                                onclick="abrirEditarReserva(${r.id},'${escHtml(r.usuario_nombre)}','${escHtml(r.plan_titulo)}',${r.num_adultos},'${r.fecha_inicio}','${r.estado}',${r.precio_total})">
+                            <span class="material-symbols-outlined">edit</span>
+                        </button>
+                        ${esEliminable ? `
+                        <button class="boton-accion boton-accion--eliminar"
+                                title="Eliminar reserva"
+                                onclick="confirmarEliminarReserva(${r.id},'${escHtml(r.usuario_nombre)}')">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>` : ''}
+                    </div>
+                </td>
+            </tr>`;
+        }).join('');
+
+        /* — Paginación — */
+        const inicio = (pagina - 1) * 10 + 1;
+        const fin    = Math.min(pagina * 10, data.total);
+        document.getElementById('info-paginacion-reservas').textContent =
+            `Mostrando ${inicio}–${fin} de ${data.total} reservas`;
+        renderPaginacionReservas(pagina, data.paginas);
+
+    } catch (err) {
+        toast('Error de conexión al cargar reservas.', 'error');
+        console.error(err);
+    }
+}
+
+/* Helper para escapar HTML en atributos */
+function escHtml(str) {
+    return String(str ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ─── Renderizar paginación de reservas ─── */
+function renderPaginacionReservas(actual, total) {
+    const cont = document.getElementById('paginacion-reservas');
+    if (total <= 1) { cont.innerHTML = ''; return; }
+    let html = `<button class="paginacion__boton" ${actual <= 1 ? 'disabled' : ''} onclick="cargarReservas(${actual - 1})">
+        <span class="material-symbols-outlined">chevron_left</span>
+    </button>`;
+    for (let i = 1; i <= total; i++) {
+        html += `<button class="${i === actual ? 'paginacion__boton--activo' : 'paginacion__boton--inactivo'}"
+                         onclick="cargarReservas(${i})">${i}</button>`;
+    }
+    html += `<button class="paginacion__boton" ${actual >= total ? 'disabled' : ''} onclick="cargarReservas(${actual + 1})">
+        <span class="material-symbols-outlined">chevron_right</span>
+    </button>`;
+    cont.innerHTML = html;
+}
+
+/* =============================================
+   MODAL — EDITAR RESERVA
+   Abre el modal pre-cargado con los datos
+   actuales de la reserva.
+   ============================================= */
+function abrirEditarReserva(id, usuario, plan, adultos, fecha, estado, precioTotal) {
+    document.getElementById('reserva-id').value             = id;
+    document.getElementById('reserva-usuario').value        = usuario;
+    document.getElementById('reserva-plan').value           = plan;
+    document.getElementById('reserva-adultos').value        = adultos;
+    document.getElementById('reserva-fecha').value          = fecha ? fecha.substring(0, 10) : '';
+    document.getElementById('reserva-estado').value         = estado;
+    document.getElementById('reserva-precio-display').value = '—';
+    document.getElementById('modal-reserva-alerta').style.display = 'none';
+
+    /* Guardar precio unitario para recalcular al cambiar adultos */
+    precioUnitarioReserva = adultos > 0 ? precioTotal / adultos : 0;
+    actualizarPrecioDisplay();
+
+    document.getElementById('modal-reserva').style.display = 'flex';
+}
+
+function cerrarModalReserva() {
+    document.getElementById('modal-reserva').style.display = 'none';
+}
+
+/* Recalcula el precio estimado al cambiar el número de adultos */
+function actualizarPrecioDisplay() {
+    const adultos = parseInt(document.getElementById('reserva-adultos').value) || 1;
+    const total   = precioUnitarioReserva * adultos;
+    document.getElementById('reserva-precio-display').value =
+        '$' + total.toLocaleString('es-CO', { minimumFractionDigits: 0 }) + ' ' +
+        (document.getElementById('reserva-precio-display').dataset.moneda || 'USD');
+}
+
+document.getElementById('reserva-adultos').addEventListener('input', actualizarPrecioDisplay);
+
+/* ─── Envío del formulario de editar reserva ─── */
+document.getElementById('form-reserva').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const id     = parseInt(document.getElementById('reserva-id').value);
+    const fecha  = document.getElementById('reserva-fecha').value;
+    const adultos = parseInt(document.getElementById('reserva-adultos').value) || 1;
+    const estado  = document.getElementById('reserva-estado').value;
+
+    if (!fecha) { alertaModalReserva('La fecha de inicio es requerida.', 'error'); return; }
+    if (adultos < 1) { alertaModalReserva('El número de personas debe ser al menos 1.', 'error'); return; }
+
+    const btn = document.getElementById('modal-reserva-btn-guardar');
+    btn.disabled    = true;
+    btn.textContent = 'Guardando…';
+
+    try {
+        const res  = await fetch('/ajax/admin_reservas.php', {
+            method:  'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ id, fecha_inicio: fecha, num_adultos: adultos, estado }),
+        });
+        const data = await res.json();
+
+        if (data.ok) {
+            cerrarModalReserva();
+            toast(data.msg, 'ok');
+            cargarReservas(paginaReservas);
+        } else {
+            alertaModalReserva(data.msg || 'Error al guardar.', 'error');
+        }
+    } catch (err) {
+        alertaModalReserva('Error de conexión: ' + err.message, 'error');
+        console.error(err);
+    }
+
+    btn.disabled    = false;
+    btn.textContent = 'Guardar cambios';
+});
+
+/* ─── Listeners cierre modal reserva ─── */
+document.getElementById('modal-reserva-cerrar').addEventListener('click', cerrarModalReserva);
+document.getElementById('modal-reserva-btn-cancelar').addEventListener('click', cerrarModalReserva);
+document.getElementById('modal-reserva').addEventListener('click', function(e) {
+    if (e.target === this) cerrarModalReserva();
+});
+
+/* =============================================
+   ELIMINAR RESERVA — Confirmación
+   Solo reservas en estado pendiente o cancelada.
+   ============================================= */
+function confirmarEliminarReserva(id, nombre) {
+    idReservaEliminar = id;
+    document.getElementById('eliminar-reserva-txt').textContent =
+        `Se eliminará la reserva #${id} de "${nombre}". Esta acción no se puede deshacer.`;
+    document.getElementById('modal-eliminar-reserva').style.display = 'flex';
+}
+
+document.getElementById('eliminar-reserva-cancelar').addEventListener('click', () => {
+    document.getElementById('modal-eliminar-reserva').style.display = 'none';
+    idReservaEliminar = null;
+});
+
+document.getElementById('eliminar-reserva-confirmar').addEventListener('click', async () => {
+    if (!idReservaEliminar) return;
+    const btn = document.getElementById('eliminar-reserva-confirmar');
+    btn.disabled    = true;
+    btn.textContent = 'Eliminando…';
+
+    try {
+        const res  = await fetch('/ajax/admin_reservas.php', {
+            method:  'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ id: idReservaEliminar }),
+        });
+        const data = await res.json();
+
+        document.getElementById('modal-eliminar-reserva').style.display = 'none';
+        idReservaEliminar = null;
+
+        if (data.ok) {
+            toast(data.msg, 'ok');
+            cargarReservas(paginaReservas);
+        } else {
+            toast(data.msg || 'No se pudo eliminar.', 'error');
+        }
+    } catch (err) {
+        toast('Error de conexión.', 'error');
+        console.error(err);
+    }
+
+    btn.disabled    = false;
+    btn.textContent = 'Eliminar';
+});
+
+/* ─── Filtros de reservas (debounce) ─── */
+document.getElementById('buscador-reservas').addEventListener('input', () => {
+    clearTimeout(busquedaReservasTimer);
+    busquedaReservasTimer = setTimeout(() => cargarReservas(1), 400);
+});
+
+document.getElementById('filtro-reserva-estado').addEventListener('change', () => cargarReservas(1));
+document.getElementById('filtro-reserva-tipo').addEventListener('change',   () => cargarReservas(1));

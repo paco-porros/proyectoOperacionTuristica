@@ -47,6 +47,10 @@ $usuario = usuarioActual();
             <span class="material-symbols-outlined">restaurant</span>
             <span class="nav__etiqueta">Planes Gastronómicos</span>
         </a>
+        <a class="nav__enlace" href="#" data-seccion="reservas" id="nav-reservas">
+            <span class="material-symbols-outlined">event_note</span>
+            <span class="nav__etiqueta">Reservas</span>
+        </a>
     </nav>
 
     <div class="barra-lateral__pie">
@@ -107,7 +111,7 @@ $usuario = usuarioActual();
                 <h3 class="tarjeta-estadistica__valor" id="stat-total">—</h3>
             </div>
             <div class="tarjeta-estadistica__icono tarjeta-estadistica__icono--primario">
-                <span class="material-symbols-outlined">group</span>
+                <span class="material-symbols-outlined" id="stat-icono-1">group</span>
             </div>
         </div>
         <div class="tarjeta-estadistica panel-vidrio">
@@ -116,7 +120,26 @@ $usuario = usuarioActual();
                 <h3 class="tarjeta-estadistica__valor" id="stat-activos">—</h3>
             </div>
             <div class="tarjeta-estadistica__icono tarjeta-estadistica__icono--terciario">
-                <span class="material-symbols-outlined">how_to_reg</span>
+                <span class="material-symbols-outlined" id="stat-icono-2">how_to_reg</span>
+            </div>
+        </div>
+        <!-- Tarjetas extra — solo visibles en la sección Reservas -->
+        <div class="tarjeta-estadistica panel-vidrio" id="stat-extra-1" style="display:none;">
+            <div>
+                <p class="tarjeta-estadistica__etiqueta">Pendientes</p>
+                <h3 class="tarjeta-estadistica__valor" id="stat-pendientes">—</h3>
+            </div>
+            <div class="tarjeta-estadistica__icono" style="background:rgba(245,158,11,.15);">
+                <span class="material-symbols-outlined" style="color:#b45309;">schedule</span>
+            </div>
+        </div>
+        <div class="tarjeta-estadistica panel-vidrio" id="stat-extra-2" style="display:none;">
+            <div>
+                <p class="tarjeta-estadistica__etiqueta">Ingresos Totales COP</p>
+                <h3 class="tarjeta-estadistica__valor" id="stat-ingresos" style="font-size:1.1rem;">—</h3>
+            </div>
+            <div class="tarjeta-estadistica__icono" style="background:rgba(16,185,129,.15);">
+                <span class="material-symbols-outlined" style="color:#065f46;">payments</span>
             </div>
         </div>
     </div>
@@ -214,9 +237,145 @@ $usuario = usuarioActual();
                 </tbody>
             </table>
         </div>
+    </section><!-- /seccion-planes-gastronomicos -->
+
+    <!-- ═══════════════════════════════════════════
+         SECCIÓN DINÁMICA — Reservas
+    ═══════════════════════════════════════════ -->
+    <section class="seccion-tabla panel-vidrio seccion-dinamica" id="seccion-reservas" style="display:none;">
+        <!-- Barra de filtros -->
+        <div class="seccion-planes__encabezado" style="flex-wrap:wrap;gap:.75rem;">
+            <div>
+                <h3 class="seccion-planes__subtitulo">Reservas registradas</h3>
+                <span class="etiqueta-planes-count" id="reservas-count"></span>
+            </div>
+            <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;">
+                <select id="filtro-reserva-estado" class="campo-select" style="min-width:140px;">
+                    <option value="">Todos los estados</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="confirmada">Confirmada</option>
+                    <option value="cancelada">Cancelada</option>
+                    <option value="completada">Completada</option>
+                </select>
+                <select id="filtro-reserva-tipo" class="campo-select" style="min-width:150px;">
+                    <option value="">Todos los tipos</option>
+                    <option value="turistico">Turístico</option>
+                    <option value="gastronomico">Gastronómico</option>
+                </select>
+                <div class="buscador__contenedor" id="buscador-reservas-contenedor" style="visibility:visible;">
+                    <span class="material-symbols-outlined buscador__icono">search</span>
+                    <input class="buscador__input" id="buscador-reservas" placeholder="Buscar usuario o plan…" type="text"/>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla -->
+        <div class="tabla-contenedor">
+            <table class="tabla-usuarios">
+                <thead class="tabla-usuarios__encabezado">
+                    <tr>
+                        <th class="tabla-usuarios__th">ID</th>
+                        <th class="tabla-usuarios__th">Usuario</th>
+                        <th class="tabla-usuarios__th">Plan</th>
+                        <th class="tabla-usuarios__th">Tipo</th>
+                        <th class="tabla-usuarios__th">Fecha</th>
+                        <th class="tabla-usuarios__th">Personas</th>
+                        <th class="tabla-usuarios__th">Total</th>
+                        <th class="tabla-usuarios__th">Estado</th>
+                        <th class="tabla-usuarios__th--derecha">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-reservas">
+                    <tr><td colspan="9" class="celda-cargando">Cargando reservas…</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Paginación -->
+        <div class="pie-tabla">
+            <p class="pie-tabla__info" id="info-paginacion-reservas">Cargando…</p>
+            <div class="paginacion" id="paginacion-reservas"></div>
+        </div>
     </section>
 
 </main>
+
+<!-- ════════════════════════════════════════
+     MODAL — Editar Reserva
+════════════════════════════════════════ -->
+<div id="modal-reserva" class="modal-fondo" style="z-index:1004;">
+    <div class="modal-caja modal-caja--ancha">
+        <div class="modal-encabezado">
+            <h3 class="modal-titulo">Editar Reserva</h3>
+            <button id="modal-reserva-cerrar" class="modal-boton-cerrar">✕</button>
+        </div>
+
+        <div id="modal-reserva-alerta" class="modal-alerta-interna"></div>
+
+        <form id="form-reserva" novalidate>
+            <input type="hidden" id="reserva-id" value=""/>
+
+            <!-- Info de contexto (solo lectura) -->
+            <div class="campo-cuadricula-2" style="margin-bottom:1rem;">
+                <div>
+                    <label class="campo-etiqueta">Usuario</label>
+                    <input id="reserva-usuario" type="text" class="campo-input" readonly style="opacity:.65;cursor:default;"/>
+                </div>
+                <div>
+                    <label class="campo-etiqueta">Plan</label>
+                    <input id="reserva-plan" type="text" class="campo-input" readonly style="opacity:.65;cursor:default;"/>
+                </div>
+            </div>
+
+            <div class="campo-cuadricula-2">
+                <div>
+                    <label class="campo-etiqueta">Fecha de inicio *</label>
+                    <input id="reserva-fecha" type="date" class="campo-input"/>
+                </div>
+                <div>
+                    <label class="campo-etiqueta">Número de personas *</label>
+                    <input id="reserva-adultos" type="number" min="1" max="50" placeholder="2" class="campo-input"/>
+                </div>
+            </div>
+
+            <div class="campo-cuadricula-2" style="margin-bottom:1.5rem;">
+                <div>
+                    <label class="campo-etiqueta">Estado *</label>
+                    <select id="reserva-estado" class="campo-select">
+                        <option value="pendiente">Pendiente</option>
+                        <option value="confirmada">Confirmada</option>
+                        <option value="cancelada">Cancelada</option>
+                        <option value="completada">Completada</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="campo-etiqueta">Precio total estimado</label>
+                    <input id="reserva-precio-display" type="text" class="campo-input" readonly style="opacity:.65;cursor:default;"/>
+                </div>
+            </div>
+
+            <div class="modal-pie-botones">
+                <button type="button" id="modal-reserva-btn-cancelar" class="boton-modal-cancelar">Cancelar</button>
+                <button type="submit"  id="modal-reserva-btn-guardar"  class="boton-modal-guardar">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     MODAL — Confirmar eliminación de reserva
+════════════════════════════════════════ -->
+<div id="modal-eliminar-reserva" class="modal-fondo" style="z-index:1005;">
+    <div class="modal-caja modal-caja--confirmacion">
+        <span class="material-symbols-outlined modal-icono-advertencia">warning</span>
+        <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:700;color:#002021;margin:0 0 .5rem;">¿Eliminar reserva?</h3>
+        <p id="eliminar-reserva-txt" style="color:#424752;margin:0 0 1.5rem;font-size:.875rem;"></p>
+        <div class="modal-pie-botones">
+            <button id="eliminar-reserva-cancelar"  class="boton-modal-cancelar">Cancelar</button>
+            <button id="eliminar-reserva-confirmar" class="boton-modal-eliminar">Eliminar</button>
+        </div>
+    </div>
+</div>
 
 <!-- ════════════════════════════════════════
      MODAL — Crear / Editar usuario
