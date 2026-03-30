@@ -60,16 +60,16 @@ $inicio = $logueado ? 'home.php' : 'index.php';
 
     <div class="navegacion__enlaces">
       <?php if ($logueado): ?>
-        <a class="navegacion__enlace" href="home.php">Inicio</a>
         <a class="navegacion__enlace" href="planes.php">Planes Turísticos</a>
         <a class="navegacion__enlace" href="gastronomia.php">Ofertas Gastronómicas</a>
+        <a class="navegacion__enlace" href="index.php#servicios">Servicios</a>
         <?php if (in_array($usuario['rol'], ['admin', 'editor'])): ?>
           <a class="navegacion__enlace" href="dashboard-administrador.php">Dashboard</a>
         <?php endif; ?>
       <?php else: ?>
-        <a class="navegacion__enlace" href="index.php#servicios">Servicios</a>
         <a class="navegacion__enlace" href="planes.php">Planes Turísticos</a>
         <a class="navegacion__enlace" href="gastronomia.php">Ofertas Gastronómicas</a>
+        <a class="navegacion__enlace" href="index.php#servicios">Servicios</a>
       <?php endif; ?>
     </div>
 

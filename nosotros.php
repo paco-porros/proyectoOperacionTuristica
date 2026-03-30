@@ -324,7 +324,7 @@ $inicio = $logueado ? 'home.php' : 'index.php';
           <div class="tarjeta-miembro__avatar">CHRISS</div>
         </div>
         <div class="tarjeta-miembro__cuerpo">
-          <div class="tarjeta-miembro__nombre">Crhristian David Henao Sanchez</div>
+          <div class="tarjeta-miembro__nombre">David Henao Sanchez</div>
           <div class="tarjeta-miembro__cargo">Director de Operaciones Turísticas</div>
           <p class="tarjeta-miembro__bio">
             Guía de turismo certificado por COTELCO con 12 años de experiencia en rutas
