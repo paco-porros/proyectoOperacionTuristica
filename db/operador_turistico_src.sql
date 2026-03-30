@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 30-03-2026 a las 01:43:43
+-- Tiempo de generación: 30-03-2026 a las 14:01:25
 -- Versión del servidor: 8.4.3
 -- Versión de PHP: 8.3.30
 
@@ -20,34 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `operador_turistico_src`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `galeria_gastronomicos`
---
-
-CREATE TABLE `galeria_gastronomicos` (
-  `id` int UNSIGNED NOT NULL,
-  `plan_gastronomico_id` int UNSIGNED NOT NULL,
-  `url_imagen` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `alt_texto` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `orden` tinyint UNSIGNED NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `galeria_turisticos`
---
-
-CREATE TABLE `galeria_turisticos` (
-  `id` int UNSIGNED NOT NULL,
-  `plan_turistico_id` int UNSIGNED NOT NULL,
-  `url_imagen` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `alt_texto` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `orden` tinyint UNSIGNED NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -119,7 +91,8 @@ INSERT INTO `planes_gastronomicos` (`id`, `restaurante_id`, `titulo`, `descripci
 (5, 5, 'Mazamorra Chiquita con Panela y Café de Altura', 'El postre más tradicional de la región cafetera: mazamorra chiquita de maíz peto servida en porrón de barro, acompañada de melado de panela artesanal, queso campesino fresco y un vaso de leche fría de vaca pastoreada. Para culminar, taza de café de altura 100 % arábica de fincas de la Vereda El Cairo, preparado en chorreado artesanal con filtro de tela. Tradición pura del Paisaje Cultural Cafetero.', 'Tradición', 'Postre / Bebida', 12000.00, 'COP', NULL, NULL, 'Español', 4.8, 187, '/img/mazamorra-chiquita.jpg', 'activo', '2026-03-26 23:59:04', '2026-03-29 18:32:02'),
 (6, 8, 'Tour Cafetero & Almuerzo Campesino de Finca', 'Vive el proceso completo del café de origen en una finca cafetera de la cordillera Central: recolección manual en los cafetales, beneficio húmedo, secado en zaranda y tueste artesanal en paila. La experiencia incluye cata de variedades caturra, castillo y geisha con catador local, y culmina con almuerzo campesino: sopa de verduras de huerta, bandeja con trucha del río, frijoles de mata, arepa de chócolo horneada en hoja y jugo de mora de castilla.', 'Experiencia', 'Experiencia', 85000.00, 'COP', 4.0, 12, 'Español, Inglés', 5.0, 89, '/img/Tour-Cafetero11.png', 'activo', '2026-03-26 23:59:04', '2026-03-29 18:32:02'),
 (7, 9, 'Trucha a la Plancha en la Reserva San Vicente', 'Un almuerzo único rodeado de bosque de niebla a 2.300 metros de altura. Trucha arcoíris a la plancha con hierbas del bosque, servida con arroz de la casa, ensalada fresca de la huerta propia de la reserva y sopa del día. El restaurante del Hotel San Vicente tiene capacidad para 900 personas y vista directa a los senderos termales. La combinación perfecta entre bienestar y gastronomía en medio de la naturaleza.', 'Naturaleza', 'Plato fuerte', 38000.00, 'COP', NULL, NULL, 'Español', 4.7, 143, '/img/Trucha-Vicente.png', 'activo', '2026-03-26 23:59:04', '2026-03-29 18:32:02'),
-(8, 10, 'Sancocho de Gallina Criolla a la Usanza Cafetera', 'Sancocho elaborado con gallina criolla de campo cocida a fuego lento durante más de tres horas con plátano verde de la región, yuca recién pelada, papa pastusa, mazorca tierna y un sofrito de hogao con cilantro cimarrón. Se sirve con arroz blanco, aguacate y ají de maní. Una receta transmitida de generación en generación en las cocinas de las fincas cafeteras de Risaralda.', 'Típico', 'Plato fuerte', 30000.00, 'COP', NULL, NULL, 'Español', 4.8, 221, '/img/sancocho-de-gallina.gif', 'activo', '2026-03-26 23:59:04', '2026-03-29 18:32:02');
+(8, 10, 'Sancocho de Gallina Criolla a la Usanza Cafetera', 'Sancocho elaborado con gallina criolla de campo cocida a fuego lento durante más de tres horas con plátano verde de la región, yuca recién pelada, papa pastusa, mazorca tierna y un sofrito de hogao con cilantro cimarrón. Se sirve con arroz blanco, aguacate y ají de maní. Una receta transmitida de generación en generación en las cocinas de las fincas cafeteras de Risaralda.', 'Típico', 'Plato fuerte', 30000.00, 'COP', NULL, NULL, 'Español', 4.8, 221, '/img/sancocho-de-gallina.gif', 'activo', '2026-03-26 23:59:04', '2026-03-29 18:32:02'),
+(9, 1, 'prueba', 'prueba', 'Gastronomía', 'prueba', 25000.00, 'USD', 1.0, 10, NULL, 0.0, 0, 'img/plan_gastronomico_1774876512_69ca77609b2da.png', 'activo', '2026-03-30 13:15:12', '2026-03-30 13:15:12');
 
 -- --------------------------------------------------------
 
@@ -155,7 +128,8 @@ INSERT INTO `planes_turisticos` (`id`, `titulo`, `descripcion`, `ubicacion`, `du
 (4, 'Tour Cafetero en Finca de la Cordillera Central', 'Recorre una auténtica finca cafetera en las laderas de la cordillera Central de Risaralda. Aprende todo el proceso del café de origen: siembra, recolección a mano, beneficio, secado y tueste artesanal. Incluye cata guiada de varietales de altura con perfiles de sabor diferenciados, recorrido por los cafetales con vista panorámica del Eje Cafetero y almuerzo campesino con productos de la finca. Una experiencia inscrita en el Paisaje Cultural Cafetero, Patrimonio de la Humanidad.', 'Vereda El Cairo, Santa Rosa de Cabal, Risaralda', 1, 85000.00, 'COP', 'Cultura', 5.0, 264, '/img/cordellera_central.webp', 'activo', '2026-03-26 23:59:04', '2026-03-29 18:08:20'),
 (5, 'Senderismo a la Cascada La Leona', 'Caminata ecológica de dificultad media-alta por los bosques nativos que rodean Santa Rosa de Cabal hasta la Cascada La Leona, un salto de agua de más de 80 metros en medio de selva nublada. El sendero atraviesa zonas de avistamiento de aves endémicas del Eje Cafetero y riachuelos cristalinos. Duración aproximada: 1h 30 min de ascenso. Guía local especializado, hidratación y seguro incluidos.', 'Zona rural, Santa Rosa de Cabal, Risaralda', 1, 55000.00, 'COP', 'Naturaleza', 4.7, 143, '/img/senderismo.webp', 'activo', '2026-03-26 23:59:04', '2026-03-29 18:08:20'),
 (6, 'Ruta del Chorizo Santarrosano y Casco Histórico', 'Un recorrido a pie por el corazón del municipio visitando los lugares más emblemáticos: el Parque Las Araucarias, la Basílica Menor de Nuestra Señora de las Victorias (arquitectura neogótica en madera), el Parque del Machete y la Plaza de Mercado. La experiencia culmina con una degustación guiada del chorizo santarrosano, el embutido más famoso de Colombia, en los mejores establecimientos tradicionales del municipio.', 'Casco urbano, Santa Rosa de Cabal, Risaralda', 1, 35000.00, 'COP', 'Gastronómico', 4.8, 219, '/img/ruta_chorizo.jpg', 'activo', '2026-03-26 23:59:04', '2026-03-29 18:08:20'),
-(7, 'Santa Rosa Completa — Termales, Nevados y Café', 'El plan definitivo para conocer todo lo que Santa Rosa de Cabal tiene para ofrecer. Tres días que combinan el bienestar de las aguas termales de San Vicente, la aventura en el Parque Nacional Los Nevados por la ruta Potosí, el recorrido por fincas cafeteras del Paisaje Cultural Cafetero y la gastronomía típica del municipio. Incluye alojamiento en hotel de la zona, transporte en jeep Willys por las rutas veredales y guías locales certificados.', 'Santa Rosa de Cabal y alrededores, Risaralda', 3, 480000.00, 'COP', 'Premium', 5.0, 96, '/img/sct.png', 'activo', '2026-03-26 23:59:04', '2026-03-29 18:08:20');
+(7, 'Santa Rosa Completa — Termales, Nevados y Café', 'El plan definitivo para conocer todo lo que Santa Rosa de Cabal tiene para ofrecer. Tres días que combinan el bienestar de las aguas termales de San Vicente, la aventura en el Parque Nacional Los Nevados por la ruta Potosí, el recorrido por fincas cafeteras del Paisaje Cultural Cafetero y la gastronomía típica del municipio. Incluye alojamiento en hotel de la zona, transporte en jeep Willys por las rutas veredales y guías locales certificados.', 'Santa Rosa de Cabal y alrededores, Risaralda', 3, 480000.00, 'COP', 'Premium', 5.0, 96, '/img/sct.png', 'activo', '2026-03-26 23:59:04', '2026-03-29 18:08:20'),
+(9, 'prueba', 'prueba', 'sisas', 1, 15000.00, 'USD', 'Turismo', 0.0, 0, 'img/plan_turistico_1774876433_69ca7711c1292.png', 'activo', '2026-03-30 13:13:53', '2026-03-30 13:13:53');
 
 -- --------------------------------------------------------
 
@@ -305,7 +279,10 @@ INSERT INTO `reservas` (`id`, `usuario_id`, `tipo_plan`, `plan_turistico_id`, `p
 (6, 3, 'turistico', 7, NULL, '2026-06-01', '2026-06-03', 2, 960000.00, 'COP', 'pendiente', NULL, '2026-03-26 23:59:05', '2026-03-26 23:59:05'),
 (7, 7, 'turistico', 2, NULL, '2026-03-29', NULL, 2, 180000.00, 'COP', 'pendiente', NULL, '2026-03-29 02:20:37', '2026-03-29 02:20:37'),
 (8, 8, 'turistico', 1, NULL, '2026-03-29', NULL, 2, 106000.00, 'COP', 'pendiente', NULL, '2026-03-29 20:04:01', '2026-03-29 20:04:01'),
-(9, 8, 'turistico', 2, NULL, '2026-03-29', NULL, 2, 180000.00, 'COP', 'pendiente', NULL, '2026-03-29 20:24:28', '2026-03-29 20:24:28');
+(9, 8, 'turistico', 2, NULL, '2026-03-29', NULL, 2, 180000.00, 'COP', 'pendiente', NULL, '2026-03-29 20:24:28', '2026-03-29 20:24:28'),
+(10, 12, 'gastronomico', NULL, 3, '2026-03-30', NULL, 2, 64000.00, 'COP', 'pendiente', NULL, '2026-03-30 13:28:11', '2026-03-30 13:28:11'),
+(11, 12, 'turistico', 2, NULL, '2026-03-30', NULL, 2, 180000.00, 'COP', 'pendiente', NULL, '2026-03-30 13:28:22', '2026-03-30 13:28:22'),
+(12, 12, 'gastronomico', NULL, 1, '2026-03-30', NULL, 2, 36000.00, 'COP', 'pendiente', NULL, '2026-03-30 13:28:53', '2026-03-30 13:28:53');
 
 -- --------------------------------------------------------
 
@@ -371,25 +348,12 @@ INSERT INTO `usuarios` (`id`, `nombre`, `email`, `contrasena`, `rol`, `estado`, 
 (7, 'jesus garcia', 'jesuu150@gmail.com', '$2y$10$3q0zaQk3dGwuil.zgMjHl.OzbuP2Daxj/YM4cKkSyfMeG5cFtsRG.', 'cliente', 'activo', NULL, '2026-03-29 02:20:12', '2026-03-30 00:22:47'),
 (8, 'Juan perez', 'maricon@gmail.com', '$2y$10$gRAFbayddSPve.KnPWnj/.CJNlxEhP/2nEMXVEKsV.h/bU3lu.4/C', 'admin', 'activo', NULL, '2026-03-29 20:02:43', '2026-03-29 21:52:27'),
 (12, 'admin', 'admin@admin.com', '$2y$10$p/GIUbyRvX5RM3m6afvtGOCBlgIQMEZfi/Z8J5l3HHnUxDCz94Nzi', 'admin', 'activo', NULL, '2026-03-30 00:24:04', '2026-03-30 00:24:04'),
-(13, 'Victor', 'victor.lopezr@unisarc.edu.co', '$2y$10$Yt190UZTwalQv017b3e0Iehps4fJ4o/UKTXlagoBqUWq339P7MyY6', 'cliente', 'activo', NULL, '2026-03-30 01:07:33', '2026-03-30 01:07:33');
+(13, 'Victor', 'victor.lopezr@unisarc.edu.co', '$2y$10$Yt190UZTwalQv017b3e0Iehps4fJ4o/UKTXlagoBqUWq339P7MyY6', 'cliente', 'activo', NULL, '2026-03-30 01:07:33', '2026-03-30 01:07:33'),
+(14, 'victor', 'victor@lopez.com', '$2y$10$eEPh0Cvzq0E8fnWFmu5vVewY6Sv009YPIHlAtm7HI2FIZwmt8u6OG', 'cliente', 'activo', NULL, '2026-03-30 12:52:40', '2026-03-30 12:52:40');
 
 --
 -- Índices para tablas volcadas
 --
-
---
--- Indices de la tabla `galeria_gastronomicos`
---
-ALTER TABLE `galeria_gastronomicos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_galg_pgast` (`plan_gastronomico_id`);
-
---
--- Indices de la tabla `galeria_turisticos`
---
-ALTER TABLE `galeria_turisticos`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_galt_plan` (`plan_turistico_id`);
 
 --
 -- Indices de la tabla `itinerario_dias`
@@ -466,18 +430,6 @@ ALTER TABLE `usuarios`
 --
 
 --
--- AUTO_INCREMENT de la tabla `galeria_gastronomicos`
---
-ALTER TABLE `galeria_gastronomicos`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `galeria_turisticos`
---
-ALTER TABLE `galeria_turisticos`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `itinerario_dias`
 --
 ALTER TABLE `itinerario_dias`
@@ -487,13 +439,13 @@ ALTER TABLE `itinerario_dias`
 -- AUTO_INCREMENT de la tabla `planes_gastronomicos`
 --
 ALTER TABLE `planes_gastronomicos`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `planes_turisticos`
 --
 ALTER TABLE `planes_turisticos`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `plan_incluye`
@@ -517,7 +469,7 @@ ALTER TABLE `resenas`
 -- AUTO_INCREMENT de la tabla `reservas`
 --
 ALTER TABLE `reservas`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `restaurantes`
@@ -529,23 +481,11 @@ ALTER TABLE `restaurantes`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Restricciones para tablas volcadas
 --
-
---
--- Filtros para la tabla `galeria_gastronomicos`
---
-ALTER TABLE `galeria_gastronomicos`
-  ADD CONSTRAINT `fk_galg_pgast` FOREIGN KEY (`plan_gastronomico_id`) REFERENCES `planes_gastronomicos` (`id`) ON DELETE CASCADE;
-
---
--- Filtros para la tabla `galeria_turisticos`
---
-ALTER TABLE `galeria_turisticos`
-  ADD CONSTRAINT `fk_galt_plan` FOREIGN KEY (`plan_turistico_id`) REFERENCES `planes_turisticos` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `itinerario_dias`
