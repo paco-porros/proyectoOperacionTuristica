@@ -1,10 +1,10 @@
 <?php
 /**
- * ajax/admin_reservas.php — GESTIÓN DE RESERVAS
- * GET  → Lista reservas paginadas con filtros (estado, tipo, búsqueda)
- * PUT  → Edita una reserva (fecha, num_adultos, estado)
- * POST action=cambiar_estado → Cambia el estado de una reserva
- * DELETE → Elimina una reserva
+ * ajax/admin_usuarios.php — GESTIÓN DE USUARIOS
+ * GET    → Lista usuarios paginados con filtros (búsqueda, rol, estado)
+ * POST   → Crea un nuevo usuario
+ * PUT    → Edita un usuario existente (nombre, email, rol, estado, password)
+ * DELETE → Elimina un usuario (no puede eliminarse a sí mismo)
  * Auth: admin/editor
  */
 
@@ -33,67 +33,47 @@ $pdo    = getDB();
 $method = $_SERVER['REQUEST_METHOD'];
 
 /* ──────────────────────────────────────────────────────
-   BLOQUE 2 — GET: Listar Reservas
+   BLOQUE 2 — GET: Listar Usuarios
    - Paginación: page, limit=10
-   - Filtros: q (búsqueda por usuario/plan), estado, tipo
-   - JOIN con usuarios, planes_turisticos y planes_gastronomicos
-   - Devuelve { ok, reservas[], total, pagina, paginas, stats }
+   - Filtros: q (búsqueda por nombre/email), rol, estado
+   - Devuelve { ok, usuarios[], total, pagina, paginas, stats }
 ────────────────────────────────────────────────────── */
 if ($method === 'GET') {
-    $page   = max(1, (int)($_GET['page']  ?? 1));
-    $limit  = 10;
-    $off    = ($page - 1) * $limit;
-    $busca  = '%' . trim($_GET['q']      ?? '') . '%';
-    $filtroEstado = trim($_GET['estado'] ?? '');
-    $filtroTipo   = trim($_GET['tipo']   ?? '');
+    $page  = max(1, (int)($_GET['page']   ?? 1));
+    $limit = 10;
+    $off   = ($page - 1) * $limit;
+    $busca = '%' . trim($_GET['q']        ?? '') . '%';
+    $filtroRol    = trim($_GET['rol']     ?? '');
+    $filtroEstado = trim($_GET['estado']  ?? '');
 
     // Condiciones dinámicas
-    $where  = ['(u.nombre LIKE :b1 OR u.email LIKE :b2 OR pt.titulo LIKE :b3 OR pg.titulo LIKE :b4)'];
-    $params = [':b1' => $busca, ':b2' => $busca, ':b3' => $busca, ':b4' => $busca];
+    $where  = ['(nombre LIKE :b1 OR email LIKE :b2)'];
+    $params = [':b1' => $busca, ':b2' => $busca];
 
-    $estados_validos = ['pendiente', 'confirmada', 'cancelada', 'completada'];
-    if ($filtroEstado && in_array($filtroEstado, $estados_validos, true)) {
-        $where[]            = 'r.estado = :estado';
-        $params[':estado']  = $filtroEstado;
+    $roles_validos = ['admin', 'editor', 'viewer', 'cliente'];
+    if ($filtroRol && in_array($filtroRol, $roles_validos, true)) {
+        $where[]          = 'rol = :rol';
+        $params[':rol']   = $filtroRol;
     }
 
-    $tipos_validos = ['turistico', 'gastronomico'];
-    if ($filtroTipo && in_array($filtroTipo, $tipos_validos, true)) {
-        $where[]          = 'r.tipo_plan = :tipo';
-        $params[':tipo']  = $filtroTipo;
+    $estados_validos = ['activo', 'inactivo'];
+    if ($filtroEstado && in_array($filtroEstado, $estados_validos, true)) {
+        $where[]            = 'estado = :estado';
+        $params[':estado']  = $filtroEstado;
     }
 
     $whereSQL = 'WHERE ' . implode(' AND ', $where);
 
     // Contar total para paginación
-    $sqlCount = "SELECT COUNT(*) FROM reservas r
-                 LEFT JOIN usuarios u             ON u.id  = r.usuario_id
-                 LEFT JOIN planes_turisticos pt   ON pt.id = r.plan_turistico_id
-                 LEFT JOIN planes_gastronomicos pg ON pg.id = r.plan_gastronomico_id
-                 $whereSQL";
-    $stmtCount = $pdo->prepare($sqlCount);
+    $stmtCount = $pdo->prepare("SELECT COUNT(*) FROM usuarios $whereSQL");
     $stmtCount->execute($params);
     $totalRows = (int)$stmtCount->fetchColumn();
 
     // Consulta principal
-    $sql = "SELECT
-                r.id,
-                r.tipo_plan,
-                r.estado,
-                r.fecha_inicio,
-                r.num_adultos,
-                r.precio_total,
-                r.moneda,
-                r.created_at,
-                u.nombre      AS usuario_nombre,
-                u.email       AS usuario_email,
-                COALESCE(pt.titulo, pg.titulo) AS plan_titulo
-            FROM reservas r
-            LEFT JOIN usuarios u              ON u.id  = r.usuario_id
-            LEFT JOIN planes_turisticos pt    ON pt.id = r.plan_turistico_id
-            LEFT JOIN planes_gastronomicos pg ON pg.id = r.plan_gastronomico_id
+    $sql = "SELECT id, nombre, email, rol, estado, avatar_url, created_at
+            FROM usuarios
             $whereSQL
-            ORDER BY r.id DESC
+            ORDER BY id DESC
             LIMIT :lim OFFSET :off";
 
     $stmt = $pdo->prepare($sql);
@@ -103,32 +83,23 @@ if ($method === 'GET') {
     $stmt->bindValue(':lim', $limit, PDO::PARAM_INT);
     $stmt->bindValue(':off', $off,   PDO::PARAM_INT);
     $stmt->execute();
-    $reservas = $stmt->fetchAll();
-
-    // Formatear precio
-    foreach ($reservas as &$r) {
-        $r['precio_formateado'] = number_format((float)$r['precio_total'], 0, ',', '.');
-    }
+    $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Estadísticas generales
     $stats = $pdo->query(
         "SELECT
-            COUNT(*)                             AS total,
-            SUM(estado = 'pendiente')            AS pendientes,
-            SUM(estado = 'confirmada')           AS confirmadas,
-            SUM(estado = 'cancelada')            AS canceladas,
-            SUM(estado = 'completada')           AS completadas,
-            SUM(tipo_plan = 'turistico')         AS turisticas,
-            SUM(tipo_plan = 'gastronomico')      AS gastronomicas,
-            COALESCE(SUM(precio_total), 0)       AS ingresos_totales
-         FROM reservas"
-    )->fetch();
-
-    $stats['ingresos_formateados'] = number_format((float)$stats['ingresos_totales'], 0, ',', '.');
+            COUNT(*)                        AS total,
+            SUM(estado = 'activo')          AS activos,
+            SUM(estado = 'inactivo')        AS inactivos,
+            SUM(rol = 'admin')              AS admins,
+            SUM(rol = 'editor')             AS editores,
+            SUM(rol = 'cliente')            AS clientes
+         FROM usuarios"
+    )->fetch(PDO::FETCH_ASSOC);
 
     echo json_encode([
         'ok'       => true,
-        'reservas' => $reservas,
+        'usuarios' => $usuarios,
         'total'    => $totalRows,
         'pagina'   => $page,
         'paginas'  => (int) ceil($totalRows / $limit),
@@ -138,105 +109,153 @@ if ($method === 'GET') {
 }
 
 /* ──────────────────────────────────────────────────────
-   BLOQUE 3 — PUT: Editar Reserva
-   - Parsea JSON del body
-   - Valida id, fecha, num_adultos, estado
-   - Recalcula precio_total si cambia num_adultos
-   - UPDATE con prepared statement
+   BLOQUE 3 — POST: Crear Usuario
+   - Valida nombre, email, password, rol, estado
+   - Verifica que el email no esté ya en uso
+   - Hashea la contraseña con password_hash
+   - Devuelve { ok, msg, id }
+────────────────────────────────────────────────────── */
+if ($method === 'POST') {
+    $d      = json_decode(file_get_contents('php://input'), true) ?? [];
+    $nombre = trim($d['nombre']   ?? '');
+    $email  = trim($d['email']    ?? '');
+    $pass   = trim($d['password'] ?? '');
+    $rol    = trim($d['rol']      ?? 'cliente');
+    $estado = trim($d['estado']   ?? 'activo');
+
+    $roles_validos   = ['admin', 'editor', 'viewer', 'cliente'];
+    $estados_validos = ['activo', 'inactivo'];
+
+    // Validaciones
+    if (!$nombre || !$email || !$pass) {
+        echo json_encode(['ok' => false, 'msg' => 'Nombre, email y contraseña son requeridos.']);
+        exit;
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo json_encode(['ok' => false, 'msg' => 'El email no tiene un formato válido.']);
+        exit;
+    }
+    if (!in_array($rol, $roles_validos, true)) {
+        echo json_encode(['ok' => false, 'msg' => 'Rol no válido.']);
+        exit;
+    }
+    if (!in_array($estado, $estados_validos, true)) {
+        echo json_encode(['ok' => false, 'msg' => 'Estado no válido.']);
+        exit;
+    }
+    if (strlen($pass) < 6) {
+        echo json_encode(['ok' => false, 'msg' => 'La contraseña debe tener al menos 6 caracteres.']);
+        exit;
+    }
+
+    // Verificar email único
+    $chk = $pdo->prepare('SELECT id FROM usuarios WHERE email = ? LIMIT 1');
+    $chk->execute([$email]);
+    if ($chk->fetch()) {
+        echo json_encode(['ok' => false, 'msg' => 'Ya existe un usuario con ese email.']);
+        exit;
+    }
+
+    $hash = password_hash($pass, PASSWORD_DEFAULT);
+
+    $ins = $pdo->prepare(
+        'INSERT INTO usuarios (nombre, email, password, rol, estado) VALUES (?, ?, ?, ?, ?)'
+    );
+    $ins->execute([$nombre, $email, $hash, $rol, $estado]);
+
+    echo json_encode([
+        'ok'  => true,
+        'msg' => 'Usuario creado correctamente.',
+        'id'  => (int)$pdo->lastInsertId(),
+    ]);
+    exit;
+}
+
+/* ──────────────────────────────────────────────────────
+   BLOQUE 4 — PUT: Editar Usuario
+   - Valida id, nombre, email, rol, estado
+   - La contraseña solo se actualiza si se envía
+   - Verifica que el email no esté en uso por otro usuario
    - Devuelve { ok, msg }
 ────────────────────────────────────────────────────── */
 if ($method === 'PUT') {
-    $d           = json_decode(file_get_contents('php://input'), true) ?? [];
-    $id          = (int)($d['id']          ?? 0);
-    $fecha       = trim($d['fecha_inicio'] ?? '');
-    $num_adultos = max(1, (int)($d['num_adultos'] ?? 1));
-    $estado      = $d['estado'] ?? '';
+    $d      = json_decode(file_get_contents('php://input'), true) ?? [];
+    $id     = (int)($d['id']       ?? 0);
+    $nombre = trim($d['nombre']    ?? '');
+    $email  = trim($d['email']     ?? '');
+    $pass   = trim($d['password']  ?? '');
+    $rol    = trim($d['rol']       ?? '');
+    $estado = trim($d['estado']    ?? '');
 
-    $estados_validos = ['pendiente', 'confirmada', 'cancelada', 'completada'];
+    $roles_validos   = ['admin', 'editor', 'viewer', 'cliente'];
+    $estados_validos = ['activo', 'inactivo'];
+
     if (!$id) {
         echo json_encode(['ok' => false, 'msg' => 'ID requerido.']);
+        exit;
+    }
+    if (!$nombre || !$email) {
+        echo json_encode(['ok' => false, 'msg' => 'Nombre y email son requeridos.']);
+        exit;
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo json_encode(['ok' => false, 'msg' => 'El email no tiene un formato válido.']);
+        exit;
+    }
+    if ($rol && !in_array($rol, $roles_validos, true)) {
+        echo json_encode(['ok' => false, 'msg' => 'Rol no válido.']);
         exit;
     }
     if ($estado && !in_array($estado, $estados_validos, true)) {
         echo json_encode(['ok' => false, 'msg' => 'Estado no válido.']);
         exit;
     }
+    if ($pass && strlen($pass) < 6) {
+        echo json_encode(['ok' => false, 'msg' => 'La contraseña debe tener al menos 6 caracteres.']);
+        exit;
+    }
 
-    // Obtener reserva actual para recalcular precio
-    $sel = $pdo->prepare(
-        'SELECT r.*, 
-                COALESCE(pt.precio_desde, pg.precio_desde) AS precio_unitario
-         FROM reservas r
-         LEFT JOIN planes_turisticos pt    ON pt.id = r.plan_turistico_id
-         LEFT JOIN planes_gastronomicos pg ON pg.id = r.plan_gastronomico_id
-         WHERE r.id = ? LIMIT 1'
-    );
-    $sel->execute([$id]);
-    $row = $sel->fetch();
-
+    // Verificar que el usuario existe
+    $chk = $pdo->prepare('SELECT id, rol, estado FROM usuarios WHERE id = ? LIMIT 1');
+    $chk->execute([$id]);
+    $row = $chk->fetch(PDO::FETCH_ASSOC);
     if (!$row) {
-        echo json_encode(['ok' => false, 'msg' => 'Reserva no encontrada.']);
+        echo json_encode(['ok' => false, 'msg' => 'Usuario no encontrado.']);
         exit;
     }
 
-    $precio_total = (float)$row['precio_unitario'] * $num_adultos;
-    $nuevo_estado = $estado ?: $row['estado'];
-    $nueva_fecha  = $fecha  ?: $row['fecha_inicio'];
+    // Verificar email único (excluir el propio usuario)
+    $chkEmail = $pdo->prepare('SELECT id FROM usuarios WHERE email = ? AND id != ? LIMIT 1');
+    $chkEmail->execute([$email, $id]);
+    if ($chkEmail->fetch()) {
+        echo json_encode(['ok' => false, 'msg' => 'Ese email ya está en uso por otro usuario.']);
+        exit;
+    }
 
-    $pdo->prepare(
-        'UPDATE reservas SET fecha_inicio = ?, num_adultos = ?, precio_total = ?, estado = ? WHERE id = ?'
-    )->execute([$nueva_fecha, $num_adultos, $precio_total, $nuevo_estado, $id]);
+    $nuevoRol    = $rol    ?: $row['rol'];
+    $nuevoEstado = $estado ?: $row['estado'];
 
-    echo json_encode(['ok' => true, 'msg' => 'Reserva actualizada correctamente.']);
+    if ($pass) {
+        // Actualizar con nueva contraseña
+        $hash = password_hash($pass, PASSWORD_DEFAULT);
+        $pdo->prepare(
+            'UPDATE usuarios SET nombre = ?, email = ?, password = ?, rol = ?, estado = ? WHERE id = ?'
+        )->execute([$nombre, $email, $hash, $nuevoRol, $nuevoEstado, $id]);
+    } else {
+        // Actualizar sin tocar la contraseña
+        $pdo->prepare(
+            'UPDATE usuarios SET nombre = ?, email = ?, rol = ?, estado = ? WHERE id = ?'
+        )->execute([$nombre, $email, $nuevoRol, $nuevoEstado, $id]);
+    }
+
+    echo json_encode(['ok' => true, 'msg' => 'Usuario actualizado correctamente.']);
     exit;
 }
 
 /* ──────────────────────────────────────────────────────
-   BLOQUE 4 — POST action=cambiar_estado: Cambiar estado
-   - Valida id y nuevo estado
-   - UPDATE directo
-   - Devuelve { ok, msg, estado }
-────────────────────────────────────────────────────── */
-if ($method === 'POST') {
-    $d      = json_decode(file_get_contents('php://input'), true) ?? $_POST;
-    $action = trim($d['action'] ?? '');
-    $id     = (int)($d['id']    ?? 0);
-    $estado = trim($d['estado'] ?? '');
-
-    $estados_validos = ['pendiente', 'confirmada', 'cancelada', 'completada'];
-
-    if ($action !== 'cambiar_estado' || !$id || !in_array($estado, $estados_validos, true)) {
-        echo json_encode(['ok' => false, 'msg' => 'Parámetros inválidos.']);
-        exit;
-    }
-
-    $check = $pdo->prepare('SELECT id FROM reservas WHERE id = ? LIMIT 1');
-    $check->execute([$id]);
-    if (!$check->fetch()) {
-        echo json_encode(['ok' => false, 'msg' => 'Reserva no encontrada.']);
-        exit;
-    }
-
-    $pdo->prepare('UPDATE reservas SET estado = ? WHERE id = ?')->execute([$estado, $id]);
-
-    $labels = [
-        'pendiente'  => 'marcada como pendiente',
-        'confirmada' => 'confirmada',
-        'cancelada'  => 'cancelada',
-        'completada' => 'marcada como completada',
-    ];
-
-    echo json_encode([
-        'ok'     => true,
-        'msg'    => 'Reserva ' . $labels[$estado] . ' correctamente.',
-        'estado' => $estado,
-    ]);
-    exit;
-}
-
-/* ──────────────────────────────────────────────────────
-   BLOQUE 5 — DELETE: Eliminar Reserva
-   - Solo elimina reservas canceladas o pendientes
+   BLOQUE 5 — DELETE: Eliminar Usuario
+   - No permite que un admin se elimine a sí mismo
+   - No permite eliminar al último admin del sistema
    - Devuelve { ok, msg }
 ────────────────────────────────────────────────────── */
 if ($method === 'DELETE') {
@@ -248,25 +267,35 @@ if ($method === 'DELETE') {
         exit;
     }
 
-    $check = $pdo->prepare('SELECT id, estado FROM reservas WHERE id = ? LIMIT 1');
-    $check->execute([$id]);
-    $row = $check->fetch();
+    // Evitar que el usuario se elimine a sí mismo
+    if ($id === (int)$usuario['id']) {
+        echo json_encode(['ok' => false, 'msg' => 'No puedes eliminar tu propia cuenta.']);
+        exit;
+    }
+
+    $chk = $pdo->prepare('SELECT id, rol FROM usuarios WHERE id = ? LIMIT 1');
+    $chk->execute([$id]);
+    $row = $chk->fetch(PDO::FETCH_ASSOC);
 
     if (!$row) {
-        echo json_encode(['ok' => false, 'msg' => 'Reserva no encontrada.']);
+        echo json_encode(['ok' => false, 'msg' => 'Usuario no encontrado.']);
         exit;
     }
 
-    // Seguridad: solo se pueden eliminar reservas canceladas o pendientes
-    if (!in_array($row['estado'], ['cancelada', 'pendiente'], true)) {
-        echo json_encode(['ok' => false, 'msg' => 'Solo se pueden eliminar reservas canceladas o pendientes.']);
-        exit;
+    // Proteger al último admin del sistema
+    if ($row['rol'] === 'admin') {
+        $countAdmins = (int)$pdo->query("SELECT COUNT(*) FROM usuarios WHERE rol = 'admin'")->fetchColumn();
+        if ($countAdmins <= 1) {
+            echo json_encode(['ok' => false, 'msg' => 'No puedes eliminar al único administrador del sistema.']);
+            exit;
+        }
     }
 
-    $pdo->prepare('DELETE FROM reservas WHERE id = ?')->execute([$id]);
-    echo json_encode(['ok' => true, 'msg' => 'Reserva eliminada correctamente.']);
+    $pdo->prepare('DELETE FROM usuarios WHERE id = ?')->execute([$id]);
+    echo json_encode(['ok' => true, 'msg' => 'Usuario eliminado correctamente.']);
     exit;
 }
 
 // BLOQUE 6 — Método no soportado
+http_response_code(405);
 echo json_encode(['ok' => false, 'msg' => 'Método no soportado.']);
