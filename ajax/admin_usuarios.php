@@ -1,11 +1,8 @@
 <?php
 /**
- * ajax/admin_usuarios.php — GESTIÓN DE USUARIOS
- * GET  → Lista usuarios (paginada) + búsqueda + stats
- * POST → Crea nuevo usuario (con password hash)
- * PUT  → Edita usuario (nombre, email, rol, estado, password)
- * DELETE → Elimina usuario (no puede auto-eliminarse)
- * Auth: admin/editor
+ * ajax/admin_usuarios.php
+ * Endpoint AJAX para el dashboard: GET (lista) / POST (crear) / PUT (editar) / DELETE (eliminar)
+ * Solo admin y editor
  */
 
 header('Content-Type: application/json; charset=utf-8');
@@ -13,7 +10,6 @@ header('Content-Type: application/json; charset=utf-8');
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/session.php';
 
-// BLOQUE 1 - Autenticación y Autorización
 if (!estaLogueado()) {
     http_response_code(401);
     echo json_encode(['ok' => false, 'msg' => 'No autenticado.']);
@@ -30,14 +26,7 @@ if (!in_array($usuario['rol'], ['admin', 'editor'], true)) {
 $pdo    = getDB();
 $method = $_SERVER['REQUEST_METHOD'];
 
-/*
-   BLOQUE 2 - GET: Listar Usuarios
-   - Obtiene page y query de búsqueda
-   - LIMIT 10 usuarios por página
-   - Busca por nombre O email (LIKE)
-   - Calcula total de páginas
-   - Devuelve { usuarios, total, pagina, paginas, stats }
-*/
+// ── GET: lista de usuarios ────────────────────────────────────────────────
 if ($method === 'GET') {
     $page  = max(1, (int)($_GET['page']  ?? 1));
     $limit = 10;
@@ -81,15 +70,7 @@ if ($method === 'GET') {
     exit;
 }
 
-/*
-   BLOQUE 3 - POST: Crear Usuario
-   - Extrae nombre, email, password, rol, estado
-   - Valida campos requeridos
-   - Verifica que email no esté en uso
-   - Hash password con PASSWORD_BCRYPT
-   - INSERT nuevo usuario
-   - Devuelve { ok: true, id }
-*/
+// ── POST: crear usuario ───────────────────────────────────────────────────
 if ($method === 'POST') {
     $d       = json_decode(file_get_contents('php://input'), true) ?? $_POST;
     $nombre  = trim($d['nombre']  ?? '');
@@ -97,105 +78,6 @@ if ($method === 'POST') {
     $pass    = trim($d['password'] ?? '');
     $rol     = $d['rol']    ?? 'cliente';
     $estado  = $d['estado'] ?? 'activo';
-
-    if (!$nombre || !$email || !$pass) {
-        echo json_encode(['ok' => false, 'msg' => 'Nombre, email y contraseña son requeridos.']);
-        exit;
-    }
-
-    $check = $pdo->prepare('SELECT id FROM usuarios WHERE email = ? LIMIT 1');
-    $check->execute([$email]);
-    if ($check->fetch()) {
-        echo json_encode(['ok' => false, 'msg' => 'El email ya está en uso.']);
-        exit;
-    }
-
-    $hash = password_hash($pass, PASSWORD_BCRYPT);
-    $ins  = $pdo->prepare(
-        'INSERT INTO usuarios (nombre, email, contrasena, rol, estado) VALUES (?,?,?,?,?)'
-    );
-    $ins->execute([$nombre, $email, $hash, $rol, $estado]);
-
-    echo json_encode(['ok' => true, 'msg' => 'Usuario creado correctamente.', 'id' => (int)$pdo->lastInsertId()]);
-    exit;
-}
-
-/*
-   BLOQUE 4 - PUT: Editar Usuario
-   - Extrae id, nombre, email, rol, estado, password
-   - Valida datos requeridos
-   - Verifica email no duplicado en otro usuario
-   - UPDATE dinámico (solo actualiza campos proporcionados)
-   - Si password se proporciona: hash con PASSWORD_BCRYPT
-   - Devuelve { ok: true, msg }
-*/
-if ($method === 'PUT') {
-    $d      = json_decode(file_get_contents('php://input'), true) ?? [];
-    $id     = (int)($d['id']     ?? 0);
-    $nombre = trim($d['nombre']  ?? '');
-    $email  = trim($d['email']   ?? '');
-    $rol    = $d['rol']    ?? null;
-    $estado = $d['estado'] ?? null;
-
-    if (!$id || !$nombre || !$email) {
-        echo json_encode(['ok' => false, 'msg' => 'Datos incompletos.']);
-        exit;
-    }
-
-    // Verificar email duplicado en otro usuario
-    $dup = $pdo->prepare('SELECT id FROM usuarios WHERE email = ? AND id <> ? LIMIT 1');
-    $dup->execute([$email, $id]);
-    if ($dup->fetch()) {
-        echo json_encode(['ok' => false, 'msg' => 'El email ya está en uso por otro usuario.']);
-        exit;
-    }
-
-    $fields = ['nombre = ?', 'email = ?'];
-    $vals   = [$nombre, $email];
-
-    if ($rol)    { $fields[] = 'rol = ?';    $vals[] = $rol; }
-    if ($estado) { $fields[] = 'estado = ?'; $vals[] = $estado; }
-    if (!empty($d['password'])) {
-        $fields[] = 'contrasena = ?';
-        $vals[]   = password_hash($d['password'], PASSWORD_BCRYPT);
-    }
-
-    $vals[] = $id;
-    $pdo->prepare('UPDATE usuarios SET ' . implode(', ', $fields) . ' WHERE id = ?')->execute($vals);
-
-    echo json_encode(['ok' => true, 'msg' => 'Usuario actualizado.']);
-    exit;
-}
-
-/*
-   BLOQUE 5 - DELETE: Eliminar Usuario
-   - Obtiene id del body o GET
-   - No permite auto-eliminarse (usuario no puede borrar su propia cuenta)
-   - DELETE donde id = ?
-   - Devuelve { ok: true, msg }
-*/
-if ($method === 'DELETE') {
-    $d  = json_decode(file_get_contents('php://input'), true) ?? [];
-    $id = (int)($d['id'] ?? $_GET['id'] ?? 0);
-
-    if (!$id) {
-        echo json_encode(['ok' => false, 'msg' => 'ID requerido.']);
-        exit;
-    }
-
-    // No puede eliminarse a sí mismo
-    if ($id === $usuario['id']) {
-        echo json_encode(['ok' => false, 'msg' => 'No puedes eliminarte a ti mismo.']);
-        exit;
-    }
-
-    $pdo->prepare('DELETE FROM usuarios WHERE id = ?')->execute([$id]);
-    echo json_encode(['ok' => true, 'msg' => 'Usuario eliminado.']);
-    exit;
-}
-
-// BLOQUE 6 - Método no soportado
-echo json_encode(['ok' => false, 'msg' => 'Método no soportado.']);
 
     if (!$nombre || !$email || !$pass) {
         echo json_encode(['ok' => false, 'msg' => 'Nombre, email y contraseña son requeridos.']);
