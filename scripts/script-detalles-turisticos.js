@@ -4,7 +4,6 @@
          en el PHP antes de cargar este archivo.
 ════════════════════════════════════════════════════ */
 
-let planActual = null;
 
 /* ── Toast ── */
 function mostrarToast(msg, tipo) {

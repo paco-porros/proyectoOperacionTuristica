@@ -234,7 +234,5 @@ require_once __DIR__ . '/includes/session.php';
 
   <script src="/scripts/script.js"></script>
 
-  <script src="/scripts/script-index.js"></script>
-
 </body>
 </html>
