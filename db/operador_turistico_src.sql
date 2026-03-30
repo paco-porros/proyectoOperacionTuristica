@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 29-03-2026 a las 19:19:29
+-- Tiempo de generación: 30-03-2026 a las 01:43:43
 -- Versión del servidor: 8.4.3
 -- Versión de PHP: 8.3.30
 
@@ -303,7 +303,9 @@ INSERT INTO `reservas` (`id`, `usuario_id`, `tipo_plan`, `plan_turistico_id`, `p
 (4, 2, 'gastronomico', NULL, 6, '2026-04-15', '2026-04-15', 2, 170000.00, 'COP', 'confirmada', NULL, '2026-03-26 23:59:05', '2026-03-26 23:59:05'),
 (5, 5, 'gastronomico', NULL, 4, '2026-04-18', '2026-04-18', 3, 105000.00, 'COP', 'pendiente', NULL, '2026-03-26 23:59:05', '2026-03-26 23:59:05'),
 (6, 3, 'turistico', 7, NULL, '2026-06-01', '2026-06-03', 2, 960000.00, 'COP', 'pendiente', NULL, '2026-03-26 23:59:05', '2026-03-26 23:59:05'),
-(7, 7, 'turistico', 2, NULL, '2026-03-29', NULL, 2, 180000.00, 'COP', 'pendiente', NULL, '2026-03-29 02:20:37', '2026-03-29 02:20:37');
+(7, 7, 'turistico', 2, NULL, '2026-03-29', NULL, 2, 180000.00, 'COP', 'pendiente', NULL, '2026-03-29 02:20:37', '2026-03-29 02:20:37'),
+(8, 8, 'turistico', 1, NULL, '2026-03-29', NULL, 2, 106000.00, 'COP', 'pendiente', NULL, '2026-03-29 20:04:01', '2026-03-29 20:04:01'),
+(9, 8, 'turistico', 2, NULL, '2026-03-29', NULL, 2, 180000.00, 'COP', 'pendiente', NULL, '2026-03-29 20:24:28', '2026-03-29 20:24:28');
 
 -- --------------------------------------------------------
 
@@ -362,12 +364,14 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `email`, `contrasena`, `rol`, `estado`, `avatar_url`, `created_at`, `updated_at`) VALUES
-(2, 'Carlos Arenas', 'carlos@srcabal.com', '$2y$12$placeholderHashEditor01', 'editor', 'activo', NULL, '2026-03-26 23:59:04', '2026-03-26 23:59:04'),
-(3, 'Valentina Ospina', 'valen@srcabal.com', '$2y$12$placeholderHashEditor02', 'editor', 'activo', NULL, '2026-03-26 23:59:04', '2026-03-26 23:59:04'),
+(2, 'Carlos Arenas', 'carlos@srcabal.com', '$2y$12$placeholderHashEditor01', 'editor', 'inactivo', NULL, '2026-03-26 23:59:04', '2026-03-30 00:24:18'),
+(3, 'Valentina Ospina', 'valen@srcabal.com', '$2y$12$placeholderHashEditor02', 'editor', 'inactivo', NULL, '2026-03-26 23:59:04', '2026-03-30 00:24:22'),
 (4, 'Alejandro Gómez', 'ale@srcabal.com', '$2y$12$placeholderHashViewer01', 'viewer', 'inactivo', NULL, '2026-03-26 23:59:04', '2026-03-26 23:59:04'),
-(5, 'Luisa Fernanda Restrepo', 'luisa@srcabal.com', '$2y$12$placeholderHashViewer02', 'viewer', 'activo', NULL, '2026-03-26 23:59:04', '2026-03-26 23:59:04'),
-(6, 'Victor', 'victor@gei.com', '81dc9bdb52d04dc20036dbd8313ed055', 'cliente', 'activo', NULL, '2026-03-27 00:03:33', '2026-03-27 00:03:33'),
-(7, 'jesus garcia', 'jesuu150@gmail.com', '$2y$10$3q0zaQk3dGwuil.zgMjHl.OzbuP2Daxj/YM4cKkSyfMeG5cFtsRG.', 'cliente', 'activo', NULL, '2026-03-29 02:20:12', '2026-03-29 02:20:12');
+(5, 'Luisa Fernanda Restrepo', 'luisa@srcabal.com', '$2y$12$placeholderHashViewer02', 'viewer', 'inactivo', NULL, '2026-03-26 23:59:04', '2026-03-30 00:24:31'),
+(7, 'jesus garcia', 'jesuu150@gmail.com', '$2y$10$3q0zaQk3dGwuil.zgMjHl.OzbuP2Daxj/YM4cKkSyfMeG5cFtsRG.', 'cliente', 'activo', NULL, '2026-03-29 02:20:12', '2026-03-30 00:22:47'),
+(8, 'Juan perez', 'maricon@gmail.com', '$2y$10$gRAFbayddSPve.KnPWnj/.CJNlxEhP/2nEMXVEKsV.h/bU3lu.4/C', 'admin', 'activo', NULL, '2026-03-29 20:02:43', '2026-03-29 21:52:27'),
+(12, 'admin', 'admin@admin.com', '$2y$10$p/GIUbyRvX5RM3m6afvtGOCBlgIQMEZfi/Z8J5l3HHnUxDCz94Nzi', 'admin', 'activo', NULL, '2026-03-30 00:24:04', '2026-03-30 00:24:04'),
+(13, 'Victor', 'victor.lopezr@unisarc.edu.co', '$2y$10$Yt190UZTwalQv017b3e0Iehps4fJ4o/UKTXlagoBqUWq339P7MyY6', 'cliente', 'activo', NULL, '2026-03-30 01:07:33', '2026-03-30 01:07:33');
 
 --
 -- Índices para tablas volcadas
@@ -489,7 +493,7 @@ ALTER TABLE `planes_gastronomicos`
 -- AUTO_INCREMENT de la tabla `planes_turisticos`
 --
 ALTER TABLE `planes_turisticos`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `plan_incluye`
@@ -513,7 +517,7 @@ ALTER TABLE `resenas`
 -- AUTO_INCREMENT de la tabla `reservas`
 --
 ALTER TABLE `reservas`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `restaurantes`
@@ -525,7 +529,7 @@ ALTER TABLE `restaurantes`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Restricciones para tablas volcadas
