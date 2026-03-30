@@ -52,8 +52,6 @@ body {
     gap: 0.75rem;
 }
 
-
-
 .barra-lateral__logo {
     width: 100%;
     height: 100%;
@@ -222,10 +220,6 @@ body {
     gap: 1rem;
     margin-left: 1.5rem;
 }
-
-
-
-
 
 .divisor-vertical {
     height: 2rem;
@@ -406,8 +400,6 @@ body {
     color: #00595e;
 }
 
-
-
 /* =============================================
    TABLA DE USUARIOS
    ============================================= */
@@ -465,6 +457,7 @@ body {
     background: rgba(255, 255, 255, 0.3);
 }
 
+/* Al pasar el cursor sobre una fila, revela el grupo de botones de acción */
 .fila-usuario:hover .acciones-fila {
     opacity: 1;
 }
@@ -543,13 +536,8 @@ body {
     flex-shrink: 0;
 }
 
-.estado-usuario__punto--activo {
-    background: #10b981;
-}
-
-.estado-usuario__punto--inactivo {
-    background: #cbd5e1;
-}
+.estado-usuario__punto--activo  { background: #10b981; }
+.estado-usuario__punto--inactivo { background: #cbd5e1; }
 
 .estado-usuario__texto--activo {
     font-size: 0.75rem;
@@ -563,6 +551,7 @@ body {
     color: #94a3b8;
 }
 
+/* Grupo de botones de acción: oculto por defecto, visible al hacer hover en la fila */
 .acciones-fila {
     display: flex;
     align-items: center;
@@ -585,21 +574,10 @@ body {
     cursor: pointer;
 }
 
-.boton-accion--editar {
-    color: #054da4;
-}
-
-.boton-accion--editar:hover {
-    background: white;
-}
-
-.boton-accion--eliminar {
-    color: #ba1a1a;
-}
-
-.boton-accion--eliminar:hover {
-    background: rgba(186, 26, 26, 0.1);
-}
+.boton-accion--editar         { color: #054da4; }
+.boton-accion--editar:hover   { background: white; }
+.boton-accion--eliminar       { color: #ba1a1a; }
+.boton-accion--eliminar:hover { background: rgba(186, 26, 26, 0.1); }
 
 /* =============================================
    PIE DE TABLA / PAGINACIÓN
@@ -641,9 +619,7 @@ body {
     cursor: pointer;
 }
 
-.paginacion__boton:hover {
-    background: rgba(255, 255, 255, 0.4);
-}
+.paginacion__boton:hover { background: rgba(255, 255, 255, 0.4); }
 
 .paginacion__boton--activo {
     width: 2rem;
@@ -676,9 +652,7 @@ body {
     cursor: pointer;
 }
 
-.paginacion__boton--inactivo:hover {
-    background: rgba(255, 255, 255, 0.4);
-}
+.paginacion__boton--inactivo:hover { background: rgba(255, 255, 255, 0.4); }
 
 /* =============================================
    SECCIONES DINÁMICAS DE PLANES
@@ -689,6 +663,7 @@ body {
     animation: fadeInUp 0.3s ease;
 }
 
+/* Animación de entrada suave usada por las secciones que se cargan dinámicamente */
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -721,6 +696,7 @@ body {
     letter-spacing: 0.05em;
 }
 
+/* Celda que aparece mientras se cargan datos vía AJAX */
 .celda-cargando {
     padding: 2.5rem;
     text-align: center;
@@ -728,7 +704,7 @@ body {
     font-style: italic;
 }
 
-/* Avatar para imágenes de planes */
+/* Miniatura de imagen de un plan en la tabla */
 .avatar-plan {
     width: 3.5rem;
     height: 2.25rem;
@@ -741,4 +717,228 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* =============================================
+   MODALES — CAPA DE FONDO (backdrop)
+   Usada por: modal-usuario, modal-eliminar,
+   modal-plan, modal-crear-plan
+   ============================================= */
+
+/* Fondo semitransparente que cubre toda la pantalla detrás del modal */
+.modal-fondo {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 32, 33, 0.55);
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+}
+
+/* Caja principal del modal */
+.modal-caja {
+    background: #e5feff;
+    border-radius: 1rem;
+    padding: 2.5rem;
+    max-width: 520px;
+    width: 90%;
+    box-shadow: 0 20px 40px rgba(0, 32, 33, 0.15);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* Variante más ancha para el modal de edición/creación de planes */
+.modal-caja--ancha {
+    max-width: 580px;
+}
+
+/* Variante centrada para el modal de confirmación de eliminación */
+.modal-caja--confirmacion {
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Encabezado del modal: título a la izquierda, botón cerrar a la derecha */
+.modal-encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.modal-titulo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #054da4;
+    margin: 0;
+}
+
+/* Botón "✕" para cerrar el modal */
+.modal-boton-cerrar {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #306388;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+/* Alerta interna del modal (éxito o error) */
+.modal-alerta-interna {
+    display: none;
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+/* =============================================
+   MODALES — CAMPOS DE FORMULARIO
+   ============================================= */
+
+/* Etiqueta de campo */
+.campo-etiqueta {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #306388;
+    margin-bottom: 0.5rem;
+}
+
+/* Input, Select y Textarea con apariencia unificada */
+.campo-input,
+.campo-select,
+.campo-textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #afedf0;
+    border-radius: 0.5rem;
+    font-family: 'Manrope', sans-serif;
+    color: #002021;
+    background: #fff;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.campo-textarea {
+    resize: vertical;
+}
+
+/* Agrupación de campo con separación inferior */
+.campo-grupo {
+    margin-bottom: 1rem;
+}
+
+/* Cuadrícula de dos columnas para campos en paralelo */
+.campo-cuadricula-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* =============================================
+   MODALES — BOTONES DE ACCIÓN (pie del modal)
+   ============================================= */
+
+/* Contenedor flex para los botones del pie del modal */
+.modal-pie-botones {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Botón secundario (cancelar) */
+.boton-modal-cancelar {
+    flex: 1;
+    padding: 1rem;
+    border-radius: 9999px;
+    border: 2px solid #afedf0;
+    background: transparent;
+    color: #306388;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Botón primario (guardar / crear) */
+.boton-modal-guardar {
+    flex: 2;
+    padding: 1rem;
+    border-radius: 9999px;
+    background: #054da4;
+    color: #fff;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1rem;
+}
+
+/* Botón destructivo (confirmar eliminación) */
+.boton-modal-eliminar {
+    flex: 1;
+    padding: 0.875rem;
+    border-radius: 9999px;
+    background: #ba1a1a;
+    color: #fff;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* =============================================
+   MODAL — CONFIRMACIÓN DE ELIMINACIÓN
+   ============================================= */
+
+/* Icono de advertencia grande centrado */
+.modal-icono-advertencia {
+    font-size: 3rem;
+    color: #ba1a1a;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+/* =============================================
+   MODAL — PREVIEW DE IMAGEN (Crear Plan)
+   ============================================= */
+
+/* Contenedor del preview de imagen; oculto hasta que el usuario sube un archivo */
+.preview-contenedor {
+    display: none;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.preview-imagen {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 0.5rem;
+}
+
+/* =============================================
+   TOAST — NOTIFICACIÓN FLOTANTE
+   Aparece en la esquina inferior derecha;
+   desaparece suavemente después de 3.5 s.
+   ============================================= */
+
+.toast-admin {
+    display: none;
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 9999;
+    padding: 0.875rem 1.5rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: 'Manrope', sans-serif;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s;
+    opacity: 0;
 }
